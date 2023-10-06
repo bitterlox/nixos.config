@@ -29,7 +29,7 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     # home-manager, used for managing user configuration
     home-manager = {
-      url = "github:nix-community/home-manager/release-23.05";
+      url = "github:nix-community/home-manager";
       # The `follows` keyword in inputs is used for inheritance.
       # Here, `inputs.nixpkgs` of home-manager is kept consistent with
       # the `inputs.nixpkgs` of the current flake,
@@ -48,7 +48,7 @@
   # 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations = {
       # By default, NixOS will try to refer the nixosConfiguration with
       # its hostname, so the system named `nixos-test` will use this one.
@@ -103,7 +103,19 @@
           # Import the configuration.nix here, so that the
           # old configuration file can still take effect.
           # Note: configuration.nix itself is also a Nix Module,
-          ./configuration.nix
+          ./configuration.nix,
+          # make home-manager as a module of nixos
+          # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
+          home-manager.nixosModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+
+            # TODO replace ryan with your own username
+            home-manager.users.angel = import ./machines/sihaya/users/angel.nix;
+
+            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+          }
         ];
       };
     };
