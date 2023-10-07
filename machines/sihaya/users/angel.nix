@@ -146,11 +146,11 @@
   };
 
   programs.neovim = {
-    enable = true,
-    defaultEditor = true,
+    enable = true;
+    defaultEditor = true;
     extraLuaLines = ''
     print("hello from nix!")
- ''
+ '';
   };
 
   # This value determines the home Manager release that your
