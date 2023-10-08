@@ -148,9 +148,12 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    extraLuaConfig = ''
-    print("hello from nix!")
-    require("${pkgs.my-nvim-config}/init.lua")
+#    extraLuaConfig = ''
+#    print("hello from nix!")
+#    require("${pkgs.my-nvim-config}/lua/x/config/set.lua")
+# '';
+    extraConfig = ''
+    luafile "${pkgs.my-nvim-config}/init.lua"
  '';
     plugins = let vimPlugins = pkgs.vimPlugins; in [
       vimPlugins.nvim-lspconfig
