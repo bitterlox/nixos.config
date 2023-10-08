@@ -153,7 +153,7 @@
 #    require("${pkgs.my-nvim-config}/lua/x/config/set.lua")
 # '';
     extraConfig = ''
-    luafile "${pkgs.my-nvim-config}/init.lua"
+    luafile "${pkgs.my-nvim-config}/lua/x/config/set.lua"
  '';
     plugins = let vimPlugins = pkgs.vimPlugins; in [
       vimPlugins.nvim-lspconfig
