@@ -148,9 +148,81 @@
   programs.neovim = {
     enable = true;
     defaultEditor = true;
-    extraLuaLines = ''
+    extraLuaConfig = ''
     print("hello from nix!")
+    require("${pkgs.my-nvim-config}/init.lua")
  '';
+    plugins = let vimPlugins = pkgs.vimPlugins; in [
+      vimPlugins.nvim-lspconfig
+      vimPlugins.plenary-nvim
+
+      # efm langserver config
+      #"creativenull/efmls-configs-nvim"
+
+      # inlay hints
+      vimPlugins.lsp-inlayhints-nvim
+
+      # snippets
+      vimPlugins.luasnip
+      vimPlugins.friendly-snippets
+
+      # neovim for lsp
+      vimPlugins.neodev-nvim
+
+      # test runner
+      vimPlugins.neotest
+      vimPlugins.neotest-go
+      vimPlugins.neotest-jest
+
+      # status line
+      vimPlugins.nvim-cokeline
+      vimPlugins.nvim-web-devicons
+
+      # nvim-cmp
+      vimPlugins.cmp-buffer
+      vimPlugins.cmp-path
+      vimPlugins.cmp-cmdline
+      vimPlugins.nvim-cmp
+      # completion sources
+      vimPlugins.cmp-nvim-lsp
+      #vimPlugins.cmp-nvim-lua
+      vimPlugins.cmp_luasnip
+      #vimPlugins.cmp-plugins
+
+      # telescope
+      vimPlugins.telescope-nvim
+
+      # themes
+      vimPlugins.rose-pine
+      #vimPlugins.minimal.nvim
+      #vimPlugins.sonokai
+      #vimPlugins.nightfox.nvim
+      #vimPlugins.adwaita.nvim
+      #vimPlugins.caret.nvim
+
+      # tmux integration
+      vimPlugins.tmux-nvim
+
+      # tpope vimPlugins
+      # git client
+      vimPlugins.vim-fugitive
+      # all about "surroundings"
+      vimPlugins.vim-surround
+      # repeat commands
+      vimPlugins.vim-repeat
+      # improved netrw
+      vimPlugins.vim-vinegar
+      # comment stuff
+      vimPlugins.vim-commentary
+
+      # treesitter + undotree
+      vimPlugins.nvim-treesitter
+      #"nvim-treesitter/playground"
+      vimPlugins.undotree
+
+      # visual star search
+      vimPlugins.vim-visual-star-search
+    ];
   };
 
   # This value determines the home Manager release that your

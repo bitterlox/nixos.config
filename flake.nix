@@ -36,6 +36,14 @@
       # to avoid problems caused by different versions of nixpkgs.
       inputs.nixpkgs.follows = "nixpkgs";
     };
+    nvim-config = {
+      url = "github:bitterlox/nvim.config/nixos";
+      flake = false;
+    };
+    neovim = {
+      url = "github:neovim/neovim/stable?dir=contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   # `outputs` are all the build result of the flake.
@@ -48,7 +56,25 @@
   # 
   # The `@` syntax here is used to alias the attribute set of the
   # inputs's parameter, making it convenient to use inside the function.
-  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, nvim-config, neovim, ... }@inputs:
+  let
+    overlay-nvim = prev: final: {
+      neovim = neovim.packages.x86_64-linux.neovim; 
+    };
+
+    overlay-get-nvim-config = prev: final: {
+      my-nvim-config = import ./common/get-nvim-config.nix {
+          pkgs = final;
+          inherit nvim-config;
+      };
+    };
+
+    # we shadow pks here and add our overlays
+    pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [ overlay-nvim overlay-get-nvim-config ];
+      };
+  in {
     nixosConfigurations = {
       # By default, NixOS will try to refer the nixosConfiguration with
       # its hostname, so the system named `nixos-test` will use this one.
@@ -100,6 +126,8 @@
         #
         # specialArgs = {...}  # pass custom arguments into all sub module.
         modules = [
+          # add our nixpkgs with overlays
+          ({ pkgs, ... }: { nixpkgs.overlays = [ overlay-nvim overlay-get-nvim-config ]; })
           # Import the configuration.nix here, so that the
           # old configuration file can still take effect.
           # Note: configuration.nix itself is also a Nix Module,
@@ -111,10 +139,11 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            # TODO replace ryan with your own username
+            # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
             home-manager.users.angel = import ./machines/sihaya/users/angel.nix;
-
-            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+            home-manager.extraSpecialArgs = {
+              inherit nvim-config;
+            };
           }
         ];
       };
