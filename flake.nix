@@ -93,8 +93,8 @@
             # add our nixpkgs with overlays
             ({ pkgs, ... }: { nixpkgs.overlays = [ overlay-nvim ]; })
             # descrypt secrets
-            ./agenix.nix
-            #            {
+            (import ./secrets.nix "chani")
+            # {
             #              imports = [ agenix.homeManagerModules.default ];
             #              config = {
             #                age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
@@ -113,8 +113,7 @@
               home-manager.useUserPackages = true;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
-              home-manager.users.angel =
-                import ./sihaya-angel.nix;
+              home-manager.users.angel = import ./sihaya-angel.nix;
             }
             ./sihaya-secret.nix
             #./trace-test.nix
@@ -144,8 +143,7 @@
               home-manager.useUserPackages = true;
 
               # TODO replace ryan with your own username
-              home-manager.users.angel =
-                import ./maker-angel.nix;
+              home-manager.users.angel = import ./maker-angel.nix;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
             }
