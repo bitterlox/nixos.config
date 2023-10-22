@@ -92,7 +92,7 @@
           modules = [
             # add our nixpkgs with overlays
             ({ pkgs, ... }: { nixpkgs.overlays = [ overlay-nvim ]; })
-            ./common/agenix.nix
+            ./agenix.nix
             #            {
             #              imports = [ agenix.homeManagerModules.default ];
             #              config = {
@@ -103,7 +103,7 @@
             # Import the configuration.nix here, so that the
             # old configuration file can still take effect.
             # Note: configuration.nix itself is also a Nix Module,
-            ./machines/sihaya/configuration.nix
+            ./sihaya-configuration.nix
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
             home-manager.nixosModules.home-manager
@@ -113,9 +113,9 @@
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
               home-manager.users.angel =
-                import ./machines/sihaya/users/angel.nix;
+                import ./sihaya-angel.nix;
             }
-            ./machines/sihaya/users/secret.nix
+            ./sihaya-secret.nix
             #./trace-test.nix
             #            (attrs: {
             #              config = builtins.trace
@@ -134,7 +134,7 @@
             # Import the configuration.nix here, so that the
             # old configuration file can still take effect.
             # Note: configuration.nix itself is also a Nix Module,
-            ./machines/maker/configuration.nix
+            ./maker-configuration.nix
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
             home-manager.nixosModules.home-manager
@@ -144,7 +144,7 @@
 
               # TODO replace ryan with your own username
               home-manager.users.angel =
-                import ./machines/maker/users/angel.nix;
+                import ./maker-angel.nix;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
             }
