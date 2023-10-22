@@ -10,7 +10,7 @@
 
 {
   imports = [ # Include the results of the hardware scan.
-    ./maker-hardware-configuration.nix
+    ./sihaya-hardware-configuration.nix
   ];
 
   # Use the GRUB 2 boot loader.
@@ -78,7 +78,6 @@
   environment.systemPackages = with pkgs; [
     neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    git
   ];
 
   # Some programs need SUID wrappers, can be configured further or are
@@ -98,6 +97,18 @@
       PermitRootLogin = "no";
       PasswordAuthentication = false;
     };
+  };
+
+  programs.git = {
+    enable = true;
+    config = { init.defaultBranch = "main"; };
+  };
+
+  programs.ssh = {
+    extraConfig = ''
+      Host *
+      IdentityFile ${config.age.secrets.ssh-private-key.path} 
+    '';
   };
 
   # Open ports in the firewall.

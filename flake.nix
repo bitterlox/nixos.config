@@ -92,6 +92,7 @@
           modules = [
             # add our nixpkgs with overlays
             ({ pkgs, ... }: { nixpkgs.overlays = [ overlay-nvim ]; })
+            # descrypt secrets
             ./agenix.nix
             #            {
             #              imports = [ agenix.homeManagerModules.default ];

@@ -7,14 +7,11 @@
         matchBlocks = {
           "*" = {
             serverAliveInterval = 120;
-            identityFile =
-              lib.debug.traceSeq config.age.secrets.angel-ssh-key.path
-              config.age.secrets.angel-ssh-key.path;
+            identityFile = config.age.secrets.ssh-private-key.path;
           };
         };
       };
     };
   };
-
-  options = { };
+  options = {};
 }
