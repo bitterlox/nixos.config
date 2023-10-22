@@ -6,13 +6,12 @@
 # https://nixos.org/manual/nixos/stable/
 # https://www.vultr.com/docs/how-to-install-nixos-on-a-vultr-vps/
 
-{ config, pkgs, ... }:
+{ config, pkgs, lib, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [ # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   # Use the GRUB 2 boot loader.
   boot.loader.grub.enable = true;
@@ -30,7 +29,7 @@
   # Set your time zone.
   time.timeZone = "Europe/Rome";
 
-  # Configure network proxy if necessary
+  # Configure network proxy if necessarconfig.agey
   # networking.proxy.default = "http://user:password@proxy:port/";
   # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
 
@@ -64,18 +63,20 @@
     mutableUsers = false;
     users.angel = {
       isNormalUser = true;
-      hashedPassword = "$y$j9T$MhFzL4qfLPfhkcF/akhD70$fUWTOTgHhF3lz7pAgn9jLiUFLhcukoWfFu4hmAZwa45";
+      hashedPassword =
+        "$y$j9T$MhFzL4qfLPfhkcF/akhD70$fUWTOTgHhF3lz7pAgn9jLiUFLhcukoWfFu4hmAZwa45";
       extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
       openssh.authorizedKeys.keys = [
         "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/JDXLqz8IKnkWZollqDXs93vOgOcnbTSUcPCP0jhug"
       ];
+      uid = 1000;
     };
   };
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     git
   ];
