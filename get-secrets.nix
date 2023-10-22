@@ -8,6 +8,12 @@ let
         owner = "angel";
         group = "users";
       };
+      password = {
+        file = secrets-flake.chani.password;
+        mode = "600";
+        owner = "angel";
+        group = "users";
+      };
     };
   };
 in (builtins.getAttr machine secrets)

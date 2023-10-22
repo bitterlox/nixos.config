@@ -63,11 +63,10 @@
     mutableUsers = false;
     users.angel = {
       isNormalUser = true;
-      hashedPassword =
-        "$y$j9T$MhFzL4qfLPfhkcF/akhD70$fUWTOTgHhF3lz7pAgn9jLiUFLhcukoWfFu4hmAZwa45";
+      hashedPasswordFile = config.age.secrets.password.path;
       extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
       openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/JDXLqz8IKnkWZollqDXs93vOgOcnbTSUcPCP0jhug"
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/JDXLqz8IKnkWZollqDXs93vOgOcnbTSUcPCP0jhug" # voidbook
       ];
       uid = 1000;
     };
