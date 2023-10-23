@@ -60,17 +60,13 @@
   # inputs's parameter, making it convenient to use inside the function.
   outputs =
     { self, nixpkgs, home-manager, my-nvim, agenix, secrets-flake, ... }@inputs:
+
     let
+      common = (import ./common { pkgs = nixpkgs; });
+      get-secrets-for-machine = common.build-machine-secrets secrets-flake;
       overlay-nvim = prev: final: {
         neovim = my-nvim.packages.x86_64-linux.default;
       };
-
-      ssh-keys = let
-        imported-ssh-keys = if (builtins.pathExists ./ssh-keys.nix) then
-          (import ./ssh-keys.nix)
-        else
-          { };
-      in nixpkgs.lib.recursiveUpdate { } imported-ssh-keys;
 
       # we shadow pkgs here and add our overlays
       #    pkgs = import nixpkgs {
@@ -93,7 +89,7 @@
             # add our nixpkgs with overlays
             ({ pkgs, ... }: { nixpkgs.overlays = [ overlay-nvim ]; })
             # descrypt secrets
-            (import ./secrets.nix "chani")
+            (import ./modules/agenix.nix (get-secrets-for-machine "chani"))
             # {
             #              imports = [ agenix.homeManagerModules.default ];
             #              config = {
