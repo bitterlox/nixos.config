@@ -100,7 +100,8 @@
             # Import the configuration.nix here, so that the
             # old configuration file can still take effect.
             # Note: configuration.nix itself is also a Nix Module,
-            ./sihaya-configuration.nix
+            ./modules/linux-base.nix
+            ./machines/chani.nix
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
             home-manager.nixosModules.home-manager
@@ -130,7 +131,8 @@
             # Import the configuration.nix here, so that the
             # old configuration file can still take effect.
             # Note: configuration.nix itself is also a Nix Module,
-            ./maker-configuration.nix
+            ./linux-base.nix
+            ./machines/maker.nix
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
             home-manager.nixosModules.home-manager
