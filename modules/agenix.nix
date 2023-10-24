@@ -1,9 +1,9 @@
 secrets:
-{ config, agenix, secrets-flake, lib, ... }: {
+{ config, agenix, lib, ... }: {
   imports = [ agenix ];
   config = {
     age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    age.secrets = lib.debug.traceSeq secrets secrets;
+    age.secrets = secrets;
   };
   options = { };
 }

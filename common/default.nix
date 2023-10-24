@@ -16,6 +16,14 @@
             group = "users";
           };
         };
+        sietch = {
+          password = {
+            file = secrets-flake.sietch.password;
+            mode = "600";
+            owner = "angel";
+            group = "users";
+          };
+        };
       };
     in (builtins.getAttr machine secrets);
 }

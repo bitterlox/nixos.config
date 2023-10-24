@@ -80,11 +80,9 @@
 
           # If you need to pass other parameters,
           # you must use `specialArgs` by uncomment the following line:
-          #
           specialArgs = {
             agenix = agenix.nixosModules.default;
-            inherit secrets-flake;
-          }; # pass custom arguments into all sub module.
+          }; # if this is missing it throws an infinite recursion err
           modules = [
             # add our nixpkgs with overlays
             ({ pkgs, ... }: { nixpkgs.overlays = [ overlay-nvim ]; })
@@ -120,19 +118,25 @@
             #            })
           ];
         };
-        "maker" = nixpkgs.lib.nixosSystem {
+        "sietch" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
 
           # If you need to pass other parameters,
           # you must use `specialArgs` by uncomment the following line:
           #
-          # specialArgs = {...}  # pass custom arguments into all sub module.
+          specialArgs = {
+            agenix = agenix.nixosModules.default;
+          }; # if this is missing it throws an infinite recursion err
           modules = [
+            # add our nixpkgs with overlays
+            ({ pkgs, ... }: { nixpkgs.overlays = [ overlay-nvim ]; })
+            # descrypt secrets
+            (import ./modules/agenix.nix (get-secrets-for-machine "sietch"))
             # Import the configuration.nix here, so that the
             # old configuration file can still take effect.
             # Note: configuration.nix itself is also a Nix Module,
-            ./linux-base.nix
-            ./machines/maker.nix
+            ./modules/linux-base.nix
+            ./machines/sietch.nix
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
             home-manager.nixosModules.home-manager
@@ -141,7 +145,7 @@
               home-manager.useUserPackages = true;
 
               # TODO replace ryan with your own username
-              home-manager.users.angel = import ./maker-angel.nix;
+              home-manager.users.angel = import ./sietch-angel.nix;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
             }
