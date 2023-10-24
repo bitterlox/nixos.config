@@ -2,7 +2,7 @@
 
 {
   imports = [ # Include the results of the hardware scan.
-    ./sihaya-hardware-configuration.nix
+    ./chani-hardware-configuration.nix
   ];
 
   # Use the GRUB 2 boot loader.
