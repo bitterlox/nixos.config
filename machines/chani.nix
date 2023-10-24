@@ -10,7 +10,7 @@
   # Define on which hard drive you want to install Grub.
   boot.loader.grub.device = "/dev/vda"; # or "nodev" for efi only
 
-  networking.hostName = "sihaya"; # Define your hostname.
+  networking.hostName = "chani"; # Define your hostname.
 
   users = {
     mutableUsers = false;
