@@ -237,8 +237,8 @@
     },
     "secrets-flake": {
       "locked": {
-        "lastModified": 1698226789,
-        "narHash": "sha256-4N6e1DVk2xwiCTyn44D6KzokoZR4mX96bI1uZxcu/Eo=",
+        "lastModified": 1698227109,
+        "narHash": "sha256-0UNro+r/kbdwFiNUC9O4+NS3GOx01CIjOywoPsVJriY=",
         "path": "/etc/nixos/secrets-flake",
         "type": "path"
       },
