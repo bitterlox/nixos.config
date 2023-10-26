@@ -30,13 +30,6 @@
   #   "Xft.dpi" = 172;
   # };
 
-  # basic configuration of git, please change to your own
-  programs.git = {
-    enable = true;
-    userName = "bitterlox";
-    userEmail = "bitterlox@pm.me";
-  };
-
   # Packages that should be installed to the user profile.
   home.packages = with pkgs;
     [

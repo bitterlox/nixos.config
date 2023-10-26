@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ config, pkgs, ... }: {
   time.timeZone = "Europe/Rome";
 
   # default packages
@@ -19,7 +19,18 @@
 
   programs.git = {
     enable = true;
-    config = { init.defaultBranch = "main"; };
+    config = {
+      init.defaultBranch = "main";
+      user.name = "bitterlox";
+      user.email = "bitterlox@pm.me";
+    };
+  };
+
+  programs.ssh = {
+    extraConfig = ''
+      Host *
+      IdentityFile ${config.age.secrets.ssh-private-key.path} 
+    '';
   };
 
   # This value determines the NixOS release from which the default

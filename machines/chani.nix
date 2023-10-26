@@ -24,10 +24,4 @@
     };
   };
 
-  programs.ssh = {
-    extraConfig = ''
-      Host *
-      IdentityFile ${config.age.secrets.ssh-private-key.path} 
-    '';
-  };
 }
