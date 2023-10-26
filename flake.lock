@@ -237,14 +237,17 @@
     },
     "secrets-flake": {
       "locked": {
-        "lastModified": 1698227109,
-        "narHash": "sha256-0UNro+r/kbdwFiNUC9O4+NS3GOx01CIjOywoPsVJriY=",
-        "path": "/etc/nixos/secrets-flake",
-        "type": "path"
+        "lastModified": 1698227063,
+        "narHash": "sha256-AW5rwsBkXDemZKGEAxdHBvPwF4fbc7j85qQPPG8emr8=",
+        "ref": "refs/heads/main",
+        "rev": "87804004bdee3aeee181ac17769dcf6c03b1bb5f",
+        "revCount": 12,
+        "type": "git",
+        "url": "file:/etc/nixos/secrets-flake"
       },
       "original": {
-        "path": "/etc/nixos/secrets-flake",
-        "type": "path"
+        "type": "git",
+        "url": "file:/etc/nixos/secrets-flake"
       }
     },
     "sonokai": {

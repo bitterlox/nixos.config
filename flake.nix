@@ -43,8 +43,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     secrets-flake = {
-      type = "path";
-      path = "/etc/nixos/secrets-flake";
+      url = "git+file:/etc/nixos/secrets-flake";
     };
   };
 
