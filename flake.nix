@@ -74,7 +74,7 @@
       #     };
     in {
       nixosConfigurations = {
-        "sihaya" = nixpkgs.lib.nixosSystem {
+        "chani" = nixpkgs.lib.nixosSystem {
           system = "x86_64-linux";
 
           # If you need to pass other parameters,
@@ -107,9 +107,9 @@
               home-manager.useUserPackages = true;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
-              home-manager.users.angel = import ./sihaya-angel.nix;
+              home-manager.users.angel = import ./chani-angel.nix;
             }
-            ./sihaya-secret.nix
+            ./chani-secret.nix
             #./trace-test.nix
             #            (attrs: {
             #              config = builtins.trace
