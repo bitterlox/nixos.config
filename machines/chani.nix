@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, ssh-public-keys, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
@@ -18,9 +18,7 @@
       isNormalUser = true;
       hashedPasswordFile = config.age.secrets.password.path;
       extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-      openssh.authorizedKeys.keys = [
-        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIN/JDXLqz8IKnkWZollqDXs93vOgOcnbTSUcPCP0jhug" # voidbook
-      ];
+      openssh.authorizedKeys.keys = [ ssh-public-keys.voidbook ];
     };
   };
 

@@ -81,6 +81,7 @@
           # you must use `specialArgs` by uncomment the following line:
           specialArgs = {
             agenix = agenix.nixosModules.default;
+            inherit (common) ssh-public-keys;
           }; # if this is missing it throws an infinite recursion err
           modules = [
             # add our nixpkgs with overlays
@@ -125,6 +126,7 @@
           #
           specialArgs = {
             agenix = agenix.nixosModules.default;
+            inherit (common) ssh-public-keys;
           }; # if this is missing it throws an infinite recursion err
           modules = [
             # add our nixpkgs with overlays
@@ -136,6 +138,7 @@
             # Note: configuration.nix itself is also a Nix Module,
             ./modules/linux-base.nix
             ./machines/sietch.nix
+            ./modules/soft-serve.nix
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
             home-manager.nixosModules.home-manager
