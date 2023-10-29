@@ -42,9 +42,7 @@
       url = "github:ryantm/agenix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    secrets-flake = {
-      url = "git+file:/etc/nixos/secrets-flake";
-    };
+    secrets-flake = { url = "git+file:/etc/nixos/secrets-flake"; };
   };
 
   # `outputs` are all the build result of the flake.

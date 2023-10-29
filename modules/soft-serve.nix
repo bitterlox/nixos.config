@@ -22,9 +22,17 @@ let
         --set SOFT_SERVE_INITIAL_ADMIN_KEYS $adminKeys \
     '';
   };
+  ssh-command = ''
+    ${pkgs.openssh}/bin/ssh \
+    -i ${config.age.secrets.ssh-private-key.path} \
+    -o "StrictHostKeyChecking=no" \
+    -p 23231 \
+    localhost \
+  '';
 in {
   imports = [ ];
   config = {
+    networking.firewall.allowedTCPPorts = [ 23231 ];
     environment.systemPackages = [ soft-serve ];
     systemd.services.soft-serve = {
       unitConfig = {
@@ -44,10 +52,10 @@ in {
       wantedBy = [ "multi-user.target" ];
       postStart = ''
         sleep 1
-        ${pkgs.openssh}/bin/ssh -i ${config.age.secrets.ssh-private-key.path} -o "StrictHostKeyChecking=no" -p 23231 localhost settings allow-keyless false
-        ${pkgs.openssh}/bin/ssh -i ${config.age.secrets.ssh-private-key.path} -o "StrictHostKeyChecking=no" -p 23231 localhost settings anon-access no-access
-        ${pkgs.openssh}/bin/ssh -i ${config.age.secrets.ssh-private-key.path} -o "StrictHostKeyChecking=no" -p 23231 localhost users create voidbook -a '-k "${voidBookPublicKey}"'
-        ${pkgs.openssh}/bin/ssh -i ${config.age.secrets.ssh-private-key.path} -o "StrictHostKeyChecking=no" -p 23231 localhost users delete admin
+        ${ssh-command} settings allow-keyless false
+        ${ssh-command} settings anon-access no-access
+        ${ssh-command} users create voidbook -a '-k "${voidBookPublicKey}"'
+        ${ssh-command} users delete admin
       '';
     };
   };
