@@ -1,12 +1,11 @@
 { config, pkgs, ... }: {
   time.timeZone = "Europe/Rome";
 
+  # Limit the number of generations to keep
+  boot.loader.systemd-boot.configurationLimit = 10;
+
   # default packages
-  environment.systemPackages = with pkgs; [
-    neovim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    git
-  ];
+  environment.systemPackages = with pkgs; [ neovim wget git ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -41,5 +40,16 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.05"; # Did you read the comment?
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  # Perform garbage collection weekly to maintain low disk usage
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 1w";
+  };
+
+  nix.settings = {
+    # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
+    auto-optimise-store = true;
+    experimental-features = [ "nix-command" "flakes" ];
+  };
 }
