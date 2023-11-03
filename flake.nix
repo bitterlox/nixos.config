@@ -13,11 +13,6 @@
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
   };
-  # This is the standard format for flake.nix.
-  # `inputs` are the dependencies of the flake,
-  # and `outputs` function will return all the build results of the flake.
-  # Each item in `inputs` will be passed as a parameter to
-  # the `outputs` function after being pulled and built.
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
 
@@ -37,7 +32,7 @@
 
   outputs = { flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } ({ flake-parts-lib, ... }: {
-      imports = [ ./machines ./modules  ];
+      imports = [ ./packages ./modules ./machines  ];
       systems = [ "x86_64-linux" ];
     });
 }

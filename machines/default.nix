@@ -2,10 +2,7 @@
 , ... }:
 let
   common = (import ../common { inherit lib; });
-  get-secrets-for-machine = common.build-machine-secrets inputs.secrets-flake;
-  overlay-nvim = prev: final: {
-    neovim = inputs.my-nvim.packages.x86_64-linux.default;
-  };
+  ssh-public-keys = common.ssh-public-keys;
 in {
 
   flake.nixosConfigurations = {
@@ -16,28 +13,13 @@ in {
         # If you need to pass other parameters,
         # you must use `specialArgs` by uncomment the following line:
         specialArgs = {
-          agenix = inputs.agenix.nixosModules.default;
-          inherit (common) ssh-public-keys;
+          inherit inputs ssh-public-keys;
         }; # if this is missing it throws an infinite recursion er
         modules = [
-          (_: { nixpkgs.pkgs = pkgs; })
-          # add our pkgs with overlays
-          #(_: {
-          #  _module.args.pkgs =
-          #    import inputs.nixpkgs { overlays = [ overlay-nvim ]; };
-          #})
-          #{
-          #  nixpkgs.overlays = [ overlay-nvim ];
-          #}
-          # descrypt secrets
-          ({ config, agenix, lib, ... }: {
-            imports = [ agenix ];
-            config = {
-              age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-              age.secrets = (get-secrets-for-machine "chani");
-            };
-            options = { };
-          })
+          { nixpkgs.pkgs = pkgs; }
+          ./agenix.nix
+          # decrypt secrets
+          (config.flake.nixosModules.agenix)
           #            (import ./modules/agenix.nix (get-secrets-for-machine "chani"))
           # {
           #              imports = [ agenix.homeManagerModules.default ];
@@ -77,21 +59,14 @@ in {
         # you must use `specialArgs` by uncomment the following line:
         #
         specialArgs = {
-          agenix = inputs.agenix.nixosModules.default;
-          inherit (common) ssh-public-keys;
+          inherit inputs ssh-public-keys;
         }; # if this is missing it throws an infinite recursion err
         modules = [
           # add our pkgs with overlays
           #({ pkgs, ... }: { pkgs.overlays = [ overlay-nvim ]; })
           # descrypt secrets
-          ({ config, agenix, lib, ... }: {
-            imports = [ agenix ];
-            config = {
-              age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-              age.secrets = (get-secrets-for-machine "chani");
-            };
-            options = { };
-          })
+          inputs.agenix.nixosModules.default
+          (config.flake.nixosModules.agenix)
           #            (import ./modules/agenix.nix (get-secrets-for-machine "chani"))
           # Import the configuration.nix here, so that the
           # old configuration file can still take effect.
