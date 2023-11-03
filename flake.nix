@@ -33,7 +33,6 @@
   outputs = { flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } ({ flake-parts-lib, ... }: {
       imports = [ ./parts ];
-      systems = [ "x86_64-linux" ];
     });
 }
 
