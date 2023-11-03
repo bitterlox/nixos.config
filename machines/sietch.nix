@@ -1,6 +1,6 @@
-{ config, ssh-public-keys, ... }:
-
-{
+{ config, ... }:
+let ssh-public-keys = config.flake.ssh-public-keys;
+in {
   imports = [ # Include the results of the hardware scan.
     ./sietch-hardware-configuration.nix
     ../modules/soft-serve

@@ -11,10 +11,12 @@
       };
 
     in {
-      _module.args.pkgs = lib.debug.traceSeqN 2 config.flake (import inputs.nixpkgs {
-        inherit system;
-        overlays = [ overlay-my-nvim ];
-      });
+      # shadow the `pkgs` arg in perSystem with an new pkgs to which we added our overlays
+      _module.args.pkgs = lib.debug.traceSeqN 2 config.flake
+        (import inputs.nixpkgs {
+          inherit system;
+          overlays = [ overlay-my-nvim ];
+        });
     };
 
   systems = [ "x86_64-linux" "aarch64-darwin" ];

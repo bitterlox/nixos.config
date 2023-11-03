@@ -1,38 +1,23 @@
 { inputs, config, lib, getSystem, moduleWithSystem, sharedModules, withSystem
 , ... }:
-let
-  common = (import ../common { inherit lib; });
-  ssh-public-keys = common.ssh-public-keys;
+let ssh-public-keys = config.flake.lib.ssh-public-keys;
 in {
 
   flake.nixosConfigurations = {
     "chani" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
       inputs.nixpkgs.lib.nixosSystem {
         inherit system;
-
         # If you need to pass other parameters,
         # you must use `specialArgs` by uncomment the following line:
         specialArgs = {
-          inherit inputs ssh-public-keys;
+          inherit  ssh-public-keys;
         }; # if this is missing it throws an infinite recursion er
         modules = [
           { nixpkgs.pkgs = pkgs; }
-          ./agenix.nix
-          # decrypt secrets
           (config.flake.nixosModules.agenix)
-          #            (import ./modules/agenix.nix (get-secrets-for-machine "chani"))
-          # {
-          #              imports = [ agenix.homeManagerModules.default ];
-          #              config = {
-          #                age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-          #                age.secrets.secret1.file = secrets-flake.sihaya.secret1;
-          #              };
-          #            }
-          # Import the configuration.nix here, so that the
-          # old configuration file can still take effect.
-          # Note: configuration.nix itself is also a Nix Module,
+          # decrypt secrets
           ../modules/linux-base.nix
-          ./chani.nix
+          (import ../machines/chani.nix ssh-public-keys)
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
           inputs.home-manager.nixosModules.home-manager
@@ -44,11 +29,6 @@ in {
             home-manager.users.angel = import ../chani-angel.nix;
           }
           ../chani-secret.nix
-          #./trace-test.nix
-          #            (attrs: {
-          #              config = builtins.trace
-          #                (attrs.lib.debug.traceVal (builtins.attrNames attrs.config)) { };
-          #            })
         ];
       });
     "sietch" = withSystem "x86_64-linux" (ctx@{ inputs', ... }:
@@ -67,12 +47,8 @@ in {
           # descrypt secrets
           inputs.agenix.nixosModules.default
           (config.flake.nixosModules.agenix)
-          #            (import ./modules/agenix.nix (get-secrets-for-machine "chani"))
-          # Import the configuration.nix here, so that the
-          # old configuration file can still take effect.
-          # Note: configuration.nix itself is also a Nix Module,
           ../modules/linux-base.nix
-          ./sietch.nix
+          ../machines/sietch.nix
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
           inputs.home-manager.nixosModules.home-manager

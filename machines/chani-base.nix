@@ -1,5 +1,7 @@
-ssh-public-keys:
-{ config, ... }: {
+
+{ config, ... }:
+let ssh-public-keys = config.flake.lib.ssh-public-keys;
+in {
   imports = [ # Include the results of the hardware scan.
     ./chani-hardware-configuration.nix
   ];
