@@ -1,6 +1,8 @@
-{ inputs, config, lib, getSystem, moduleWithSystem, sharedModules, withSystem
+{ inputs, config, lib, getSystem, moduleWithSystem, privateModules, withSystem
 , ... }:
-let ssh-public-keys = config.flake.lib.ssh-public-keys;
+let
+  ssh-public-keys =
+    builtins.trace privateModules config.flake.lib.ssh-public-keys;
 in {
   flake.nixosConfigurations = {
     "chani" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
@@ -11,14 +13,11 @@ in {
         specialArgs = {
           inherit ssh-public-keys;
         }; # if this is missing it throws an infinite recursion er
-        modules = [
-          {
-            nixpkgs.pkgs = pkgs;
-          }
+        modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules ++ [
           # decrypt secrets
           (config.flake.nixosModules.agenix)
           ../modules/linux-base.nix
-          (import ../machines/chani/configuration.nix ssh-public-keys)
+          ../machines/chani/configuration.nix
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
           inputs.home-manager.nixosModules.home-manager
@@ -32,24 +31,14 @@ in {
           ../chani-secret.nix
         ];
       });
-    "sietch" = withSystem "x86_64-linux" (ctx@{ inputs', ... }:
+    "sietch" = withSystem "x86_64-linux" (ctx@{ inputs', pkgs, ... }:
       inputs.nixpkgs.lib.nixosSystem {
         system = "x86_64-linux";
 
-        # If you need to pass other parameters,
-        # you must use `specialArgs` by uncomment the following line:
-        #
-        specialArgs = {
-          inherit inputs ssh-public-keys;
-        }; # if this is missing it throws an infinite recursion err
-        modules = [
-          # add our pkgs with overlays
-          #({ pkgs, ... }: { pkgs.overlays = [ overlay-nvim ]; })
-          # descrypt secrets
-          inputs.agenix.nixosModules.default
+        modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules ++ [
           (config.flake.nixosModules.agenix)
           ../modules/linux-base.nix
-          ../machines/sietch.nix
+          ../machines/sietch/configuration.nix
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
           inputs.home-manager.nixosModules.home-manager

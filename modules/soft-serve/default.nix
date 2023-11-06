@@ -1,8 +1,7 @@
-{ pkgs, config, ssh-public-keys, ... }:
+{ pkgs, config, ... }:
 let
   lib = pkgs.lib;
-  adminKey = pkgs.writeText "soft-serve-admin-key"
-    (builtins.getAttr "sietch" ssh-public-keys);
+  adminKey = pkgs.writeText "soft-serve-admin-key" config.sshPubKeys.sietch;
 
   wrapped-soft-serve = import ./wrap-soft-serve.nix {
     inherit pkgs adminKey;
