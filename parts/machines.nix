@@ -2,7 +2,6 @@
 , ... }:
 let ssh-public-keys = config.flake.lib.ssh-public-keys;
 in {
-
   flake.nixosConfigurations = {
     "chani" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
       inputs.nixpkgs.lib.nixosSystem {
@@ -10,14 +9,16 @@ in {
         # If you need to pass other parameters,
         # you must use `specialArgs` by uncomment the following line:
         specialArgs = {
-          inherit  ssh-public-keys;
+          inherit ssh-public-keys;
         }; # if this is missing it throws an infinite recursion er
         modules = [
-          { nixpkgs.pkgs = pkgs; }
-          (config.flake.nixosModules.agenix)
+          {
+            nixpkgs.pkgs = pkgs;
+          }
           # decrypt secrets
+          (config.flake.nixosModules.agenix)
           ../modules/linux-base.nix
-          (import ../machines/chani.nix ssh-public-keys)
+          (import ../machines/chani/configuration.nix ssh-public-keys)
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
           inputs.home-manager.nixosModules.home-manager

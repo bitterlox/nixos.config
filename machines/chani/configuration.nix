@@ -1,9 +1,7 @@
-
-{ config, ... }:
-let ssh-public-keys = config.flake.lib.ssh-public-keys;
-in {
+ssh-public-keys:
+{ config, ... }: {
   imports = [ # Include the results of the hardware scan.
-    ./chani-hardware-configuration.nix
+    ./hardware-configuration.nix
   ];
 
   # Use the GRUB 2 boot loader.
