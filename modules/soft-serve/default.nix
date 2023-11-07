@@ -23,6 +23,7 @@ in {
       git
     ];
     systemd.services.soft-serve = {
+      restartIfChanged = true;
       unitConfig = {
         # if it blows up i'll blame the icecream emoji
         Description = "Soft Serve git server 🍦";
