@@ -1,13 +1,14 @@
+# this is akin to a flake-parts top-level module
 { self, inputs, config, lib, ... }: {
   #imports = [{
   #  _module.args = {
   #    sharedModules = [{ nixpkgs.overlays = [ overlay-nvim ]; }];
   #  };
   #}];
-  perSystem = { system, pkgs, ... }:
+  perSystem = { inputs', system, pkgs, ... }:
     let
       overlay-my-nvim = prev: final: {
-        neovim = inputs.my-nvim.packages.${system}.default;
+        neovim = inputs'.my-nvim.packages.default;
       };
     in {
       # shadow the `pkgs` arg in perSystem with a new pkgs to which we add our overlays

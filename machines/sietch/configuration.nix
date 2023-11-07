@@ -1,7 +1,6 @@
 { config, ... }: {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ../../modules/soft-serve
   ];
 
   config = {
@@ -16,7 +15,8 @@
       mutableUsers = false;
       users.angel = {
         isNormalUser = true;
-        hashedPasswordFile = config.age.secrets.password.path;
+        hashedPasswordFile =
+          config.age.secrets.password.path; # move to private module maybe
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
         openssh.authorizedKeys.keys = [ config.sshPubKeys.voidbook ];
       };

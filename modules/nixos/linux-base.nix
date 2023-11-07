@@ -25,6 +25,7 @@
     };
   };
 
+  # maybe split out into different module and put into privateModules
   programs.ssh = {
     extraConfig = ''
       Host *
