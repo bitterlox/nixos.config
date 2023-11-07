@@ -32,7 +32,7 @@
 
   outputs = { flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } ({ flake-parts-lib, ... }: {
-      imports = [ ./lib ./packages ./modules ./machines ./users ];
+      imports = [ ./lib ./packages ./nixos ./hm ];
     });
 }
 

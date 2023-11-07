@@ -1,5 +1,3 @@
-# { imports = [ ./configuration.nix ]; }
-
 # this is akin to a flake-parts top-level module
 { inputs, config, lib, getSystem, moduleWithSystem, privateModules, withSystem
 , ... }:
@@ -8,12 +6,14 @@ let
   nixosBaseModules = with nixosModules; [ agenix linux-base ];
 in {
   flake.nixosConfigurations = {
-    "sietch" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
+    "chani" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
       inputs.nixpkgs.lib.nixosSystem {
         inherit system;
+        # If you need to pass other parameters,
+        # you must use `specialArgs` by uncomment the following line:
+        specialArgs = { };
         modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules
           ++ nixosBaseModules ++ [
-            nixosModules.soft-serve
             ./configuration.nix
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
@@ -22,13 +22,11 @@ in {
               home-manager.useGlobalPkgs = true;
               home-manager.useUserPackages = true;
 
-              # TODO replace ryan with your own username
-              home-manager.users.angel = import ../../sietch-angel.nix;
-
-              # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+              # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
+              home-manager.users.angel = import ../../../chani-angel.nix;
             }
+            ../../../chani-secret.nix
           ];
       });
   };
 }
-
