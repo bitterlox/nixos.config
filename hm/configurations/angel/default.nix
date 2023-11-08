@@ -1,10 +1,10 @@
-{ inputs, ... }: {
+{ inputs, config, ... }: {
   flake.homeConfigurations.angel =
     inputs.home-manager.nixosModules.home-manager {
       home-manager.useGlobalPkgs = true;
       home-manager.useUserPackages = true;
 
       # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
-      home-manager.users.angel = import ./home.nix;
+      home-manager.users.angel = config.flake.homeModules.angel;
     };
 }
