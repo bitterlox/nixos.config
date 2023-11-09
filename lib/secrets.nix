@@ -22,6 +22,12 @@ let
         owner = "angel";
         group = "users";
       };
+      borg-passphrase = {
+        file = secrets-flake.sietch.borg-passphrase;
+        mode = "600";
+        owner = "angel";
+        group = "users";
+      };
       password = {
         file = secrets-flake.sietch.password;
         mode = "600";

@@ -1,5 +1,3 @@
-# { imports = [ ./configuration.nix ]; }
-
 # this is akin to a flake-parts top-level module
 { inputs, config, lib, getSystem, moduleWithSystem, privateModules, withSystem
 , ... }:
@@ -14,7 +12,7 @@ in {
         modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules
           ++ nixosBaseModules ++ [
             nixosModules.soft-serve
-            ./configuration.nix
+            (import ./configuration.nix config.flake.lib)
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
             inputs.home-manager.nixosModules.home-manager
