@@ -10,13 +10,11 @@
       };
       environment = {
         BORG_RSH = ''
-          ssh \
-          -o 'StrictHostKeyChecking=no' \
-          -o 'IdentitiesOnly=yes' \
-          -i ${sshKeyPath}
+          ssh -o 'StrictHostKeyChecking=no' -o 'IdentitiesOnly=yes' -i ${sshKeyPath}
         '';
       };
       compression = "auto,zstd";
+      #extraArgs = "--debug";
       extraCreateArgs = "--verbose --stats --checkpoint-interval 600";
     };
   };
