@@ -274,11 +274,11 @@
     },
     "secrets-flake": {
       "locked": {
-        "lastModified": 1698318533,
-        "narHash": "sha256-VfdP3zsda2pp2su71FwtWPY+4LbLDWAxP85/8OqP0vs=",
+        "lastModified": 1699460766,
+        "narHash": "sha256-tk8wubxnQw+oU0s+kY0GV5rsFiC97VSZRgBp3IyPFsA=",
         "ref": "refs/heads/main",
-        "rev": "6aa91041d0b55f7ba7591f46fc456a22abcf6bf2",
-        "revCount": 13,
+        "rev": "38bb16b71099713f9118cdc642173b2256177ac4",
+        "revCount": 14,
         "type": "git",
         "url": "file:/etc/nixos/secrets-flake"
       },
