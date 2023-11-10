@@ -40,7 +40,14 @@ myflakelib:
       repo = "ssh://j6zbx5gr@j6zbx5gr.repo.borgbase.com/./repo";
       paths = [ "/var/lib/soft-serve" ];
       user = "root";
-      startAt = "2h";
+      startAt = "*-*-* 02/2:00:00";
+      persistentTimer = true;
+      preHook = ''
+        systemctl stop soft-serve.service
+      '';
+      postHook = ''
+        systemctl start soft-serve.service
+      '';
     };
   };
 }
