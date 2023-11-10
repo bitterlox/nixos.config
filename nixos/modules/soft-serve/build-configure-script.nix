@@ -12,12 +12,16 @@ let
     -p ${(builtins.toString soft-serve-config.ports.ssh)} \
     localhost'';
 
+  # not going to work i think, it would be pretty normal for it to work that
+  # when you run an ssh command and it returns the sql op is done;
+  padding = "sleep 0.01";
+
   postStartSettings = ''
     ${ssh-command} settings allow-keyless false
     ${ssh-command} settings anon-access no-access'';
 
   deleteUsers =
-    "${ssh-command} users list | sed 's/admin//g' | xargs -I {} ${ssh-command} users delete {}";
+    "${ssh-command} users list | sed 's/admin//g' | xargs -I {} ${ssh-command} users delete {}; ${padding};";
 
   makeAddNewUsersCmd = user: publicKey:
     "${ssh-command} users create ${user} -a '-k \"${publicKey}\"'"; # had to escape two double quotes here
@@ -26,13 +30,18 @@ let
     createUserCommands = builtins.attrValues
       (builtins.mapAttrs (username: pubkey: makeAddNewUsersCmd username pubkey)
         soft-serve-config.adminPublicKeys);
-  in (lib.strings.concatStringsSep "\n" createUserCommands);
-
-  postStartCommands = "${deleteUsers}";
+    padded = pkgs.lib.lists.flatten
+      (builtins.map (e: [ e padding ]) createUserCommands);
+  in (lib.strings.concatStringsSep "\n" padded);
 
 in ''
   sleep 0.05
+  echo "running post-start"
   ${postStartSettings}
-  ${postStartCommands}
+  echo "applied server settings"
+  sleep 0.01
+  ${deleteUsers}
+  echo "deleted old users"
   ${addNewUsers}
+  echo "created new users as per config"
 ''

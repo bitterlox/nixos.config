@@ -8,7 +8,7 @@ let
     inherit (config.soft-serve) dataPath ports;
   };
 
-  postStart = import ./build-post-start.nix {
+  configureScript = import ./build-configure-script.nix {
     inherit pkgs;
     ssh-private-key-path = config.age.secrets.ssh-private-key.path;
     soft-serve-config = config.soft-serve;
@@ -23,6 +23,7 @@ in {
       git
     ];
     systemd.services.soft-serve = {
+      stopIfChanged = true;
       restartIfChanged = true;
       unitConfig = {
         # if it blows up i'll blame the icecream emoji
@@ -38,8 +39,22 @@ in {
         ExecStart = "${wrapped-soft-serve}/bin/soft serve";
       };
       wantedBy = [ "multi-user.target" ];
-      inherit postStart;
-      #postStart = lib.debug.traceSeq postStart postStart;
+    };
+    # we run the configure in a different systemd unit because running it
+    # as 'postStart' of the soft-serve unit caused a wierd issue with SQLITE
+    # where it would error out saying the db was locked
+    systemd.services.configure-soft-serve = {
+      unitConfig = {
+        Description = "Soft Serve configure commands";
+        Requires = "soft-serve.service";
+        After = "soft-serve.service";
+      };
+      serviceConfig = {
+        Type = "simple";
+        ExecStart =
+          "${pkgs.writeShellScript "configure-soft-serve" configureScript}";
+      };
+      wantedBy = [ "multi-user.target" ];
     };
   };
   options = let

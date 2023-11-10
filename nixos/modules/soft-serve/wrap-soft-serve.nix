@@ -18,4 +18,6 @@ pkgs.stdenv.mkDerivation {
       --set SOFT_SERVE_HTTP_LISTEN_ADDR :$http \
       --set SOFT_SERVE_GIT_LISTEN_ADDR :$git \
   '';
+  #  --set SOFT_SERVE_DEBUG 1 \
+  #  --set SOFT_SERVE_VERBOSE 1 \
 }
