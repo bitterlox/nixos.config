@@ -29,7 +29,6 @@ myflakelib:
 
     # https://nixos.wiki/wiki/Borg_backup
     # see: Don't try backup when unit is unavailable
-
     services.borgbackup.jobs.sietch = let
       secrets = config.age.secrets;
       defaults = myflakelib.defaultBorgOptions {
