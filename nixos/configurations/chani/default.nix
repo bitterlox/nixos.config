@@ -23,9 +23,22 @@ in {
               home-manager.useUserPackages = true;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
-              home-manager.users.angel = import ../../../chani-angel.nix;
+              home-manager.users.angel = import config.flake.homeModules.angel;
             }
-            ../../../chani-secret.nix
+            # use secrets
+            ({ config, ... }: {
+              config.home-manager.users.angel = {
+                programs.ssh = {
+                  enable = true;
+                  matchBlocks = {
+                    "*" = {
+                      serverAliveInterval = 120;
+                      identityFile = config.age.secrets.ssh-private-key.path;
+                    };
+                  };
+                };
+              };
+            })
           ];
       });
   };

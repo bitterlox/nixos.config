@@ -1,2 +1,2 @@
-{ flake.homeModules = { angel = ./users/angel; }; }
+{ imports = [ ./users ]; }
 

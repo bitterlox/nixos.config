@@ -21,7 +21,7 @@ in {
               home-manager.useUserPackages = true;
 
               # TODO replace ryan with your own username
-              home-manager.users.angel = import ../../../sietch-angel.nix;
+              home-manager.users.angel = import config.flake.homeModules.angel;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
             }
