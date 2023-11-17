@@ -27,12 +27,14 @@
 
     flake-parts.url = "github:hercules-ci/flake-parts";
 
+    devenv.url = "github:cachix/devenv";
+
     secrets-flake.url = "git+file:/etc/nixos/secrets-flake";
   };
 
   outputs = { flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } ({ flake-parts-lib, ... }: {
-      imports = [ ./lib ./packages ./nixos ./hm ];
+      imports = [ ./lib ./packages ./nixos ./hm ./devshells ];
     });
 }
 
