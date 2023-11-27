@@ -100,11 +100,11 @@
         "pre-commit-hooks": "pre-commit-hooks"
       },
       "locked": {
-        "lastModified": 1700140236,
-        "narHash": "sha256-OpukFO0rRG2hJzD+pCQq+nSWuT9dBL6DSvADQaUlmFg=",
+        "lastModified": 1700691772,
+        "narHash": "sha256-LidI1PVpxL5/WchIRfMszzsiA5t40QyJiU8V/vd4ZZE=",
         "owner": "cachix",
         "repo": "devenv",
-        "rev": "525d60c44de848a6b2dd468f6efddff078eb2af2",
+        "rev": "38302f4b9ff45915151848b719c5c4127946c1b8",
         "type": "github"
       },
       "original": {
@@ -249,11 +249,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1700118404,
-        "narHash": "sha256-XkqpZpVoy1FV7UbiLkP+fQxxv/6KnwLYkFEHgE8z2IQ=",
+        "lastModified": 1701071203,
+        "narHash": "sha256-lQywA7QU/vzTdZ1apI0PfgCWNyQobXUYghVrR5zuIeM=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "c1a033122df8a3c74fda3780c83a104a7d60873c",
+        "rev": "db1878f013b52ba5e4034db7c1b63e8d04173a86",
         "type": "github"
       },
       "original": {
@@ -308,11 +308,11 @@
         "sonokai-theme": "sonokai-theme"
       },
       "locked": {
-        "lastModified": 1700229655,
-        "narHash": "sha256-bTzn35fRWOWwpmCffa98DT/e+pKe6j0A0pRI+7s7mqo=",
+        "lastModified": 1701084425,
+        "narHash": "sha256-Kb4KImK1ZA6C/CsM2HMvG8c8zeI3AGGulix8HOFO+iI=",
         "owner": "bitterlox",
         "repo": "nvim-config-flake",
-        "rev": "94ab49a399fcf89e2917aa5d7bef278ba26c29b2",
+        "rev": "ad18657d65014813a9b0dadae6204e86eaf5b5da",
         "type": "github"
       },
       "original": {
@@ -431,11 +431,11 @@
     },
     "nixpkgs_2": {
       "locked": {
-        "lastModified": 1699963925,
-        "narHash": "sha256-LE7OV/SwkIBsCpAlIPiFhch/J+jBDGEZjNfdnzCnCrY=",
+        "lastModified": 1700794826,
+        "narHash": "sha256-RyJTnTNKhO0yqRpDISk03I/4A67/dp96YRxc86YOPgU=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "bf744fe90419885eefced41b3e5ae442d732712d",
+        "rev": "5a09cb4b393d58f9ed0d9ca1555016a8543c2ac8",
         "type": "github"
       },
       "original": {
@@ -492,11 +492,11 @@
         "rev": "38bb16b71099713f9118cdc642173b2256177ac4",
         "revCount": 14,
         "type": "git",
-        "url": "file:/etc/nixos/secrets-flake"
+        "url": "ssh://git.bittervoid.io:23231/secrets-flake"
       },
       "original": {
         "type": "git",
-        "url": "file:/etc/nixos/secrets-flake"
+        "url": "ssh://git.bittervoid.io:23231/secrets-flake"
       }
     },
     "sonokai-theme": {

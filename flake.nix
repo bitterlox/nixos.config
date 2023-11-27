@@ -29,7 +29,7 @@
 
     devenv.url = "github:cachix/devenv";
 
-    secrets-flake.url = "git+file:/etc/nixos/secrets-flake";
+    secrets-flake.url = "git+ssh://git.bittervoid.io:23231/secrets-flake";
   };
 
   outputs = { flake-parts, ... }@inputs:
