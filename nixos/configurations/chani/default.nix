@@ -35,6 +35,9 @@ in {
                       serverAliveInterval = 120;
                       identityFile = config.age.secrets.ssh-private-key.path;
                     };
+                    "github.com" = {
+                      identityFile = config.age.secrets.ssh-private-key.path;
+                    };
                   };
                 };
               };
