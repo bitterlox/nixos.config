@@ -40,7 +40,9 @@ myflakelib:
       paths = [ "/var/lib/soft-serve" ];
       user = "root";
       startAt = "*-*-* 02/2:00:00";
-      persistentTimer = true;
+      # temporarily comment this out so that the config builds, see issue
+      # https://github.com/NixOS/nixpkgs/issues/282640
+      # persistentTimer = true; 
       preHook = ''
         systemctl stop soft-serve.service
       '';
