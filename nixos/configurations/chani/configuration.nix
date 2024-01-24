@@ -17,7 +17,8 @@
         hashedPasswordFile =
           config.age.secrets.password.path; # move to private module maybe
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-        openssh.authorizedKeys.keys = [ config.sshPubKeys.voidbook ];
+        openssh.authorizedKeys.keys = let keys = config.sshPubKeys;
+        in [ keys.voidbook keys.iphone ];
       };
     };
   };
