@@ -23,8 +23,9 @@ myflakelib:
       };
     };
 
-    soft-serve.adminPublicKeys = {
-      inherit (config.sshPubKeys) voidbook chani iphone;
+    soft-serve = {
+      adminPublicKeys = { inherit (config.sshPubKeys) voidbook chani iphone; };
+      sshCloneUrlFilePath = config.age.secrets.soft-serve-ssh-clone-url.path;
     };
 
     # https://nixos.wiki/wiki/Borg_backup

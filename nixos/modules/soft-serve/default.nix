@@ -5,7 +5,7 @@ let
 
   wrapped-soft-serve = import ./wrap-soft-serve.nix {
     inherit pkgs adminKey;
-    inherit (config.soft-serve) dataPath ports;
+    inherit (config.soft-serve) dataPath ports sshPublicUrlFilePath;
   };
 
   configureScript = import ./build-configure-script.nix {
@@ -73,6 +73,13 @@ in {
         example = "/var/lib/soft-serve";
         description = lib.mdDoc
           "Absolute path which will be passed to SOFT_SERVE_DATA_PATH env var";
+      };
+      sshPublicUrlFilePath = lib.mkOption {
+        type = lib.types.str;
+        default = "localhost:23231";
+        example = "localhost:23231";
+        description = lib.mdDoc
+          "path to file containg Url to clone repos over ssh";
       };
       ports = {
         ssh = mkPortOption 23231 "Port for ssh server";

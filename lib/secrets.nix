@@ -34,6 +34,12 @@ let
         owner = "angel";
         group = "users";
       };
+      soft-serve-ssh-clone-url = {
+        file = secrets-flake.sietch.soft-serve-ssh-clone-url;
+        mode = "600";
+        owner = "angel";
+        group = "users";
+      };
     };
   };
 in (builtins.getAttr machine-name secrets)
