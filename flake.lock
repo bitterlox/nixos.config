@@ -309,11 +309,11 @@
         "sonokai-theme": "sonokai-theme"
       },
       "locked": {
-        "lastModified": 1707235478,
-        "narHash": "sha256-aptfQuWmf+FVoIlrDANBQSM/qYca6WSspdj9kwxwjDg=",
+        "lastModified": 1707847261,
+        "narHash": "sha256-L+ZIojOg4EGsWhtGIoLDHWPO35BTqeBKGxsxIbq13hI=",
         "owner": "bitterlox",
         "repo": "nvim-config-flake",
-        "rev": "9d2b1399d96d810b6f14130e0bec6c05178f7ed9",
+        "rev": "743d62e8b88f062e327969690d368b3de51fb960",
         "type": "github"
       },
       "original": {
