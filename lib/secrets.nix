@@ -34,8 +34,8 @@ let
         owner = "angel";
         group = "users";
       };
-      soft-serve-ssh-clone-url = {
-        file = secrets-flake.sietch.soft-serve-ssh-clone-url;
+      soft-serve-ssh-public-url = {
+        file = secrets-flake.sietch.soft-serve-ssh-public-url;
         mode = "600";
         owner = "angel";
         group = "users";
