@@ -1,4 +1,4 @@
-{ pkgs, adminKey, dataPath, ports, sshPublicUrlFilePath }:
+{ pkgs, adminKey, dataPath, ports, sshPublicUrl }:
 pkgs.stdenv.mkDerivation {
   name = "wrapped-soft-serve";
   src = pkgs.soft-serve;
@@ -7,9 +7,8 @@ pkgs.stdenv.mkDerivation {
   inherit adminKey;
   inherit dataPath;
   inherit (ports) ssh http git;
-  inherit sshPublicUrlFilePath;
+  inherit sshPublicUrl;
   installPhase = ''
-    sshPublicUrl="$(cat $sshPublicUrlFilePath)"
     mkdir -p $out/bin
     makeWrapper $src/bin/soft \
       $out/bin/soft \

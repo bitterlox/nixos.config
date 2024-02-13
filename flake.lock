@@ -487,11 +487,11 @@
     },
     "secrets-flake": {
       "locked": {
-        "lastModified": 1707844663,
-        "narHash": "sha256-Gcf1VW1xMPA5BKXOXzB0epOq7jo+x3qeWp/ZTZJtDtY=",
+        "lastModified": 1707845443,
+        "narHash": "sha256-RgHEGhcsbAI9mrEfT0iqrAMxax4O4cE0MEixeOQaPzw=",
         "ref": "refs/heads/main",
-        "rev": "5682eb2c09f68310197abd5e73f8d4588787b421",
-        "revCount": 17,
+        "rev": "2268d1401c28172dc76485f427a6eeaabb25c75e",
+        "revCount": 18,
         "type": "git",
         "url": "ssh://git.bittervoid.io:23231/secrets-flake"
       },
