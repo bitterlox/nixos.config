@@ -6,7 +6,14 @@ in {
   config = { # maybe put this into separate private module
     age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     age.secrets = secrets.agenix;
-    soft-serve.sshPublicUrl = secrets.plaintext.soft-serve-ssh-public-url;
+    plaintext-secrets = secrets.plaintext;
   };
-  options = { };
+  options = {
+    plaintext-secrets = lib.mkOption {
+      type = lib.types.anything;
+      default = { };
+      example = "{}";
+      description = lib.mdDoc "Anything goes in here";
+    };
+  };
 }

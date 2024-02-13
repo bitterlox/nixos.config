@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ config, pkgs, ... }: {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
@@ -9,6 +9,8 @@
     boot.loader.grub.device = "/dev/vda"; # or "nodev" for efi only
 
     networking.hostName = "chani"; # Define your hostname.
+
+    environment.systemPackages = [ pkgs.neovim-full ];
 
     users = {
       mutableUsers = false;

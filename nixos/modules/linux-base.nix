@@ -5,7 +5,7 @@
   boot.loader.systemd-boot.configurationLimit = 10;
 
   # default packages
-  environment.systemPackages = with pkgs; [ neovim wget git ];
+  environment.systemPackages = with pkgs; [ neovim-light wget git ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {

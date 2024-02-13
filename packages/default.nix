@@ -8,7 +8,8 @@
   perSystem = { inputs', system, pkgs, ... }:
     let
       overlay-my-nvim = prev: final: {
-        neovim = inputs'.my-nvim.packages.default;
+        neovim-full = inputs'.my-nvim.packages.nvim-full;
+        neovim-light = inputs'.my-nvim.packages.nvim-light;
       };
     in {
       # shadow the `pkgs` arg in perSystem with a new pkgs to which we add our overlays
