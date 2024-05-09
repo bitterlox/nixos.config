@@ -2,6 +2,7 @@
 { inputs, config, lib, getSystem, moduleWithSystem, privateModules, withSystem
 , ... }:
 let
+  nixosModules = config.flake.nixosModules;
   nixosBaseModules = with nixosModules; [ agenix linux-base ];
 in {
   flake.nixosConfigurations = {
