@@ -9,7 +9,6 @@ in {
       agenix = (import ./agenix.nix inputs.agenix.nixosModules.default
         get-secrets-for-machine);
       linux-base = ./linux-base.nix;
-      soft-serve = ./soft-serve;
     };
     _module.args.privateModules = [ ./ssh-public-keys.nix ];
   };

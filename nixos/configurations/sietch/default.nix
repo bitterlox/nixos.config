@@ -2,7 +2,6 @@
 { inputs, config, lib, getSystem, moduleWithSystem, privateModules, withSystem
 , ... }:
 let
-  nixosModules = config.flake.nixosModules;
   nixosBaseModules = with nixosModules; [ agenix linux-base ];
 in {
   flake.nixosConfigurations = {
@@ -11,7 +10,7 @@ in {
         inherit system;
         modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules
           ++ nixosBaseModules ++ [
-            nixosModules.soft-serve
+            ./modules/soft-serve
             (import ./configuration.nix config.flake.lib)
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
