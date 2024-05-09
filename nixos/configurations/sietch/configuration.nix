@@ -16,25 +16,30 @@ myflakelib:
       mutableUsers = false;
       users.angel = {
         isNormalUser = true;
-        hashedPasswordFile =
-          config.age.secrets.password.path; # move to private module maybe
+        hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
         openssh.authorizedKeys.keys = [ config.sshPubKeys.voidbook ];
       };
     };
 
+    programs.ssh = {
+      extraConfig = ''
+        Host *
+        IdentityFile ${config.lockbox.sshKeyPath} 
+      '';
+    };
+
     soft-serve = {
       adminPublicKeys = { inherit (config.sshPubKeys) voidbook chani iphone; };
-      sshPublicUrl = config.plaintext-secrets.soft-serve-ssh-public-url;
+      sshPublicUrl = config.lockbox.softServeSshPublicUrl;
     };
 
     # https://nixos.wiki/wiki/Borg_backup
     # see: Don't try backup when unit is unavailable
     services.borgbackup.jobs.sietch = let
-      secrets = config.age.secrets;
       defaults = myflakelib.defaultBorgOptions {
-        passphrasePath = secrets.borg-passphrase.path;
-        sshKeyPath = secrets.ssh-private-key.path;
+        inherit (config.lockbox) sshKeyPath;
+        passphrasePath = config.lockbox.borgPassphrasePath;
       };
     in defaults // {
       repo = "ssh://j6zbx5gr@j6zbx5gr.repo.borgbase.com/./repo";

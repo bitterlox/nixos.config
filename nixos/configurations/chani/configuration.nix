@@ -16,12 +16,35 @@
       mutableUsers = false;
       users.angel = {
         isNormalUser = true;
-        hashedPasswordFile =
-          config.age.secrets.password.path; # move to private module maybe
+        hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
         openssh.authorizedKeys.keys = let keys = config.sshPubKeys;
         in [ keys.voidbook keys.iphone ];
       };
     };
+
+    # maybe redundant ssh config
+    # this is system level
+    programs.ssh = {
+      extraConfig = ''
+        Host *
+        IdentityFile ${config.lockbox.sshKeyPath} 
+      '';
+    };
+
+    # this is home-manager level
+    home-manager.users.angel = {
+      programs.ssh = {
+        enable = true;
+        matchBlocks = {
+          "*" = {
+            serverAliveInterval = 120;
+            identityFile = config.lockbox.sshKeyPath;
+          };
+          "github.com" = { identityFile = config.lockbox.sshKeyPath; };
+        };
+      };
+    };
+
   };
 }

@@ -10,7 +10,7 @@ let
 
   configureScript = import ./build-configure-script.nix {
     inherit pkgs;
-    ssh-private-key-path = config.age.secrets.ssh-private-key.path;
+    ssh-private-key-path = config.lockbox.sshKeyPath;
     soft-serve-config = config.soft-serve;
   };
 
