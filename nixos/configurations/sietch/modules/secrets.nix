@@ -23,9 +23,6 @@ secrets-flake: agenix-module:
         group = "users";
       };
     };
-    # WIP fill in stuff in lockbox and add the cleartext stuff alongside
-    # not sure if we need to split out the filling of the lockbox to load
-    # the agenix module first to decrypt everything
     lockbox = {
       hashedPasswordFilePath = config.age.secrets.password.path;
       passphrasePath = config.age.secrets.borg-passphrase.path;
