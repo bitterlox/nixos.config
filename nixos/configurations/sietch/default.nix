@@ -8,7 +8,8 @@ in {
       inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules ++ [
-          shared-modules.agenix
+          #shared-modules.agenix
+          ./modules/secrets.nix
           shared-modules.linux-base
           ./modules/soft-serve
           (import ./configuration.nix config.flake.lib)
