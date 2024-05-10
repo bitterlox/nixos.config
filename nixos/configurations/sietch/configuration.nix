@@ -16,8 +16,7 @@ myflakelib:
       mutableUsers = false;
       users.angel = {
         isNormalUser = true;
-        hashedPasswordFile =
-          config.lockbox.hashedPasswordFilePath;
+        hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
         openssh.authorizedKeys.keys = [ config.sshPubKeys.voidbook ];
       };
@@ -39,7 +38,8 @@ myflakelib:
     # see: Don't try backup when unit is unavailable
     services.borgbackup.jobs.sietch = let
       defaults = myflakelib.defaultBorgOptions {
-        inherit (config.lockbox) borgPassphrasePath sshKeyPath;
+        inherit (config.lockbox) sshKeyPath;
+        passphrasePath = config.lockbox.borgPassphrasePath;
       };
     in defaults // {
       repo = "ssh://j6zbx5gr@j6zbx5gr.repo.borgbase.com/./repo";
