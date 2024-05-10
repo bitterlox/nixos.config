@@ -3,7 +3,6 @@
 , ... }:
 let
   sharedModules = config.flake.nixosModules;
-  nixosBaseModules = with nixosModules; [ agenix linux-base ];
 in {
   flake.nixosConfigurations = {
     "chani" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
@@ -27,10 +26,6 @@ in {
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
             home-manager.users.angel = import config.flake.homeModules.angel;
           }
-          # use secrets
-          ({ config, ... }: {
-            config.;
-          })
         ];
       });
   };
