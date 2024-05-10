@@ -25,14 +25,6 @@
     };
   };
 
-  # maybe split out into different module and put into privateModules
-  programs.ssh = {
-    extraConfig = ''
-      Host *
-      IdentityFile ${config.age.secrets.ssh-private-key.path} 
-    '';
-  };
-
   programs.mosh = {
     enable = true;
 #    openFirewall = true;
