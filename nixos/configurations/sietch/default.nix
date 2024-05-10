@@ -9,7 +9,8 @@ in {
         inherit system;
         modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules ++ [
           #shared-modules.agenix
-          ./modules/secrets.nix
+          (import ./modules/secrets.nix inputs.secrets-flake
+            inputs.agenix.nixosModules.default)
           shared-modules.linux-base
           ./modules/soft-serve
           (import ./configuration.nix config.flake.lib)
