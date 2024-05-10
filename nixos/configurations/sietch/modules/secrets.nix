@@ -25,7 +25,7 @@ secrets-flake: agenix-module:
     };
     lockbox = {
       hashedPasswordFilePath = config.age.secrets.password.path;
-      passphrasePath = config.age.secrets.borg-passphrase.path;
+      borgPassphrasePath = config.age.secrets.borg-passphrase.path;
       sshKeyPath = config.age.secrets.ssh-private-key.path;
       softServeSshPublicUrl = secrets-flake.sietch.soft-serve-ssh-public-url;
     };
