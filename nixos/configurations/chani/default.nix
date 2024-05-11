@@ -3,6 +3,8 @@
 , ... }:
 let
   sharedModules = config.flake.nixosModules;
+  secretsModule = (import ./modules/secrets.nix inputs.secrets-flake
+    inputs.agenix.nixosModules.default sharedModules.lockbox);
 in {
   flake.nixosConfigurations = {
     "chani" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
@@ -12,8 +14,7 @@ in {
         # you must use `specialArgs` by uncomment the following line:
         specialArgs = { };
         modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules ++ [
-          (import ./modules/secrets.nix inputs.secrets-flake
-            inputs.agenix.nixosModules.default)
+          secretsModule
           sharedModules.linux-base
           ./configuration.nix
           # make home-manager as a module of nixos

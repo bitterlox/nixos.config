@@ -1,6 +1,6 @@
-secrets-flake: agenix-module:
+secrets-flake: agenix-module: lockbox-module:
 { config, options, pkgs, lib, ... }: {
-  imports = [ agenix-module ];
+  imports = [ lockbox-module agenix-module ];
   config = {
     age.identityPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     age.secrets = {
@@ -28,14 +28,6 @@ secrets-flake: agenix-module:
       borgPassphrasePath = config.age.secrets.borg-passphrase.path;
       sshKeyPath = config.age.secrets.ssh-private-key.path;
       softServeSshPublicUrl = secrets-flake.sietch.soft-serve-ssh-public-url;
-    };
-  };
-  options = {
-    lockbox = lib.mkOption {
-      type = with lib.types; attrsOf str;
-      default = { };
-      example = { mysecret = "superSecretPassword"; };
-      description = lib.mdDoc "An attrset of secrets and less secret values";
     };
   };
 }
