@@ -49,6 +49,8 @@ myflakelib:
       # temporarily comment this out so that the config builds, see issue
       # https://github.com/NixOS/nixpkgs/issues/282640
       # persistentTimer = true; 
+      # when we stop this it might be nice to have a temp
+#     # ssh server spun up that says backup in progress
       preHook = ''
         systemctl stop soft-serve.service
       '';
