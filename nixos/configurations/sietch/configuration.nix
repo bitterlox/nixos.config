@@ -30,7 +30,9 @@ myflakelib:
     };
 
     soft-serve = {
-      adminPublicKeys = { inherit (config.sshPubKeys) voidbook chani iphone; };
+      adminPublicKeys = {
+        inherit (config.sshPubKeys) voidbook chani iphone elewse;
+      };
       sshPublicUrl = config.lockbox.softServeSshPublicUrl;
     };
 
@@ -50,7 +52,7 @@ myflakelib:
       # https://github.com/NixOS/nixpkgs/issues/282640
       # persistentTimer = true; 
       # when we stop this it might be nice to have a temp
-#     # ssh server spun up that says backup in progress
+      #     # ssh server spun up that says backup in progress
       preHook = ''
         systemctl stop soft-serve.service
       '';
