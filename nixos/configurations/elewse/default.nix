@@ -7,13 +7,21 @@ let
     inputs.agenix.nixosModules.default sharedModules.lockbox);
 in {
   flake.nixosConfigurations = {
-    "chani" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
+    "elewse" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
       inputs.nixpkgs.lib.nixosSystem {
         inherit system;
         # If you need to pass other parameters,
         # you must use `specialArgs` by uncomment the following line:
         specialArgs = { };
-        modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules ++ [
+        modules = [{
+          nixpkgs.overlays = [
+            (prev: final: {
+              neovim-full = inputs'.my-nvim.packages.nvim-full;
+              neovim-light = inputs'.my-nvim.packages.nvim-light;
+            })
+          ];
+        }] ++ privateModules ++ [
+          inputs.nixos-hardware.nixosModules.framework-16-7040-amd
           secretsModule
           sharedModules.linux-base
           ./configuration.nix
@@ -36,7 +44,7 @@ in {
                 # You can update home Manager without changing this value. See
                 # the home Manager release notes for a list of state version
                 # changes in each release.
-                home.stateVersion = "23.05";
+                home.stateVersion = "23.11";
               };
             };
           }

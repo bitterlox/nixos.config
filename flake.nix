@@ -29,6 +29,9 @@
 
     devenv.url = "github:cachix/devenv";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware/master";
+
+    #secrets-flake.url = "git+ssh://git.bittervoid.io:23231/secrets-flake";
     secrets-flake.url = "git+ssh://git.bittervoid.io:23231/secrets-flake";
   };
 

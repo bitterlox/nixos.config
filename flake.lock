@@ -346,6 +346,22 @@
         "type": "github"
       }
     },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1715148395,
+        "narHash": "sha256-lRxjTxY3103LGMjWdVqntKZHhlmMX12QUjeFrQMmGaE=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "a4e2b7909fc1bdf30c30ef21d388fde0b5cdde4a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "master",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1678875422,
@@ -481,17 +497,18 @@
         "flake-parts": "flake-parts",
         "home-manager": "home-manager_2",
         "my-nvim": "my-nvim",
+        "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_2",
         "secrets-flake": "secrets-flake"
       }
     },
     "secrets-flake": {
       "locked": {
-        "lastModified": 1707846435,
-        "narHash": "sha256-mktwubvhEHjt7Psnzj0H+EGHa5k6hnPhQQL1avxZjOQ=",
+        "lastModified": 1715764113,
+        "narHash": "sha256-GDgliAr2fdnIZ7VHcy48RDQHZm17tiXXtA9iekRQ6Zk=",
         "ref": "refs/heads/main",
-        "rev": "6f49ce217e50ff3305c15398de2dc2cfc77b1e00",
-        "revCount": 19,
+        "rev": "a60c3d67a20785737ccc34f62ca5b9d627a9f143",
+        "revCount": 20,
         "type": "git",
         "url": "ssh://git.bittervoid.io:23231/secrets-flake"
       },
