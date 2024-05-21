@@ -81,7 +81,7 @@
   users.users.angel = {
     isNormalUser = true;
     description = "angel";
-    hashedPasswordFile = "/persist/angelpasswd";
+    hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs;
       [
