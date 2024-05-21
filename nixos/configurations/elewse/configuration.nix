@@ -13,7 +13,7 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "nixos"; # Define your hostname.
+  networking.hostName = "elewse"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
   # Configure network proxy if necessary
@@ -55,7 +55,7 @@
   };
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  # services.printing.enable = true;
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -81,10 +81,12 @@
   users.users.angel = {
     isNormalUser = true;
     description = "angel";
+    hashedPasswordFile = "/persist/angelpasswd";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs;
       [
         kate
+        pkgs.neovim-light
         #  thunderbird
       ];
   };
@@ -98,7 +100,8 @@
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default
+    neovim-light # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default
+    neovim-full
     fprintd
     git
     #  wget
@@ -121,7 +124,7 @@
   # we try to configure it to be as unusable as possible
   # TODO: override linux-base definition:
   services.openssh = {
-    enable = true;
+    enable = lib.mkForce false;
     openFirewall = false;
     # if we just set ports to [] it still listens on 22 since if we omit "Port" from sshd_config
     # ssh still listens on default port (see sshd_config man)

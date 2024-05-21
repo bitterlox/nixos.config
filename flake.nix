@@ -31,6 +31,8 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 
+    impermanence.url = "github:nix-community/impermanence";
+
     #secrets-flake.url = "git+ssh://git.bittervoid.io:23231/secrets-flake";
     secrets-flake.url = "git+ssh://git.bittervoid.io:23231/secrets-flake";
   };

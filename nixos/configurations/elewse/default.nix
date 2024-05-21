@@ -5,6 +5,8 @@ let
   sharedModules = config.flake.nixosModules;
   secretsModule = (import ./modules/secrets.nix inputs.secrets-flake
     inputs.agenix.nixosModules.default sharedModules.lockbox);
+  impermanenceModule = (import ./modules/impermanence.nix
+    inputs.impermanence.nixosModules.impermanence);
 in {
   flake.nixosConfigurations = {
     "elewse" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
@@ -23,6 +25,7 @@ in {
         }] ++ privateModules ++ [
           inputs.nixos-hardware.nixosModules.framework-16-7040-amd
           secretsModule
+          impermanenceModule
           sharedModules.linux-base
           ./configuration.nix
           # make home-manager as a module of nixos
