@@ -65,15 +65,21 @@ impermanenceModule:
     environment.persistence."/persist" = {
       directories = [
         "/etc/nixos"
+        # wifi connections
         "/etc/NetworkManager/system-connections"
+        # battery charge data
         "/var/lib/upower"
       ];
       files = [
+        # this because someone said it's important?
         "/etc/machine-id"
         # etc shadow is created before we have a chance to bind-mount it
         #"/etc/shadow"
+        # this because i forget commands
         "/root/.bash_history"
+        # this to avoid mashing y every time i switch config
         "/root/.local/share/nix/trusted-settings.json"
+        # this to avoid re-confirming every time i ssh to my servers
         "/root/.ssh/known_hosts"
       ];
     };
