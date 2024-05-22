@@ -90,6 +90,13 @@
         #  thunderbird
       ];
   };
+  
+
+  # Define a user account. Don't forget to set a password with ‘passwd’.
+  users.users.root = {
+    isSystemUser = true;
+    hashedPasswordFile = "/persist/angelpasswd";
+  };
 
   # Install firefox.
   programs.firefox.enable = true;

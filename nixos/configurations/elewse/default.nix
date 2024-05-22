@@ -24,8 +24,8 @@ in {
           ];
         }] ++ privateModules ++ [
           inputs.nixos-hardware.nixosModules.framework-16-7040-amd
-          secretsModule
           impermanenceModule
+          secretsModule
           sharedModules.linux-base
           ./configuration.nix
           # make home-manager as a module of nixos

@@ -1,5 +1,5 @@
 impermanenceModule:
-{ config, ... }: {
+{ config, lib, ... }: {
   imports = [ impermanenceModule ];
   config = {
     boot.initrd = {
@@ -68,13 +68,28 @@ impermanenceModule:
         "/etc/machine-id"
         # etc shadow is created before we have a chance to bind-mount it
         #"/etc/shadow"
+        "/root/.bash_history"
+      ];
+    };
+
+    # manually create bind mounts using nixos filesystem facilities
+    # so that we can mount these before agenix runs and needs ssh keys
+    # to decrypt secrets
+    fileSystems = let
+      paths = [
         "/etc/ssh/ssh_host_ed25519_key"
         "/etc/ssh/ssh_host_ed25519_key.pub"
         "/etc/ssh/ssh_host_rsa_key"
         "/etc/ssh/ssh_host_rsa_key.pub"
-        "/root/.bash_history"
       ];
-    };
+    in builtins.listToAttrs (builtins.map (path:
+      lib.attrsets.nameValuePair path {
+        device = "/persist" + path;
+        fsType = "none";
+        neededForBoot = true;
+        #depends = [ "/persist" ];
+        options = [ "bind" "ro" ];
+      }) paths);
 
     security.sudo.extraConfig = ''
       # rollback results in sudo lectures after each reboot
