@@ -73,6 +73,8 @@ impermanenceModule:
         # etc shadow is created before we have a chance to bind-mount it
         #"/etc/shadow"
         "/root/.bash_history"
+        "/root/.local/share/nix/trusted-settings.json"
+        "/root/.ssh/known_hosts"
       ];
     };
 
