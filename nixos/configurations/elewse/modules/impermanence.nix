@@ -89,18 +89,36 @@ impermanenceModule:
     # to decrypt secrets
     fileSystems = let
       paths = [
-        "/etc/ssh/ssh_host_ed25519_key"
-        "/etc/ssh/ssh_host_ed25519_key.pub"
-        "/etc/ssh/ssh_host_rsa_key"
-        "/etc/ssh/ssh_host_rsa_key.pub"
+        # ssh host keys
+        {
+          path = "/etc/ssh/ssh_host_ed25519_key";
+          extraOptions = [ "ro" ];
+        }
+        {
+          path = "/etc/ssh/ssh_host_ed25519_key.pub";
+          extraOptions = [ "ro" ];
+        }
+        {
+          path = "/etc/ssh/ssh_host_rsa_key";
+          extraOptions = [ "ro" ];
+        }
+        {
+          path = "/etc/ssh/ssh_host_rsa_key.pub";
+          extraOptions = [ "ro" ];
+        }
+        # secure boot keys
+        {
+          path = "/etc/secureboot";
+          extraOptions = [ "rw" ];
+        }
       ];
-    in builtins.listToAttrs (builtins.map (path:
+    in builtins.listToAttrs (builtins.map ({ path, extraOptions }:
       lib.attrsets.nameValuePair path {
         device = "/persist" + path;
         fsType = "none";
         neededForBoot = true;
         #depends = [ "/persist" ];
-        options = [ "bind" "ro" ];
+        options = [ "bind" ] ++ extraOptions;
       }) paths);
 
     security.sudo.extraConfig = ''
