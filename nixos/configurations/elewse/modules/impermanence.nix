@@ -63,7 +63,11 @@ impermanenceModule:
     };
     # configure impermanence
     environment.persistence."/persist" = {
-      directories = [ "/etc/nixos" "/etc/NetworkManager/system-connections" ];
+      directories = [
+        "/etc/nixos"
+        "/etc/NetworkManager/system-connections"
+        "/var/lib/upower"
+      ];
       files = [
         "/etc/machine-id"
         # etc shadow is created before we have a chance to bind-mount it
