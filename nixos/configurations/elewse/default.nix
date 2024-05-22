@@ -24,6 +24,7 @@ in {
           ];
         }] ++ privateModules ++ [
           inputs.nixos-hardware.nixosModules.framework-16-7040-amd
+          inputs.lanzaboote.nixosModules.lanzaboote
           impermanenceModule
           secretsModule
           sharedModules.linux-base

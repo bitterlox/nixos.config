@@ -33,6 +33,9 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.3.0";
+    lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+
     #secrets-flake.url = "git+ssh://git.bittervoid.io:23231/secrets-flake";
     secrets-flake.url = "git+ssh://git.bittervoid.io:23231/secrets-flake";
   };

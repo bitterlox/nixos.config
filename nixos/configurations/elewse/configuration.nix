@@ -10,7 +10,13 @@
   ];
 
   # Bootloader.
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = lib.mkForce false;
+  # enable lanzaboote for secureboot
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/etc/secureboot";
+  };
+
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking.hostName = "elewse"; # Define your hostname.
@@ -83,14 +89,12 @@
     description = "angel";
     hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs;
-      [
-        kate
-        pkgs.neovim-light
-        #  thunderbird
-      ];
+    packages = with pkgs; [
+      kate
+      pkgs.neovim-light
+      #  thunderbird
+    ];
   };
-  
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.root = {
