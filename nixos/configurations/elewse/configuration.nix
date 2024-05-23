@@ -48,17 +48,48 @@
   };
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
+  # services.xserver.enable = true;
 
   # Enable the KDE Plasma Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
-  services.xserver.desktopManager.plasma5.enable = true;
+  # services.xserver.displayManager.sddm.enable = true;
+  # services.xserver.desktopManager.plasma5.enable = true;
 
   # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
+  # services.xserver = {
+  #   layout = "us";
+  #   xkbVariant = "";
+  # };
+
+  # wayland stuff
+  security.polkit.enable = true;
+  hardware.opengl.enable = true;
+  programs.hyprland.enable = true;
+  services.greetd = let
+    hypr-run = pkgs.writeShellScriptBin "hypr-run" ''
+      export XDG_SESSION_TYPE="wayland"
+      export XDG_SESSION_DESKTOP="Hyprland"
+      export XDG_CURRENT_DESKTOP="Hyprland"
+
+      systemd-run --user --scope --collect --quiet --unit="hyprland" \
+          systemd-cat --identifier="hyprland" ${pkgs.hyprland}/bin/Hyprland $@
+
+      ${pkgs.hyprland}/bin/hyperctl dispatch exit
+    '';
+  in {
+    enable = true;
+    settings = {
+      default_session.command = ''
+        ${pkgs.greetd.tuigreet}/bin/tuigreet \
+              --time \
+              --asterisks \
+              --user-menu \
+              --cmd ${lib.getExe hypr-run}'';
+    };
   };
+  environment.etc."greetd/environments".text = ''
+    sway
+    Hyprland
+  '';
 
   # Enable CUPS to print documents.
   # services.printing.enable = true;
