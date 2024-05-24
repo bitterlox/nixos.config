@@ -85,8 +85,9 @@
               --time \
               --asterisks \
               --user-menu \
-              --theme ${tuigreetTheme} \
               --cmd ${lib.getExe hypr-run}'';
+      # theme support added in 0.9.0
+      # --theme ${tuigreetTheme} \
     };
   };
   environment.etc."greetd/environments".text = ''
