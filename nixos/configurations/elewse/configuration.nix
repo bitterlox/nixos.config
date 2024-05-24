@@ -65,6 +65,8 @@
   hardware.opengl.enable = true;
   programs.hyprland.enable = true;
   services.greetd = let
+    tuigreetTheme =
+      "border=lightmagenta;text=lightblue;prompt=lightblue;time=lightmagenta;action=yellow;button=orange;container=lightblue;input=orange";
     hypr-run = pkgs.writeShellScriptBin "hypr-run" ''
       export XDG_SESSION_TYPE="wayland"
       export XDG_SESSION_DESKTOP="Hyprland"
@@ -83,6 +85,7 @@
               --time \
               --asterisks \
               --user-menu \
+              --theme ${tuigreetTheme} \
               --cmd ${lib.getExe hypr-run}'';
     };
   };
