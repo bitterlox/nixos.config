@@ -43,7 +43,7 @@ in {
     services.cliphist.enable = true;
     programs.eww = {
       enable = true;
-      package = pkgs.eww-wayland;
+      package = pkgs.eww;
       configDir = (import ./eww { inherit pkgs; });
     };
 
