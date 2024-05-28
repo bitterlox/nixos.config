@@ -1,5 +1,13 @@
 angelBaseModule:
-{ lib, config, options, pkgs, ... }: {
+{ lib, config, options, pkgs, ... }:
+let
+  overrides = {
+    eww = pkgs.eww.overrideAttrs (oldAttrs: {
+      cargoBuildFlags = oldAttrs.cargoBuildFlags ++ [ "--features=wayland" ];
+      buildInputs = [ pkgs.gtk-layer-shell ];
+    });
+  };
+in {
   imports = [ angelBaseModule ];
   config = {
 
@@ -19,21 +27,28 @@ angelBaseModule:
         bind = [
           "$mod, F, exec, firefox"
           "$mod, T, exec, kitty"
-#          "Control_C, exec, ${wl-copy}"
-#          "Control_V, exec, ${wl-paste}"
+          #          "Control_C, exec, ${wl-copy}"
+          #          "Control_V, exec, ${wl-paste}"
         ];
       };
     };
 
-    home.packages = with pkgs; [ mako wl-clipboard shotman ];
+    home.packages = let
+      overriden = [ ];
+      vanilla = with pkgs; [ mako wl-clipboard shotman ];
+    in overriden ++ vanilla;
 
     services.cliphist.enable = true;
+    programs.eww = {
+      enable = true;
+      package = pkgs.eww-wayland;
+      configDir = pkgs.writeTextDir "config/foo.yuck" "";
+    };
 
     programs.kitty = {
-        enable = true;
-        keybindings = {
-          };
-      };
+      enable = true;
+      keybindings = { };
+    };
 
     # This value determines the home Manager release that your
     # configuration is compatible with. This helps avoid breakage

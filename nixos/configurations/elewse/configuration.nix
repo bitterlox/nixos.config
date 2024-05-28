@@ -64,6 +64,11 @@
   security.polkit.enable = true;
   hardware.opengl.enable = true;
   programs.hyprland.enable = true;
+  services.pipewire = {
+    # needed for hyprland
+    #systemWide = true;
+    wireplumber.enable = true;
+  };
   services.greetd = let
     tuigreetTheme =
       "border=lightmagenta;text=lightblue;prompt=lightblue;time=lightmagenta;action=yellow;button=orange;container=lightblue;input=orange";
