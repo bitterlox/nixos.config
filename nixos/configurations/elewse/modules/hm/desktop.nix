@@ -23,6 +23,8 @@ in {
         exec-once = [
           "${wl-paste} --type text --watch cliphist store"
           "${wl-paste} --type image --watch cliphist store"
+          "eww daemon"
+          "eww open bar"
         ];
         bind = [
           "$mod, F, exec, firefox"
@@ -42,7 +44,7 @@ in {
     programs.eww = {
       enable = true;
       package = pkgs.eww-wayland;
-      configDir = pkgs.writeTextDir "config/foo.yuck" "";
+      configDir = (import ./eww { inherit pkgs; });
     };
 
     programs.kitty = {
