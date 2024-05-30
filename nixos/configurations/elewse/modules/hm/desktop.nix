@@ -263,15 +263,19 @@ in {
 
     home.packages = let
       overriden = [ ];
-      vanilla = with pkgs; [ mako wl-clipboard shotman ];
+      vanilla = with pkgs; [ wl-clipboard shotman libnotify ];
     in overriden ++ vanilla;
 
     services.cliphist.enable = true;
+    # rename eww subdir to something like widgets/bar and put stuff down below
+    # into it, abstracting it away into a module
     programs.eww = {
       enable = true;
       package = pkgs.eww;
       configDir = (import ./eww { inherit pkgs; });
     };
+
+    services.mako.enable = true;
 
     programs.kitty = {
       enable = true;
