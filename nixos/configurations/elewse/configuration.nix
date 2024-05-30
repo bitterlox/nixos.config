@@ -16,6 +16,7 @@
     enable = true;
     pkiBundle = "/etc/secureboot";
   };
+  boot.kernelPackages = pkgs.linuxPackages_6_8;
 
   boot.loader.efi.canTouchEfiVariables = true;
 

@@ -17,10 +17,10 @@ in {
         specialArgs = { };
         modules = [{
           # enable when 24.05 has been released
-          #nixpkgs.pkgs = (import inputs.nixpkgs-stable {
-          #  localSystem = system;
-          #  config.allowUnfree = true;
-          #});
+          # nixpkgs.pkgs = (import inputs.nixpkgs-stable {
+          #   localSystem = system;
+          #   config.allowUnfree = true;
+          # });
           nixpkgs.overlays = [
             (prev: final: {
               neovim-full = inputs'.my-nvim.packages.nvim-full;
