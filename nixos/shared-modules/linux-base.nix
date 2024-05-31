@@ -5,7 +5,12 @@
   boot.loader.systemd-boot.configurationLimit = 10;
 
   # default packages
-  environment.systemPackages = with pkgs; [ neovim-light wget git ];
+  environment.systemPackages = with pkgs; [
+    neovim-light
+    wget
+    git
+    psmisc # killall + other utils
+  ];
 
   # Enable the OpenSSH daemon.
   services.openssh = {
@@ -27,7 +32,7 @@
 
   programs.mosh = {
     enable = true;
-#    openFirewall = true;
+    #    openFirewall = true;
   };
 
   # Perform garbage collection weekly to maintain low disk usage

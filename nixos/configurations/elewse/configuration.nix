@@ -142,6 +142,9 @@
     isSystemUser = true;
     hashedPasswordFile = "/persist/angelpasswd";
   };
+  security.sudo.extraConfig = ''
+    Defaults        timestamp_timeout=15
+  '';
 
   # Install firefox.
   programs.firefox.enable = true;
@@ -157,6 +160,7 @@
     neovim-full
     fprintd
     git
+    brightnessctl
     #  wget
   ]);
 
