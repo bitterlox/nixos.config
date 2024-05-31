@@ -1,18 +1,12 @@
 { pkgs, ... }:
 let
-  get-workspaces = "${
-      (import ./scripts/get-workspaces.nix { inherit pkgs; })
-    }/bin/get-workspaces";
+  scripts = (import ./scripts { inherit pkgs; });
 
-  get-active-workspace = "${
-      (import ./scripts/get-active-workspace.nix { inherit pkgs; })
-    }/bin/get-active-workspace";
-  change-active-workspace = "${
-      (import ./scripts/change-active-workspace.nix { inherit pkgs; })
-    }/bin/change-active-workspace";
-  get-window-title = "${
-      (import ./scripts/get-window-title.nix { inherit pkgs; })
-    }/bin/get-window-title";
+  get-workspaces = "${scripts}/bin/get-workspaces.sh";
+  get-active-workspace = "${scripts}/bin/get-active-workspace.sh";
+  change-active-workspace = "${scripts}/bin/change-active-workspace.sh";
+  get-window-title = "${scripts}/bin/get-window-title.sh";
+
 in pkgs.writeTextFile {
   name = "workspaces.eww";
   text = ''
