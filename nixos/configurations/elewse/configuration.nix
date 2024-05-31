@@ -152,13 +152,13 @@
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
-  environment.systemPackages = with pkgs; [
-    neovim-light # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default
+  environment.systemPackages = lib.mkBefore (with pkgs; [
+    #neovim-light # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default
     neovim-full
     fprintd
     git
     #  wget
-  ];
+  ]);
 
   services.fprintd.enable = true;
   services.fwupd.enable = true;
