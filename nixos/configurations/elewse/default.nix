@@ -10,17 +10,17 @@ let
 in {
   flake.nixosConfigurations = {
     "elewse" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
-      inputs.nixpkgs.lib.nixosSystem {
+      inputs.nixpkgs-stable.lib.nixosSystem {
         inherit system;
         # If you need to pass other parameters,
         # you must use `specialArgs` by uncomment the following line:
         specialArgs = { };
         modules = [{
           # enable when 24.05 has been released
-          # nixpkgs.pkgs = (import inputs.nixpkgs-stable {
-          #   localSystem = system;
-          #   config.allowUnfree = true;
-          # });
+          nixpkgs.pkgs = (import inputs.nixpkgs-stable {
+            localSystem = system;
+            config.allowUnfree = true;
+          });
           nixpkgs.overlays = [
             (prev: final: {
               neovim-full = inputs'.my-nvim.packages.nvim-full;
