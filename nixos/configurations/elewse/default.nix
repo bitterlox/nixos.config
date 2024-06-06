@@ -3,9 +3,9 @@
 , ... }:
 let
   sharedModules = config.flake.nixosModules;
-  secretsModule = (import ./modules/secrets.nix inputs.secrets-flake
+  secretsModule = (import ./secrets.nix inputs.secrets-flake
     inputs.agenix.nixosModules.default sharedModules.lockbox);
-  impermanenceModule = (import ./modules/impermanence.nix
+  impermanenceModule = (import ./impermanence.nix
     inputs.impermanence.nixosModules.impermanence);
 in {
   flake.nixosConfigurations = {
@@ -43,7 +43,7 @@ in {
 
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
             home-manager.users.angel =
-              (import ./modules/hm/desktop.nix config.flake.homeModules.angel);
+              (import ./hm/desktop.nix config.flake.homeModules.angel);
           }
         ];
       });

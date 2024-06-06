@@ -8,7 +8,7 @@ let
     });
   };
 in {
-  imports = [ angelBaseModule ./compositor.nix ];
+  imports = [ angelBaseModule ./compositor ./browsers ];
   config = {
 
     home.packages = let
@@ -16,18 +16,28 @@ in {
       vanilla = with pkgs; [ wl-clipboard shotman libnotify nerdfonts ];
     in overriden ++ vanilla;
 
-    services.cliphist.enable = true;
-    # rename eww subdir to something like widgets/bar and put stuff down below
-    # into it, abstracting it away into a module
-
     fonts.fontconfig.enable = true;
 
-    services.mako.enable = true;
-
+    ## PROGRAMS ##
     programs.kitty = {
       enable = true;
       keybindings = { };
     };
+
+    programs.password-store.enable = true;
+    programs.password-store.settings = {
+      PASSWORD_STORE_DIR = "~/.password-store";
+    };
+
+    programs.gpg.enable = true;
+
+    ## SERVICES ##
+    services.gpg-agent = {
+      enable = true;
+      pinentryPackage = pkgs.pinentry-curses;
+    };
+    services.mako.enable = true;
+    services.cliphist.enable = true;
 
     # This value determines the home Manager release that your
     # configuration is compatible with. This helps avoid breakage
