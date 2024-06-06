@@ -23,10 +23,21 @@ in {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
 
-            # TODO replace ryan with your own username
-            home-manager.users.angel = import config.flake.homeModules.angel;
-
-            # Optionally, use home-manager.extraSpecialArgs to pass arguments to home.nix
+            # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
+            home-manager.users.angel = { ... }: {
+              imports = [ config.flake.homeModules.angel ];
+              config = {
+                # This value determines the home Manager release that your
+                # configuration is compatible with. This helps avoid breakage
+                # when a new home Manager release introduces backwards
+                # incompatible changes.
+                #
+                # You can update home Manager without changing this value. See
+                # the home Manager release notes for a list of state version
+                # changes in each release.
+                home.stateVersion = "23.05";
+              };
+            };
           }
         ];
       });
