@@ -22,10 +22,17 @@ secrets-flake: agenix-module: lockbox-module:
         owner = "angel";
         group = "users";
       };
+      ssh-hosts = {
+        file = secrets-flake.common.ssh-hosts;
+        mode = "600";
+        owner = "angel";
+        group = "users";
+      };
     };
     lockbox = {
       hashedPasswordFilePath = config.age.secrets.password.path;
       sshKeyPath = config.age.secrets.ssh-private-key.path;
+      sshHostsPath = config.age.secrets.ssh-hosts.path;
     };
   };
 }

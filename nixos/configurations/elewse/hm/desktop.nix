@@ -1,5 +1,5 @@
 angelBaseModule:
-{ lib, config, options, pkgs, ... }:
+{ lib, config, options, pkgs, osConfig, ... }:
 let
   overrides = {
     eww = pkgs.eww.overrideAttrs (oldAttrs: {
@@ -30,6 +30,7 @@ in {
     };
 
     programs.gpg.enable = true;
+    programs.ssh.includes = [ osConfig.lockbox.sshHostsPath ];
 
     ## SERVICES ##
     services.gpg-agent = {
