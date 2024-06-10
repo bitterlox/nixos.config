@@ -13,7 +13,7 @@ in {
 
     home.packages = let
       overriden = [ ];
-      vanilla = with pkgs; [ wl-clipboard shotman libnotify nerdfonts ];
+      vanilla = with pkgs; [ wl-clipboard shotman libnotify nerdfonts obsidian ];
     in overriden ++ vanilla;
 
     fonts.fontconfig.enable = true;
@@ -26,7 +26,7 @@ in {
 
     programs.password-store.enable = true;
     programs.password-store.settings = {
-      PASSWORD_STORE_DIR = "~/.password-store";
+      PASSWORD_STORE_DIR = "/home/angel/.password-store";
     };
 
     programs.gpg.enable = true;
@@ -35,7 +35,7 @@ in {
     ## SERVICES ##
     services.gpg-agent = {
       enable = true;
-      pinentryPackage = pkgs.pinentry-curses;
+      pinentryPackage = pkgs.pinentry-qt;
     };
     services.mako.enable = true;
     services.cliphist.enable = true;
