@@ -1,5 +1,11 @@
 { lib, config, options, pkgs, ... }: {
   imports = [ ./widgets ];
+  # force electron apps to use wayland
+  home.sessionVariables = { ELECTRON_OZONE_PLATFORM_HINT = "auto"; };
+  #  home.file.".config/electron-flags.conf" = {
+  #    enable = true;
+  #    text = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
+  #  };
   # wayland config
   wayland.windowManager.hyprland = {
     enable = true;
