@@ -1,5 +1,5 @@
 { lib, config, options, pkgs, ... }: {
-  imports = [ ./widgets ];
+  imports = [ ./widgets ./launcher.nix ./desktop-files.nix ];
   # force electron apps to use wayland
   home.sessionVariables = { ELECTRON_OZONE_PLATFORM_HINT = "auto"; };
   #  home.file.".config/electron-flags.conf" = {
@@ -37,7 +37,7 @@
       "$mod" = "SUPER";
       "$terminal" = "kitty";
       #$fileManager = dolphin
-      #$menu = wofi --show drun
+      "$menu" = "tofi-drun | xargs hyprctl dispatch exec --";
 
       ###################
       #### AUTOSTART ####
@@ -189,7 +189,7 @@
         "$mod, M, exit,"
         "$mod, E, exec, $fileManager"
         "$mod, V, togglefloating,"
-        "$mod, R, exec, $menu"
+        "$mod, D, exec, $menu"
         "$mod, P, pseudo," # dwindle
         "$mod, J, togglesplit," # dwindle
 

@@ -6,15 +6,32 @@ let
       cargoBuildFlags = oldAttrs.cargoBuildFlags ++ [ "--features=wayland" ];
       buildInputs = [ pkgs.gtk-layer-shell ];
     });
+    nerdfonts = pkgs.nerdfonts.override {
+      fonts = [
+        "FiraCode"
+        "DroidSansMono"
+        "SourceCodePro"
+        "Hasklig"
+        "NerdFontsSymbolsOnly"
+      ];
+    };
   };
 in {
   imports = [ angelBaseModule ./compositor ./browsers ];
   config = {
 
     home.packages = let
-      overriden = [ ];
-      vanilla = with pkgs; [ wl-clipboard shotman libnotify nerdfonts obsidian ];
+      overriden = [ overrides.nerdfonts ];
+      vanilla = with pkgs; [
+        wl-clipboard
+        shotman
+        libnotify
+        obsidian
+        popcorntime
+        font-manager
+      ];
     in overriden ++ vanilla;
+    home.extraOutputsToInstall = [ "share" ];
 
     fonts.fontconfig.enable = true;
 
