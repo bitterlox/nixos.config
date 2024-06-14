@@ -28,11 +28,25 @@ secrets-flake: agenix-module: lockbox-module:
         owner = "angel";
         group = "users";
       };
+      borg-passphrase = {
+        file = secrets-flake.elewse.borg-passphrase;
+        mode = "600";
+        owner = "angel";
+        group = "users";
+      };
+      backups-ssh-privkey = {
+        file = secrets-flake.elewse.backups-ssh-privkey;
+        mode = "600";
+        owner = "angel";
+        group = "users";
+      };
     };
     lockbox = {
       hashedPasswordFilePath = config.age.secrets.password.path;
       sshKeyPath = config.age.secrets.ssh-private-key.path;
       sshHostsPath = config.age.secrets.ssh-hosts.path;
+      borgPassphrasePath = config.age.secrets.borg-passphrase.path;
+      backupsKeyPath = config.age.secrets.backups-ssh-privkey.path;
     };
   };
 }

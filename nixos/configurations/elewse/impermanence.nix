@@ -1,7 +1,39 @@
 impermanenceModule:
-{ config, lib, ... }: {
+{ config, lib, pkgs, ... }: {
   imports = [ impermanenceModule ];
   config = {
+    # snapshot persist before shutting down
+    systemd.services.snapshot-persist = {
+      before = [ "halt.target" "shutdown.target" "reboot.target" ];
+      unitConfig = {
+        Description = "Service that snapshots /persist before shutdown";
+        DefaultDependencies = "no";
+      };
+      serviceConfig = {
+        Type = "oneshot";
+        RemainAfterExit = "yes";
+      };
+      script = ''
+        mkdir -p /mnt
+
+        # We first mount the btrfs root to /mnt
+        # so we can manipulate btrfs subvolumes.
+        ${config.systemd.package.util-linux}/bin/mount -o subvol=/ /dev/lvg/root /mnt
+
+        if [ -e /mnt/persist-bak ]; then
+          echo "deleting old /persist backup"
+          ${pkgs.btrfs-progs}/bin/btrfs subvolume delete /mnt/persist-bak
+        fi
+
+        echo "backing up current /persist"
+        ${pkgs.btrfs-progs}/bin/btrfs subvolume snapshot -r /mnt/persist/ /mnt/persist-bak
+
+        # unmount and continue shutdown
+        ${config.systemd.package.util-linux}/bin/umount /mnt
+      '';
+      wantedBy = [ "halt.target" "shutdown.target" "reboot.target" ];
+    };
+    # wipe file system on boot
     boot.initrd = {
       enable = true;
       supportedFilesystems = [ "btrfs" ];
@@ -69,6 +101,8 @@ impermanenceModule:
         "/etc/NetworkManager/system-connections"
         # battery charge data
         "/var/lib/upower"
+        # fingerprint sensor data
+        "/var/lib/fprint"
       ];
       files = [
         # this because someone said it's important?

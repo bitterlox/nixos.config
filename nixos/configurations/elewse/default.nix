@@ -5,8 +5,8 @@ let
   sharedModules = config.flake.nixosModules;
   secretsModule = (import ./secrets.nix inputs.secrets-flake
     inputs.agenix.nixosModules.default sharedModules.lockbox);
-  impermanenceModule = (import ./impermanence.nix
-    inputs.impermanence.nixosModules.impermanence);
+  impermanenceModule =
+    (import ./impermanence.nix inputs.impermanence.nixosModules.impermanence);
 in {
   flake.nixosConfigurations = {
     "elewse" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
@@ -33,7 +33,7 @@ in {
           impermanenceModule
           secretsModule
           sharedModules.linux-base
-          ./configuration.nix
+          (import ./configuration.nix config.flake.lib)
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
           inputs.home-manager.nixosModules.home-manager

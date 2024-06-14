@@ -1,7 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
+myflakelib:
 { config, pkgs, lib, ... }:
 
 {
@@ -113,7 +110,21 @@
         };
         "github.com" = { identityFile = config.lockbox.sshKeyPath; };
       };
+  services.borgbackup.jobs.sietch = let
+    defaults = myflakelib.defaultBorgOptions {
+      sshKeyPath = config.lockbox.backupsKeyPath;
+      passphrasePath = config.lockbox.borgPassphrasePath;
     };
+  in defaults // {
+    repo = "ssh://q4r945cs@q4r945cs.repo.borgbase.com/./repo";
+    paths = [ "/persist" ];
+    user = "root";
+    startAt = "weekly";
+    # temporarily comment this out so that the config builds, see issue
+    # https://github.com/NixOS/nixpkgs/issues/282640
+    # persistentTimer = true; 
+    # when we stop this it might be nice to have a temp
+    # ssh server spun up that says backup in progress
   };
 
   # Open ports in the firewall.
