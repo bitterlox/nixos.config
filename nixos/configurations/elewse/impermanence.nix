@@ -99,6 +99,8 @@ impermanenceModule:
         "/etc/nixos"
         # wifi connections
         "/etc/NetworkManager/system-connections"
+        # bluetooth connections
+        "/var/lib/bluetooth"
         # battery charge data
         "/var/lib/upower"
         # fingerprint sensor data

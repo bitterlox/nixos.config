@@ -35,6 +35,34 @@ in {
 
     fonts.fontconfig.enable = true;
 
+    # kde themes #
+    gtk.enable = true;
+
+    gtk.iconTheme.package = pkgs.whitesur-icon-theme;
+    # options:
+    # WhiteSur WhiteSur-dark WhiteSur-light
+    gtk.iconTheme.name = "WhiteSur-dark";
+    gtk.theme.package = pkgs.whitesur-gtk-theme;
+    # variants:
+    # WhiteSur-Dark WhiteSur-Dark-hdpi WhiteSur-Dark-solid
+    # WhiteSur-Dark-xhdpi WhiteSur-Light WhiteSur-Light-hdpi
+    # WhiteSur-Light-solid WhiteSur-Light-xhdpi
+    gtk.theme.name = "WhiteSur-Dark-solid";
+
+    # gtk.iconTheme.package = pkgs.rose-pine-icon-theme;
+    # # If you prefer other icons variant, replace the "rose-pine-icons"
+    # #  with "rose-pine-moon-icons" or "rose-pine-dawn-icons"
+    # gtk.iconTheme.name = "rose-pine-moon-icons";
+    # gtk.theme.package = pkgs.rose-pine-gtk-theme;
+    # # If your prefer other themes variant, replace the "rose-pine-gtk"
+    # # with "rose-pine-moon-gtk" or "rose-pine-dawn-gtk"
+    # gtk.theme.name = "rose-pine-moon-gtk";
+
+    # gtk.iconTheme.package = pkgs.kanagawa-icon-theme;
+    # gtk.iconTheme.name = "Kanagawa";
+    # gtk.theme.package = pkgs.kanagawa-gtk-theme;
+    # gtk.theme.name = "Kanagawa-BL";
+
     ## PROGRAMS ##
     programs.kitty = {
       enable = true;
@@ -47,6 +75,15 @@ in {
     };
 
     programs.gpg.enable = true;
+
+    programs.ssh.enable = true;
+    programs.ssh.matchBlocks = {
+      "*" = {
+        serverAliveInterval = 120;
+        identityFile = osConfig.lockbox.sshKeyPath;
+      };
+      "github.com" = { identityFile = osConfig.lockbox.sshKeyPath; };
+    };
     programs.ssh.includes = [ osConfig.lockbox.sshHostsPath ];
 
     ## SERVICES ##

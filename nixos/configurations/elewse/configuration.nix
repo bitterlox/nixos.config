@@ -18,16 +18,6 @@ myflakelib:
 
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "elewse"; # Define your hostname.
-  # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
-
-  # Configure network proxy if necessary
-  # networking.proxy.default = "http://user:password@proxy:port/";
-  # networking.proxy.noProxy = "127.0.0.1,localhost,internal.domain";
-
-  # Enable networking
-  networking.networkmanager.enable = true;
-
   # Set your time zone.
   time.timeZone = "Europe/Rome";
 
@@ -71,11 +61,11 @@ myflakelib:
     description = "angel";
     hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      kate
-      pkgs.neovim-light
-      #  thunderbird
-    ];
+    packages = with pkgs;
+      [
+        neovim-light
+        #  thunderbird
+      ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -99,17 +89,6 @@ myflakelib:
     '';
   };
 
-  # this is home-manager level
-  home-manager.users.angel = {
-    programs.ssh = {
-      enable = true;
-      matchBlocks = {
-        "*" = {
-          serverAliveInterval = 120;
-          identityFile = config.lockbox.sshKeyPath;
-        };
-        "github.com" = { identityFile = config.lockbox.sshKeyPath; };
-      };
   services.borgbackup.jobs.sietch = let
     defaults = myflakelib.defaultBorgOptions {
       sshKeyPath = config.lockbox.backupsKeyPath;
