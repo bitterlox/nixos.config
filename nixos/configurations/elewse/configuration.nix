@@ -1,10 +1,10 @@
-myflakelib:
+myflakelib: hyprlandPackage:
 { config, pkgs, lib, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
-    ./software
+    (import ./software hyprlandPackage)
   ];
 
   # Bootloader.

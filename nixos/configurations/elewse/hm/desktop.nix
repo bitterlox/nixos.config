@@ -2,10 +2,6 @@ angelBaseModule:
 { lib, config, options, pkgs, osConfig, ... }:
 let
   overrides = {
-    eww = pkgs.eww.overrideAttrs (oldAttrs: {
-      cargoBuildFlags = oldAttrs.cargoBuildFlags ++ [ "--features=wayland" ];
-      buildInputs = [ pkgs.gtk-layer-shell ];
-    });
     nerdfonts = pkgs.nerdfonts.override {
       fonts = [
         "FiraCode"
@@ -15,23 +11,44 @@ let
         "NerdFontsSymbolsOnly"
       ];
     };
+    popcorntime = pkgs.popcorntime.overrideDerivation (previousAttrs: {
+      # PROBLEM: this derivation is defined using a recursive attrSet so
+      # overrides don't propagate
+      #
+      # SOLUTIONS
+      # can use lib.strings.splitString to split on newlines;
+      # then remove the last line:
+      # add my line using the proper desktopItem
+      # concat all strings with newlines
+      #
+      # OR
+      #
+      # make overlay just copying the thing from nixpkgs but using the new feature
+      # from stdenv.mkDerivation that allows finalAttrs so you can reference stuff
+      # then override that
+      # make PR to nixpkgs to upstream this change
+      desktopItem = previousAttrs.desktopItem.override {
+        exec =
+          "${previousAttrs.pname} --enable-features=UseOzonePlatform --ozone-platform=wayland";
+      };
+    });
   };
 in {
   imports = [ angelBaseModule ./compositor ./browsers ];
   config = {
-
     home.packages = let
-      overriden = [ overrides.nerdfonts ];
+      overriden = with overrides; [ nerdfonts popcorntime ];
+      #overriden = with overrides; [ nerdfonts ];
       vanilla = with pkgs; [
         wl-clipboard
         shotman
         libnotify
         obsidian
-        popcorntime
-        font-manager
+        ungoogled-chromium
+        google-chrome
       ];
     in overriden ++ vanilla;
-    home.extraOutputsToInstall = [ "share" ];
+    #home.extraOutputsToInstall = [ "share" ];
 
     fonts.fontconfig.enable = true;
 
@@ -93,6 +110,12 @@ in {
     };
     services.mako.enable = true;
     services.cliphist.enable = true;
+
+    # todo: rclone
+    # https://rclone.org/docs/#config-config-file
+    # set up config with cli and then replace with declarative version
+    # set up a systemd user service to mount the drive at login
+    # https://rclone.org/protondrive/
 
     # This value determines the home Manager release that your
     # configuration is compatible with. This helps avoid breakage

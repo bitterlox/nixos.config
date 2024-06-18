@@ -1,14 +1,22 @@
-{ lib, config, options, pkgs, ... }: {
+{ pkgs, osConfig, lib, ... }:
+let scripts = (import ../scripts { inherit pkgs; });
+in {
   imports = [ ./widgets ./launcher.nix ./desktop-files.nix ];
   # force electron apps to use wayland
-  home.sessionVariables = { ELECTRON_OZONE_PLATFORM_HINT = "auto"; };
-  #  home.file.".config/electron-flags.conf" = {
-  #    enable = true;
-  #    text = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
-  #  };
+  home.sessionVariables = {
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    # https://nixos.org/manual/nixos/stable/release-notes.html#sec-release-22.05-notable-changes
+    # yet another one of these
+    NIXOS_OZONE_WL = "1";
+  };
+  # home.file.".config/electron-flags.conf" = {
+  #   enable = true;
+  #   text = "--enable-features=UseOzonePlatform --ozone-platform=wayland";
+  # };
   # wayland config
   wayland.windowManager.hyprland = {
     enable = true;
+    package = osConfig.programs.hyprland.package;
     settings = {
       # This is an example Hyprland config file.
       # Refer to the wiki for more information.
@@ -51,6 +59,7 @@
         "wl-paste --type image --watch cliphist store"
         #"eww daemon"
         "eww open bar"
+        "sleep 3; ${lib.getExe scripts.changeWallpaper} $HOME/Pictures/wallpapers/"
       ];
 
       # exec-once = $terminal
@@ -164,7 +173,10 @@
 
         sensitivity = 0; # -1.0 - 1.0, 0 means no modification.
 
-        touchpad = { natural_scroll = false; };
+        touchpad = {
+          natural_scroll = false;
+          clickfinger_behavior = 1;
+        };
       };
 
       # https://wiki.hyprland.org/Configuring/Variables/#gestures
@@ -182,6 +194,7 @@
       ###################
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
+      # can use wev program to find key names
       bind = [
         "$mod, T, exec, $terminal"
         "$mod, F, exec, firefox"
@@ -212,16 +225,21 @@
         "$mod, 0, workspace, 10"
 
         # Move active window to a workspace with mainMod + SHIFT + [0-9]
-        "$mod SHIFT, 1, movetoworkspace, 1"
-        "$mod SHIFT, 2, movetoworkspace, 2"
-        "$mod SHIFT, 3, movetoworkspace, 3"
-        "$mod SHIFT, 4, movetoworkspace, 4"
-        "$mod SHIFT, 5, movetoworkspace, 5"
-        "$mod SHIFT, 6, movetoworkspace, 6"
-        "$mod SHIFT, 7, movetoworkspace, 7"
-        "$mod SHIFT, 8, movetoworkspace, 8"
-        "$mod SHIFT, 9, movetoworkspace, 9"
-        "$mod SHIFT, 0, movetoworkspace, 10"
+        "$mod SHIFT, 1, movetoworkspacesilent, 1"
+        "$mod SHIFT, 2, movetoworkspacesilent, 2"
+        "$mod SHIFT, 3, movetoworkspacesilent, 3"
+        "$mod SHIFT, 4, movetoworkspacesilent, 4"
+        "$mod SHIFT, 5, movetoworkspacesilent, 5"
+        "$mod SHIFT, 6, movetoworkspacesilent, 6"
+        "$mod SHIFT, 7, movetoworkspacesilent, 7"
+        "$mod SHIFT, 8, movetoworkspacesilent, 8"
+        "$mod SHIFT, 9, movetoworkspacesilent, 9"
+        "$mod SHIFT, 0, movetoworkspacesilent, 10"
+
+        # workspaces
+        "$mod, TAB, workspace, e+1"
+        "$mod SHIFT, TAB, workspace, e-1"
+        "$mod, backspace, workspace, previous"
 
         # Example special workspace (scratchpad)
         "$mod, S, togglespecialworkspace, magic"
@@ -252,6 +270,26 @@
       #windowrulev2 = "float,class:^(kitty)$,title:^(kitty)$";
 
       #windowrulev2 = "suppressevent maximize, class:.*"; # You'll probably like this.
+
+      ## debug##
+
+      debug = { disable_logs = false; };
+    };
+  };
+
+  services.hyprpaper = {
+    enable = true;
+    settings = {
+      ipc = "on";
+      splash = false;
+      splash_offset = 2.0;
+      # preload =
+      #   [ "/share/wallpapers/buttons.png" "/share/wallpapers/cat_pacman.png" ];
+
+      # wallpaper = [
+      #   "DP-3,/share/wallpapers/buttons.png"
+      #   "DP-1,/share/wallpapers/cat_pacman.png"
+      # ];
     };
   };
 }

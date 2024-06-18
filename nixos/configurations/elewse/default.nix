@@ -25,6 +25,7 @@ in {
             (prev: final: {
               neovim-full = inputs'.my-nvim.packages.nvim-full;
               neovim-light = inputs'.my-nvim.packages.nvim-light;
+              hyprpaper = inputs'.hyprpaper.packages.default;
             })
           ];
         }] ++ privateModules ++ [
@@ -33,7 +34,8 @@ in {
           impermanenceModule
           secretsModule
           sharedModules.linux-base
-          (import ./configuration.nix config.flake.lib)
+          (import ./configuration.nix config.flake.lib
+            inputs'.hyprland.packages.hyprland)
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
           inputs.home-manager.nixosModules.home-manager

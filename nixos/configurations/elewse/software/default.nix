@@ -1,5 +1,7 @@
+hyprlandPackage:
 { config, pkgs, lib, ... }: {
-  imports = [ ./hardware.nix ./compositor.nix ./greeter.nix ];
+  imports =
+    [ ./hardware.nix (import ./compositor.nix hyprlandPackage) ./greeter.nix ];
 
   environment.systemPackages = lib.mkBefore (with pkgs; [
     #neovim-light # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default
@@ -8,6 +10,20 @@
     brightnessctl
     #  wget
   ]);
+
+  ## programs ##
+
+  # file manager - thunar
+
+  # https://nixos.wiki/wiki/Thunar
+  programs.thunar.enable = true;
+  programs.thunar.plugins = [ pkgs.xfce.thunar-volman ];
+  services.gvfs.enable = true; # Mount, trash, and other functionalities
+  services.tumbler.enable = true; # Thumbnail support for images
+
+  #
+
+  ## services ##
 
   services.fprintd.enable = true;
   services.fwupd.enable = true;
