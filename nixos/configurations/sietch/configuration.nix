@@ -48,11 +48,8 @@ myflakelib:
       paths = [ "/var/lib/soft-serve" ];
       user = "root";
       startAt = "*-*-* 02/2:00:00";
-      # temporarily comment this out so that the config builds, see issue
-      # https://github.com/NixOS/nixpkgs/issues/282640
-      # persistentTimer = true; 
       # when we stop this it might be nice to have a temp
-      #     # ssh server spun up that says backup in progress
+      # ssh server spun up that says backup in progress
       preHook = ''
         systemctl stop soft-serve.service
       '';

@@ -15,6 +15,8 @@
       compression = "auto,zstd";
       #extraArgs = "--debug";
       extraCreateArgs = "--verbose --stats --checkpoint-interval 600";
+      # run service unit if system was shutdown and timer would've triggered it
+      persistentTimer = true;
     };
   };
 }
