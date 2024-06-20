@@ -45,7 +45,7 @@ in {
         libnotify
         obsidian
         ungoogled-chromium
-        google-chrome
+        hyprpicker
       ];
     in overriden ++ vanilla;
     #home.extraOutputsToInstall = [ "share" ];
