@@ -10,7 +10,15 @@ in {
     "sietch" = withSystem "x86_64-linux" (ctx@{ inputs', system, pkgs, ... }:
       inputs.nixpkgs.lib.nixosSystem {
         inherit system;
-        modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules ++ [
+        modules = [{
+          nixpkgs.pkgs = (import inputs.nixpkgs { localSystem = system; });
+          nixpkgs.overlays = [
+            (prev: final: {
+              neovim-full = inputs'.my-nvim.packages.nvim-full;
+              neovim-light = inputs'.my-nvim.packages.nvim-light;
+            })
+          ];
+        }] ++ privateModules ++ [
           #shared-modules.agenix
           secretsModule
           sharedModules.linux-base
