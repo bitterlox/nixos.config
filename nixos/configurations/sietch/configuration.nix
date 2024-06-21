@@ -18,7 +18,8 @@ myflakelib:
         isNormalUser = true;
         hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-        openssh.authorizedKeys.keys = [ config.sshPubKeys.voidbook ];
+        openssh.authorizedKeys.keys = let keys = config.lockbox.sshPubKeys;
+        in [ keys.voidbook keys.elewse ];
       };
     };
 
@@ -31,7 +32,7 @@ myflakelib:
 
     soft-serve = {
       adminPublicKeys = {
-        inherit (config.sshPubKeys) voidbook chani iphone elewse;
+        inherit (config.lockbox.sshPubKeys) voidbook chani iphone elewse;
       };
       sshPublicUrl = config.lockbox.softServeSshPublicUrl;
     };

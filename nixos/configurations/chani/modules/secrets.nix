@@ -23,6 +23,10 @@ secrets-flake: agenix-module: lockbox-module:
     lockbox = {
       hashedPasswordFilePath = config.age.secrets.password.path;
       sshKeyPath = config.age.secrets.ssh-private-key.path;
+      sshPubKeys = {
+        inherit (secrets-flake.common.sshPubKeys) voidbook iphone;
+        elewse = secrets-flake.elewse.ssh.public-key;
+      };
     };
   };
 }

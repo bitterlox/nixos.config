@@ -18,8 +18,8 @@
         isNormalUser = true;
         hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-        openssh.authorizedKeys.keys = let keys = config.sshPubKeys;
-        in [ keys.voidbook keys.iphone ];
+        openssh.authorizedKeys.keys = let keys = config.lockbox.sshPubKeys;
+        in [ keys.voidbook keys.iphone keys.elewse ];
       };
     };
 

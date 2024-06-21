@@ -28,6 +28,11 @@ secrets-flake: agenix-module: lockbox-module:
       borgPassphrasePath = config.age.secrets.borg-passphrase.path;
       sshKeyPath = config.age.secrets.ssh-private-key.path;
       softServeSshPublicUrl = secrets-flake.sietch.soft-serve-ssh-public-url;
+      sshPubKeys = {
+        inherit (secrets-flake.common.sshPubKeys) voidbook iphone;
+        chani = secrets-flake.chani.ssh.public-key;
+        elewse = secrets-flake.elewse.ssh.public-key;
+      };
     };
   };
 }
