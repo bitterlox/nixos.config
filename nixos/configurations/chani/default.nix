@@ -13,7 +13,15 @@ in {
         # If you need to pass other parameters,
         # you must use `specialArgs` by uncomment the following line:
         specialArgs = { };
-        modules = [{ nixpkgs.pkgs = pkgs; }] ++ privateModules ++ [
+        modules = [{
+          nixpkgs.pkgs = (import inputs.nixpkgs { localSystem = system; });
+          nixpkgs.overlays = [
+            (prev: final: {
+              neovim-full = inputs'.my-nvim.packages.nvim-full;
+              neovim-light = inputs'.my-nvim.packages.nvim-light;
+            })
+          ];
+        }] ++ privateModules ++ [
           secretsModule
           sharedModules.linux-base
           ./configuration.nix

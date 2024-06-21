@@ -493,10 +493,10 @@
         "type": "github"
       }
     },
-    "home-manager_2": {
+    "home-manager-stable": {
       "inputs": {
         "nixpkgs": [
-          "nixpkgs"
+          "nixpkgs-stable"
         ]
       },
       "locked": {
@@ -510,6 +510,26 @@
       "original": {
         "owner": "nix-community",
         "ref": "release-24.05",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "home-manager_2": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1718788307,
+        "narHash": "sha256-SqiOz0sljM0GjyQEVinPXQxaGcbOXw5OgpCWGPgh/vo=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "d7830d05421d0ced83a0f007900898bdcaf2a2ca",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
         "repo": "home-manager",
         "type": "github"
       }
@@ -1198,6 +1218,7 @@
         "devenv": "devenv",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager_2",
+        "home-manager-stable": "home-manager-stable",
         "hyprland": "hyprland",
         "hyprpaper": "hyprpaper",
         "impermanence": "impermanence",

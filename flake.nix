@@ -23,8 +23,10 @@
     my-nvim.inputs.nixpkgs.follows = "nixpkgs";
 
     ## home-manager ##
-    home-manager.url = "github:nix-community/home-manager/release-24.05";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager-stable.url = "github:nix-community/home-manager/release-24.05";
+    home-manager-stable.inputs.nixpkgs.follows = "nixpkgs-stable";
 
     ## secrets ##
     agenix.url = "github:ryantm/agenix";
