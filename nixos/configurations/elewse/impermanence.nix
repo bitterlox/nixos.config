@@ -94,6 +94,8 @@ impermanenceModule:
       };
     };
     # configure impermanence
+    # there's a bug which is not allowing me to impermanate /home
+    # https://github.com/nix-community/home-manager/issues/5421
     environment.persistence."/persist" = {
       directories = [
         "/etc/nixos"
@@ -106,6 +108,58 @@ impermanenceModule:
         # fingerprint sensor data
         "/var/lib/fprint"
       ];
+      #      ++ [
+      #        # handled by hm
+      #        # ".bash_profile"
+      #        # ".bashrc"
+      #
+      #        # these are caches, delete
+      #        # ".cache"
+      #        # ".compose-cache"
+      #
+      #        # nuke for now, keep only .config/obsidian
+      #        # ".config"
+      #        "/home/angel/.config/obsidian"
+      #
+      #        # keep all of these
+      #        "/home/angel/Desktop"
+      #        "/home/angel/Documents"
+      #        "/home/angel/Downloads"
+      #        "/home/angel/.gnupg"
+      #
+      #        # handled by hm
+      #        # ".gtkrc-2.0"
+      #        # seems mostly cache-like stuff, maybe can try to persist
+      #        # tofi and nvim stuff if they do wierd stuff
+      #        # ".local"
+      #
+      #        # keep all of these
+      #        "/home/angel/.mozilla"
+      #        "/home/angel/Music"
+      #
+      #        # delete, handled by nix / hm
+      #        # ".nix-defexpr"
+      #        # ".nix-profile"
+      #
+      #        # keep all of these
+      #        "/home/angel/.nvim"
+      #        "/home/angel/.password-store"
+      #        "/home/angel/Pictures"
+      #
+      #        # this is needed by gnome keyring, delete for now
+      #        # ".pki"
+      #
+      #        # handled by hm
+      #        # ".profile"
+      #
+      #        # keep all of these
+      #        "/home/angel/Public"
+      #
+      #        # handled by hm
+      #        # ".ssh"
+      #        "/home/angel/Templates"
+      #        "/home/angel/Videos"
+      #      ];
       files = [
         # this because someone said it's important?
         "/etc/machine-id"
@@ -117,7 +171,9 @@ impermanenceModule:
         "/root/.local/share/nix/trusted-settings.json"
         # this to avoid re-confirming every time i ssh to my servers
         "/root/.ssh/known_hosts"
+
       ];
+      #      ++ [ "/home/angel/.bash_history" "/home/angel/.ssh/known_hosts" ];
     };
 
     # manually create bind mounts using nixos filesystem facilities

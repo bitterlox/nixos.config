@@ -45,7 +45,8 @@ in {
 
             # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
             home-manager.users.angel =
-              (import ./hm/desktop.nix config.flake.homeModules.angel);
+              (import ./hm/desktop.nix config.flake.homeModules.angel
+                inputs.impermanence.nixosModules.home-manager.impermanence);
           }
         ];
       });

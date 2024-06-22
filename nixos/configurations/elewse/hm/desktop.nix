@@ -1,4 +1,4 @@
-angelBaseModule:
+angelBaseModule: impermanenceHmModule:
 { lib, config, options, pkgs, osConfig, ... }:
 let
   overrides = {
@@ -34,7 +34,7 @@ let
     });
   };
 in {
-  imports = [ angelBaseModule ./compositor ./browsers ];
+  imports = [ angelBaseModule impermanenceHmModule ./compositor ./browsers ];
   config = {
     home.packages = let
       overriden = with overrides; [ nerdfonts popcorntime ];
@@ -110,6 +110,67 @@ in {
     };
     services.mako.enable = true;
     services.cliphist.enable = true;
+
+    # this at least allows HM to create all dirs and files but fails
+    # because it says it can't find /persist/home/angel
+    # so the other one binds but does not activate, this one activates
+    # but doesn't bind
+    # home.persistence."/persist/home/angel" = {
+    #   directories = [
+    #     # handled by hm
+    #     # ".bash_profile"
+    #     # ".bashrc"
+
+    #     # these are caches, delete
+    #     # ".cache"
+    #     # ".compose-cache"
+
+    #     # nuke for now, keep only .config/obsidian
+    #     # ".config"
+    #     ".config/obsidian"
+
+    #     # keep all of these
+    #     "Desktop"
+    #     "Documents"
+    #     "Downloads"
+    #     ".gnupg"
+
+    #     # handled by hm
+    #     # ".gtkrc-2.0"
+    #     # seems mostly cache-like stuff, maybe can try to persist
+    #     # tofi and nvim stuff if they do wierd stuff
+    #     # ".local"
+
+    #     # keep all of these
+    #     ".mozilla"
+    #     "Music"
+
+    #     # delete, handled by nix / hm
+    #     # ".nix-defexpr"
+    #     # ".nix-profile"
+
+    #     # keep all of these
+    #     ".nvim"
+    #     ".password-store"
+    #     "Pictures"
+
+    #     # this is needed by gnome keyring, delete for now
+    #     # ".pki"
+
+    #     # handled by hm
+    #     # ".profile"
+
+    #     # keep all of these
+    #     "Public"
+
+    #     # handled by hm
+    #     # ".ssh"
+    #     "Templates"
+    #     "Videos"
+    #   ];
+    #   files = [ ".bash_history" ".ssh/known_hosts" ];
+    #   allowOther = true;
+    # };
 
     # todo: rclone
     # https://rclone.org/docs/#config-config-file
