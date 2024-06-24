@@ -33,7 +33,7 @@
     agenix.inputs.nixpkgs.follows = "nixpkgs";
 
     secrets-flake.url = "git+ssh://git.bittervoid.io:23231/secrets-flake";
-    #secrets-flake.url = "git+ssh://git.bittervoid.io:23231/secrets-flake";
+    #secrets-flake.url = "git+file:///home/angel/secrets-flake";
 
     # DX - utils #
     flake-parts.url = "github:hercules-ci/flake-parts";
