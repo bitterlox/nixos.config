@@ -31,6 +31,7 @@ myflakelib:
     };
 
     soft-serve = {
+      enable = true;
       adminPublicKeys = {
         inherit (config.lockbox.sshPubKeys) voidbook chani iphone elewse;
       };
