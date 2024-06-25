@@ -1,7 +1,6 @@
-{ pkgs, config, ... }:
+{ pkgs, config, lib, ... }:
 let
   cfg = config.soft-serve;
-  lib = pkgs.lib;
   adminKey = pkgs.writeText "soft-serve-admin-key" config.sshPubKeys.sietch;
 
   wrapped-soft-serve = import ./wrap-soft-serve.nix {
@@ -26,8 +25,8 @@ in {
         description = lib.mdDoc description;
       };
   in {
-    enable = lib.mkEnableOption "soft-serve";
     soft-serve = {
+      enable = lib.mkEnableOption "soft-serve";
       dataPath = lib.mkOption {
         type = lib.types.str;
         default = "/var/lib/soft-serve";
