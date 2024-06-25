@@ -23,6 +23,7 @@ in {
           secretsModule
           sharedModules.linux-base
           ./modules/soft-serve
+          ./modules/firefly-iii
           (import ./configuration.nix config.flake.lib)
           # make home-manager as a module of nixos
           # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`

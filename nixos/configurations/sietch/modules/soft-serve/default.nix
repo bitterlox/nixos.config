@@ -17,6 +17,7 @@ let
 in {
   imports = [ ];
   options = let
+    # todo: add this to myflakelib under a "port-utils" key or smth
     mkPortOption = default: description:
       lib.mkOption {
         type = lib.types.port;

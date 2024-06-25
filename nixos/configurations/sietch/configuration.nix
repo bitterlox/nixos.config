@@ -38,6 +38,12 @@ myflakelib:
       sshPublicUrl = config.lockbox.softServeSshPublicUrl;
     };
 
+    firefly-iii = {
+      enable = true;
+      virtualHost = "ff.bittervoid.io";
+      user = "angel";
+    };
+
     # https://nixos.wiki/wiki/Borg_backup
     # see: Don't try backup when unit is unavailable
     services.borgbackup.jobs.sietch = let
