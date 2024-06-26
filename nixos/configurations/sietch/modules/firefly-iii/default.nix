@@ -1,13 +1,12 @@
-{ pkgs, config, lib, ... }:
-let cfg = config.firefly-iii;
+{ pkgs, config, options, lib, ... }:
+let
+  cfg = config.firefly-iii;
+  # this username will be used to create a user under which we'll run 
+  # firefly-iii, caddy and everything else
+  defaultUsername = "caddy";
 in {
   options.firefly-iii = {
     enable = lib.mkEnableOption "firefly-iii";
-    user = lib.mkOption {
-      type = lib.types.str;
-      example = "foo";
-      description = lib.mdDoc "user under which to run firefly-iii";
-    };
     virtualHost = lib.mkOption {
       type = lib.types.str;
       example = "example.com";
@@ -27,35 +26,59 @@ in {
     };
     databaseName = lib.mkOption {
       type = lib.types.str;
-      default = "firefly";
-      example = "firefly";
+      default = "fireflydb";
+      example = "fireflydb";
       description = lib.mdDoc
         "name for mysql database to be created and used by firefly-iii";
     };
-    mysqlUser = lib.mkOption {
-      type = lib.types.str;
-      default = "127.0.0.1";
-      example = "127.0.0.1";
-      description = lib.mdDoc "name for mysql user";
-    };
   };
   config = lib.mkIf cfg.enable {
+    # open firewall for caddy
+    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    # using socket authentication means that we need to authenticate from a
+    # user account whose name is the same as the mysql user we're authenticating
+    # for; we create a user for this purpose
+    # users.users."${defaultUsername}" = {
+    #   isSystemUser = true;
+    #   group = "firefly-iii";
+    # };
+    # users.groups.firefly-iii = { };
     services.firefly-iii = {
       enable = true;
-      user = cfg.user;
+      user = defaultUsername;
       settings = {
         APP_ENV = "production";
+        # probably the only piece of state to add manually
         APP_KEY_FILE = "/var/secrets/firefly-iii-app-key.txt";
         SITE_OWNER = "admin@sietch";
         DB_CONNECTION = "mysql";
         DB_HOST = cfg.bind-address;
         DB_PORT = cfg.port;
         DB_DATABASE = cfg.databaseName;
-        DB_USERNAME = "firefly";
-        DB_PASSWORD_FILE = "/var/secrets/firefly-iii-mysql-password.txt";
+        DB_USERNAME = defaultUsername;
+        DB_SOCKET = "/run/mysqld/mysqld.sock";
       };
-      enableNginx = true;
+      # poolConfig = options.services.firefly-iii.poolConfig.default // {
+      #   user = "caddy";
+      #   group = "caddy";
+      #   "listen.owner" = "caddy";
+      #   "listen.group" = "caddy";
+      # };
+      enableNginx = false;
       virtualHost = cfg.virtualHost;
+    };
+    services.phpfpm.settings = { log_level = "debug"; };
+    services.caddy = {
+      #user = defaultUsername;
+      enable = true;
+      # there is an issue with the mimetype of files and the X-Content-Type-Options
+      # header; figure out if it's set by default or what, and then disable it;
+      virtualHosts."${cfg.virtualHost}".extraConfig = ''
+        encode gzip
+        file_server
+        root * ${config.services.firefly-iii.package}/public
+        php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii.socket}
+      '';
     };
     services.mysql = {
       enable = true;
@@ -66,7 +89,7 @@ in {
       };
       initialDatabases = [{ name = cfg.databaseName; }];
       ensureUsers = [{
-        name = cfg.mysqlUser;
+        name = defaultUsername;
         ensurePermissions = { "${cfg.databaseName}.*" = "ALL PRIVILEGES"; };
       }];
     };

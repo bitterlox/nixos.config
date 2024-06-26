@@ -41,7 +41,6 @@ myflakelib:
     firefly-iii = {
       enable = true;
       virtualHost = "ff.bittervoid.io";
-      user = "angel";
     };
 
     # https://nixos.wiki/wiki/Borg_backup
