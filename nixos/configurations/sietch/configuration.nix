@@ -64,7 +64,7 @@ myflakelib:
       };
       firefly-iii = defaults // {
         repo = config.lockbox.borg-repo-urls.firefly-iii;
-        paths = [ "/var/backup/mysql/" ];
+        paths = [ "/var/backup/mysql/" "/var/lib/firefly-iii/storage/upload/" ];
         startAt = "Mon *-*-* 01:00:00";
         # don't need hooks since we're backing up an inert sql dump
       };
