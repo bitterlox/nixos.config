@@ -56,7 +56,7 @@
 
   outputs = { flake-parts, ... }@inputs:
     flake-parts.lib.mkFlake { inherit inputs; } ({ flake-parts-lib, ... }: {
-      imports = [ ./lib ./nixos ./hm ./devshells ];
+      imports = [ ./lib ./nixos ./hm ./devshells ./packages ];
     });
 }
 

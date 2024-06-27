@@ -6,7 +6,7 @@
 
   # default packages
   environment.systemPackages = with pkgs; [
-    neovim-light
+    vim
     wget
     git
     psmisc # killall + other utils

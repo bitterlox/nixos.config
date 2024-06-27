@@ -64,11 +64,6 @@ myflakelib: hyprlandPackage:
     description = "angel";
     hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs;
-      [
-        neovim-light
-        #  thunderbird
-      ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.

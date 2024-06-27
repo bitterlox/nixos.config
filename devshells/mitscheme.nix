@@ -1,14 +1,17 @@
 { inputs, ... }: {
   imports = [ inputs.devenv.flakeModule ];
   systems = [ "x86_64-linux" ];
-  perSystem = { pkgs, ... }: {
-    config.devenv.shells.default = {
-      # https://devenv.sh/reference/options/
-      packages = [ pkgs.mitscheme ];
+  # i don't like devenv, it needs to be run with --impure and it 
+  # fucks up nix flake show; find alternative
 
-      enterShell = ''
-        echo "welcome to the shell"
-      '';
-    };
-  };
+  # perSystem = { pkgs, ... }: {
+  #   config.devenv.shells.default = {
+  #     # https://devenv.sh/reference/options/
+  #     packages = [ pkgs.mitscheme ];
+
+  #     enterShell = ''
+  #       echo "welcome to the shell"
+  #     '';
+  #   };
+  # };
 }

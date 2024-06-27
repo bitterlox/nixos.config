@@ -10,8 +10,6 @@
 
     networking.hostName = "chani"; # Define your hostname.
 
-    environment.systemPackages = [ pkgs.neovim-full ];
-
     users = {
       mutableUsers = false;
       users.angel = {

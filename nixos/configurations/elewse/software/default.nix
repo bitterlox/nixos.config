@@ -4,8 +4,6 @@ hyprlandPackage:
     [ ./hardware.nix (import ./compositor.nix hyprlandPackage) ./greeter.nix ];
 
   environment.systemPackages = lib.mkBefore (with pkgs; [
-    #neovim-light # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default
-    neovim-full
     git
     brightnessctl
     #  wget
