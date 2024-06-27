@@ -33,6 +33,7 @@ secrets-flake: agenix-module: lockbox-module:
         chani = secrets-flake.chani.ssh.public-key;
         elewse = secrets-flake.elewse.ssh.public-key;
       };
+      inherit (secrets-flake.sietch) borg-repo-urls;
     };
   };
 }

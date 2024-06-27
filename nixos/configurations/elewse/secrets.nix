@@ -41,6 +41,7 @@ secrets-flake: agenix-module: lockbox-module:
       sshHostsPath = config.age.secrets.ssh-hosts.path;
       borgPassphrasePath = config.age.secrets.borg-passphrase.path;
       backupsKeyPath = config.age.secrets.backups-ssh-privkey.path;
+      inherit (secrets-flake.elewse) borg-repo-url;
     };
   };
 }

@@ -98,7 +98,7 @@ myflakelib: hyprlandPackage:
       passphrasePath = config.lockbox.borgPassphrasePath;
     };
   in defaults // {
-    repo = "ssh://q4r945cs@q4r945cs.repo.borgbase.com/./repo";
+    repo = config.lockbox.borg-repo-url;
     paths = [ "/persist" ];
     user = "root";
     startAt = "weekly";

@@ -1,8 +1,20 @@
-{ pkgs, config, options, lib, ... }:
+{ pkgs, config, lib, ... }:
+# state created by this module:
+# - /var/lib/firefly-iii 
+# - /var/lib/caddy
+# - /var/lib/mysql
+# - ...?
+# state we need to create manually for this to work
+# - /var/secrets/firefly-iii-app-key.txt
 let
   cfg = config.firefly-iii;
   # this username will be used to create a user under which we'll run 
-  # firefly-iii, caddy and everything else
+  # firefly-iii, caddy and everything else;
+  # i tried to have firefly-iii use its own user account but was getting perm
+  # issues so now everything runs under the "caddy" account
+  # if switching this in the future remember that caddy itself isn't being
+  # congured for account currently, we're relying on the fact that is uses a
+  # "caddy" account on it own
   defaultUsername = "caddy";
 in {
   options.firefly-iii = {
@@ -35,14 +47,6 @@ in {
   config = lib.mkIf cfg.enable {
     # open firewall for caddy
     networking.firewall.allowedTCPPorts = [ 80 443 ];
-    # using socket authentication means that we need to authenticate from a
-    # user account whose name is the same as the mysql user we're authenticating
-    # for; we create a user for this purpose
-    # users.users."${defaultUsername}" = {
-    #   isSystemUser = true;
-    #   group = "firefly-iii";
-    # };
-    # users.groups.firefly-iii = { };
     services.firefly-iii = {
       enable = true;
       user = defaultUsername;
@@ -58,12 +62,6 @@ in {
         DB_USERNAME = defaultUsername;
         DB_SOCKET = "/run/mysqld/mysqld.sock";
       };
-      # poolConfig = options.services.firefly-iii.poolConfig.default // {
-      #   user = "caddy";
-      #   group = "caddy";
-      #   "listen.owner" = "caddy";
-      #   "listen.group" = "caddy";
-      # };
       enableNginx = false;
       virtualHost = cfg.virtualHost;
     };
@@ -71,8 +69,10 @@ in {
     services.caddy = {
       #user = defaultUsername;
       enable = true;
-      # there is an issue with the mimetype of files and the X-Content-Type-Options
-      # header; figure out if it's set by default or what, and then disable it;
+      # there is an issue with the mimetype of files and the
+      # X-Content-Type-Options header; figure out if it's set by default 
+      # or what, and then disable it;
+      # edit: issue fixed itself, header is no longer present... idk 
       virtualHosts."${cfg.virtualHost}".extraConfig = ''
         encode gzip
         file_server
@@ -80,6 +80,8 @@ in {
         php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii.socket}
       '';
     };
+    # using socket authentication means that we need to authenticate from a user
+    # account whose name is the same as the mysql user we're authenticating for
     services.mysql = {
       enable = true;
       package = pkgs.mariadb;
@@ -95,7 +97,7 @@ in {
     };
     services.mysqlBackup = {
       enable = true;
-      user = "backup";
+      user = "angel";
       calendar = "weekly";
       databases = [ cfg.databaseName ];
       # figure out if this takes a toll on server resources

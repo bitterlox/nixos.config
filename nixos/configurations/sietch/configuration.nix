@@ -45,26 +45,30 @@ myflakelib:
 
     # https://nixos.wiki/wiki/Borg_backup
     # see: Don't try backup when unit is unavailable
-    services.borgbackup.jobs.sietch = let
+    services.borgbackup.jobs = let
       defaults = myflakelib.defaultBorgOptions {
         inherit (config.lockbox) sshKeyPath;
         passphrasePath = config.lockbox.borgPassphrasePath;
+      } // {
+        user = "root";
       };
-    in defaults // {
-      repo = "ssh://j6zbx5gr@j6zbx5gr.repo.borgbase.com/./repo";
-      paths = [ "/var/lib/soft-serve" ];
-      user = "root";
-      startAt = "*-*-* 02/2:00:00";
-      # when we stop this it might be nice to have a temp
-      # ssh server spun up that says backup in progress
-      preHook = ''
-        systemctl stop soft-serve.service
-      '';
-      postHook = ''
-        systemctl start soft-serve.service
-      '';
+    in {
+      soft-serve = defaults // {
+        repo = config.lockbox.borg-repo-urls.soft-serve;
+        paths = [ "/var/lib/soft-serve" ];
+        startAt = "*-*-* 02/2:00:00";
+        # when we stop this it might be nice to have a temp
+        # ssh server spun up that says backup in progress
+        preHook = "systemctl stop soft-serve.service";
+        postHook = "systemctl start soft-serve.service";
+      };
+      firefly-iii = defaults // {
+        repo = config.lockbox.borg-repo-urls.firefly-iii;
+        paths = [ "/var/backup/mysql/" ];
+        startAt = "Mon *-*-* 01:00:00";
+        # don't need hooks since we're backing up an inert sql dump
+      };
     };
-
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
     # on your system were taken. It's perfectly fine and recommended to leave
