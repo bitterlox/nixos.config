@@ -9,6 +9,7 @@
     vim
     wget
     git
+    htop
     psmisc # killall + other utils
   ];
 
