@@ -1,5 +1,5 @@
 # this is akin to a flake-parts top-level module
-{ self, inputs, config, lib, ... }: {
+{ self, pkgs, inputs, config, lib, ... }: {
   #imports = [{
   #  _module.args = {
   #    sharedModules = [{ nixpkgs.overlays = [ overlay-nvim ]; }];
@@ -9,7 +9,10 @@
     packages = {
       neovim-full = inputs'.my-nvim.packages.nvim-full;
       neovim-light = inputs'.my-nvim.packages.nvim-light;
-    };
+    } // (with pkgs; {
+      firefly-iii-data-importer =
+        (callPackage ./firefly-iii-data-importer.nix { });
+    });
   };
   systems = [ "x86_64-linux" "aarch64-darwin" ];
 }
