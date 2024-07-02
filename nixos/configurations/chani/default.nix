@@ -30,9 +30,10 @@ in {
               home-manager.useUserPackages = true;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
-              home-manager.users.angel = { ... }: {
+              home-manager.users.angel = { osConfig, ... }: {
                 imports = [ config.flake.homeModules.angel ];
                 config = {
+                  programs.ssh.includes = [ osConfig.lockbox.sshHostsPath ];
                   # This value determines the home Manager release that your
                   # configuration is compatible with. This helps avoid breakage
                   # when a new home Manager release introduces backwards

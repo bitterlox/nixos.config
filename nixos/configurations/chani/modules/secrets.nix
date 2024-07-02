@@ -16,6 +16,12 @@ secrets-flake: agenix-module: lockbox-module:
         owner = "angel";
         group = "users";
       };
+      ssh-hosts = {
+        file = secrets-flake.common.ssh-hosts;
+        mode = "600";
+        owner = "angel";
+        group = "users";
+      };
     };
     # WIP fill in stuff in lockbox and add the cleartext stuff alongside
     # not sure if we need to split out the filling of the lockbox to load
@@ -23,6 +29,7 @@ secrets-flake: agenix-module: lockbox-module:
     lockbox = {
       hashedPasswordFilePath = config.age.secrets.password.path;
       sshKeyPath = config.age.secrets.ssh-private-key.path;
+      sshHostsPath = config.age.secrets.ssh-hosts.path;
       sshPubKeys = {
         inherit (secrets-flake.common.sshPubKeys) voidbook iphone;
         elewse = secrets-flake.elewse.ssh.public-key;
