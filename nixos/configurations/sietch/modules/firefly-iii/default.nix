@@ -17,12 +17,26 @@ let
   # "caddy" account on it own
   defaultUsername = "caddy";
 in {
+  imports = [ ./firefly-iii-data-importer.nix ];
   options.firefly-iii = {
     enable = lib.mkEnableOption "firefly-iii";
-    virtualHost = lib.mkOption {
-      type = lib.types.str;
-      example = "example.com";
-      description = lib.mdDoc "external address for firefly-iii";
+    dataImporterPackage = lib.mkOption {
+      type = lib.types.package;
+      description = ''
+        The firefly-iii-data-importer package served by php-fpm and the webserver of choice.
+        This option can be used to point the webserver to the correct root.
+      '';
+    };
+    virtualHosts = lib.mkOption {
+      type = let virtualHostOption = lib.mkOption { type = lib.types.str; };
+      in lib.types.submodule {
+        options.firefly-iii = virtualHostOption;
+        options.data-importer = virtualHostOption;
+      };
+      example =
+        "{ firefly-iii = 'ff.example.com'; data-importer = 'di.example.com'; }";
+      description =
+        lib.mdDoc "external addresses for firefly-iii and the data-importer";
     };
     bind-address = lib.mkOption {
       type = lib.types.str;
@@ -63,7 +77,15 @@ in {
         DB_SOCKET = "/run/mysqld/mysqld.sock";
       };
       enableNginx = false;
-      virtualHost = cfg.virtualHost;
+      virtualHost = cfg.virtualHosts.firefly-iii;
+    };
+    customServices.firefly-iii-data-importer = {
+      enable = true;
+      package = cfg.dataImporterPackage;
+      settings = {
+          FIREFLY_III_URL = "https://${cfg.virtualHosts.firefly-iii}";
+          FIREFLY_III_ACCESS_TOKEN_FILE = "/var/secrets/firefly-iii-data-importer-token.txt";
+        };
     };
     services.phpfpm.settings = { log_level = "debug"; };
     services.caddy = {
@@ -73,11 +95,18 @@ in {
       # X-Content-Type-Options header; figure out if it's set by default 
       # or what, and then disable it;
       # edit: issue fixed itself, header is no longer present... idk 
-      virtualHosts."${cfg.virtualHost}".extraConfig = ''
+      virtualHosts."${cfg.virtualHosts.firefly-iii}".extraConfig = ''
         encode gzip
         file_server
         root * ${config.services.firefly-iii.package}/public
         php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii.socket}
+      '';
+
+      virtualHosts."${cfg.virtualHosts.data-importer}".extraConfig = ''
+        encode gzip
+        file_server
+        root * ${cfg.dataImporterPackage}/public
+        php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii-data-importer.socket}
       '';
     };
     # using socket authentication means that we need to authenticate from a user

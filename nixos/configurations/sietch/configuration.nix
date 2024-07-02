@@ -40,7 +40,10 @@ myflakelib:
 
     firefly-iii = {
       enable = true;
-      virtualHost = "ff.bittervoid.io";
+      virtualHosts = {
+          firefly-iii =  "ff.bittervoid.io";
+          data-importer =  "di.bittervoid.io";
+        };
     };
 
     # https://nixos.wiki/wiki/Borg_backup

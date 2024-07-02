@@ -35,10 +35,7 @@ in phpPackage.buildComposerProject (finalAttrs: {
 
   vendorHash = "sha256-dSv8Xcd1YUBr9D/kKuMJSVzX6rel9t7HQv5Nf8NGWCc=";
 
-  #  passthru = {
-  #    inherit phpPackage;
-  #    tests = nixosTests.firefly-iii;
-  #  };
+  passthru = { inherit phpPackage; };
 
   postInstall = ''
     mv $out/share/php/${pname}/* $out/

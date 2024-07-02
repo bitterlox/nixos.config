@@ -11,10 +11,11 @@ in {
       (ctx@{ inputs', self', system, pkgs, ... }:
         inputs.nixpkgs.lib.nixosSystem {
           inherit system;
-          modules = [{
+          modules = let p = self'.packages;
+          in [{
             # add my own packages
-            environment.systemPackages = let p = self'.packages;
-            in [ p.neovim-light p.neovim-full ];
+            firefly-iii.dataImporterPackage = p.firefly-iii-data-importer;
+            environment.systemPackages = [ p.neovim-light p.neovim-full ];
           }] ++ privateModules ++ [
             #shared-modules.agenix
             secretsModule
