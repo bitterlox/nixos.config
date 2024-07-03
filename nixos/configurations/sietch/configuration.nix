@@ -19,7 +19,7 @@ myflakelib:
         hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
         openssh.authorizedKeys.keys = let keys = config.lockbox.sshPubKeys;
-        in [ keys.voidbook keys.elewse ];
+        in [ keys.voidbook keys.elewse keys.chani ];
       };
     };
 
@@ -41,9 +41,9 @@ myflakelib:
     firefly-iii = {
       enable = true;
       virtualHosts = {
-          firefly-iii =  "ff.bittervoid.io";
-          data-importer =  "di.bittervoid.io";
-        };
+        firefly-iii = "ff.bittervoid.io";
+        data-importer = "di.bittervoid.io";
+      };
     };
 
     # https://nixos.wiki/wiki/Borg_backup
