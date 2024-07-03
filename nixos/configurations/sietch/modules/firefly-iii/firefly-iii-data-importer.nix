@@ -1,15 +1,11 @@
 { pkgs, config, lib, ... }:
 
 let
-  inherit (lib)
-    optionalString mkDefault mkIf mkOption mkEnableOption literalExpression;
-  inherit (lib.types)
-    nullOr attrsOf oneOf str int bool path package enum submodule;
-  inherit (lib.strings)
-    concatLines removePrefix toShellVars removeSuffix hasSuffix;
+  inherit (lib) mkIf mkOption mkEnableOption literalExpression;
+  inherit (lib.types) attrsOf oneOf str int bool path package submodule;
+  inherit (lib.strings) concatLines toShellVars removeSuffix hasSuffix;
   inherit (lib.attrsets)
-    mapAttrsToList attrValues genAttrs filterAttrs mapAttrs' nameValuePair;
-  inherit (builtins) isInt isString toString typeOf;
+    mapAttrsToList genAttrs filterAttrs mapAttrs' nameValuePair;
 
   firefly-iii-cfg = config.services.firefly-iii;
   cfg = config.customServices.firefly-iii-data-importer;
@@ -17,8 +13,8 @@ let
   firefly-iii-user = firefly-iii-cfg.user;
   firefly-iii-group = firefly-iii-cfg.group;
 
-  # artisan = "${cfg.package}/artisan";
-  #
+  artisan = "${cfg.package}/artisan";
+
   env-file-values = mapAttrs' (n: v: nameValuePair (removeSuffix "_FILE" n) v)
     (filterAttrs (n: v: hasSuffix "_FILE" n) cfg.settings);
   env-nonfile-values = filterAttrs (n: v: !hasSuffix "_FILE" n) cfg.settings;
@@ -30,9 +26,16 @@ let
     set +a
   '';
 
+  # one of the artisan commands imports the env vars into the php process
+  # or in the config, idk which
   firefly-iii-maintenance =
     pkgs.writeShellScript "firefly-iii-maintenance.sh" ''
       ${fileenv-func}
+
+      ${artisan} package:discover
+      ${artisan} cache:clear
+      ${artisan} config:cache
+      ${artisan} importer:version
     '';
 
   commonServiceConfig = {
@@ -77,21 +80,6 @@ in {
     enable = mkEnableOption
       "Firefly III: A free and open source personal finance manager";
 
-    # user = mkOption {
-    #   type = str;
-    #   default = firefly-iii-user;
-    #   description = "User account under which the data importer runs.";
-    # };
-
-    # group = mkOption {
-    #   type = str;
-    #   default = firefly-iii-group;
-    #   description = ''
-    #     Group under which the data importer runs. It is best to set this to the group
-    #     of whatever webserver is being used as the frontend.
-    #   '';
-    # };
-
     dataDir = mkOption {
       type = path;
       default = "/var/lib/firefly-iii-data-importer";
@@ -112,27 +100,6 @@ in {
       apply = firefly-iii-data-importer:
         firefly-iii-data-importer.override (prev: { dataDir = cfg.dataDir; });
     };
-
-    # enableNginx = mkOption {
-    #   type = bool;
-    #   default = false;
-    #   description = ''
-    #     Whether to enable nginx or not. If enabled, an nginx virtual host will
-    #     be created for access to firefly-iii. If not enabled, then you may use
-    #     `''${config.services.firefly-iii.package}` as your document root in
-    #     whichever webserver you wish to setup.
-    #   '';
-    # };
-
-    # virtualHost = mkOption {
-    #   type = str;
-    #   default = "localhost";
-    #   description = ''
-    #     The hostname at which you wish firefly-iii to be served. If you have
-    #     enabled nginx using `services.firefly-iii.enableNginx` then this will
-    #     be used.
-    #   '';
-    # };
 
     poolConfig = mkOption {
       type = attrsOf (oneOf [ str int bool ]);
@@ -161,19 +128,6 @@ in {
         APP_URL will be the same as `services.firefly-iii.virtualHost` if the
         former is unset in `services.firefly-iii.settings`.
       '';
-      #   example = literalExpression ''
-      #     {
-      #       APP_ENV = "production";
-      #       APP_KEY_FILE = "/var/secrets/firefly-iii-app-key.txt";
-      #       SITE_OWNER = "mail@example.com";
-      #       DB_CONNECTION = "mysql";
-      #       DB_HOST = "db";
-      #       DB_PORT = 3306;
-      #       DB_DATABASE = "firefly";
-      #       DB_USERNAME = "firefly";
-      #       DB_PASSWORD_FILE = "/var/secrets/firefly-iii-mysql-password.txt;
-      #     }
-      #   '';
       type = submodule {
         freeformType = attrsOf (oneOf [ str int bool ]);
         options = {
@@ -224,54 +178,6 @@ in {
       restartTriggers = [ cfg.package ];
     };
 
-    # systemd.services.firefly-iii-cron = {
-    #   after =
-    #     [ "firefly-iii-setup.service" "postgresql.service" "mysql.service" ];
-    #   wants = [ "firefly-iii-setup.service" ];
-    #   description = "Daily Firefly III cron job";
-    #   serviceConfig = {
-    #     ExecStart = "${artisan} firefly-iii:cron";
-    #   } // commonServiceConfig;
-    # };
-
-    # systemd.timers.firefly-iii-cron = {
-    #   description = "Trigger Firefly Cron";
-    #   timerConfig = {
-    #     OnCalendar = "Daily";
-    #     RandomizedDelaySec = "1800s";
-    #     Persistent = true;
-    #   };
-    #   wantedBy = [ "timers.target" ];
-    #   restartTriggers = [ cfg.package ];
-    # };
-
-    # services.nginx = mkIf cfg.enableNginx {
-    #   enable = true;
-    #   recommendedTlsSettings = mkDefault true;
-    #   recommendedOptimisation = mkDefault true;
-    #   recommendedGzipSettings = mkDefault true;
-    #   virtualHosts.${cfg.virtualHost} = {
-    #     root = "${cfg.package}/public";
-    #     locations = {
-    #       "/" = {
-    #         tryFiles = "$uri $uri/ /index.php?$query_string";
-    #         index = "index.php";
-    #         extraConfig = ''
-    #           sendfile off;
-    #         '';
-    #       };
-    #       "~ .php$" = {
-    #         extraConfig = ''
-    #           include ${config.services.nginx.package}/conf/fastcgi_params ;
-    #           fastcgi_param SCRIPT_FILENAME $request_filename;
-    #           fastcgi_param modHeadersAvailable true; #Avoid sending the security headers twice
-    #           fastcgi_pass unix:${config.services.phpfpm.pools.firefly-iii.socket};
-    #         '';
-    #       };
-    #     };
-    #   };
-    # };
-
     systemd.tmpfiles.settings."10-firefly-iii" = genAttrs [
       "${cfg.dataDir}/storage"
       "${cfg.dataDir}/storage/app"
@@ -297,19 +203,6 @@ in {
         user = firefly-iii-user;
       };
     };
-
-    # users = {
-    #   users = mkIf (firefly-iii-user == defaultUser) {
-    #     ${defaultUser} = {
-    #       description = "Firefly-iii service user";
-    #       group = firefly-iii-group;
-    #       isSystemUser = true;
-    #       home = cfg.dataDir;
-    #     };
-    #   };
-    #   groups =
-    #     mkIf (firefly-iii-group == defaultGroup) { ${defaultGroup} = { }; };
-    # };
   };
 }
 
