@@ -42,7 +42,7 @@ myflakelib:
       enable = true;
       virtualHosts = {
         firefly-iii = "ff.bittervoid.io";
-        data-importer = "di.bittervoid.io";
+        data-importer = "http://localhost:1234";
       };
     };
 
