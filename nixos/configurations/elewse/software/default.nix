@@ -6,6 +6,7 @@ hyprlandPackage:
   environment.systemPackages = lib.mkBefore (with pkgs; [
     git
     brightnessctl
+    libreoffice-qt6-fresh
     #  wget
   ]);
 

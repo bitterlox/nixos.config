@@ -34,7 +34,7 @@ let
     });
   };
 in {
-  imports = [ angelBaseModule impermanenceHmModule ./compositor ./browsers ];
+  imports = [ angelBaseModule impermanenceHmModule ./compositor ./browsers ./shells.nix ];
   config = {
     home.packages = let
       overriden = with overrides; [ nerdfonts popcorntime ];
