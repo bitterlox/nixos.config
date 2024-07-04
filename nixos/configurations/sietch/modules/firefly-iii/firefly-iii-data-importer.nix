@@ -178,7 +178,7 @@ in {
       restartTriggers = [ cfg.package ];
     };
 
-    systemd.tmpfiles.settings."10-firefly-iii" = genAttrs [
+    systemd.tmpfiles.settings."10-firefly-iii-data-importer" = genAttrs [
       "${cfg.dataDir}/storage"
       "${cfg.dataDir}/storage/app"
       "${cfg.dataDir}/storage/database"

@@ -83,9 +83,12 @@ in {
       enable = true;
       package = cfg.dataImporterPackage;
       settings = {
-          FIREFLY_III_URL = "https://${cfg.virtualHosts.firefly-iii}";
-          FIREFLY_III_ACCESS_TOKEN_FILE = "/var/secrets/firefly-iii-data-importer-token.txt";
-        };
+        APP_DEBUG = true;
+        LOG_LEVEL = "debug";
+        FIREFLY_III_URL = "https://${cfg.virtualHosts.firefly-iii}";
+        FIREFLY_III_ACCESS_TOKEN_FILE =
+          "/var/secrets/firefly-iii-data-importer-token.txt";
+      };
     };
     services.phpfpm.settings = { log_level = "debug"; };
     services.caddy = {
