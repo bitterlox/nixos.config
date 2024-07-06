@@ -1,6 +1,6 @@
 { pkgs, lib, config, ... }:
 let
-  languagePacks = [ "it" "en-US" ];
+  languagePacks = [ "it" "en-GB" ];
   pkgVersion = config.programs.firefox.package.version;
 
   lock-false = {
@@ -38,7 +38,7 @@ in {
       DisplayMenuBar =
         "default-off"; # alternatives: "always", "never" or "default-on"
       SearchBar = "unified"; # alternative: "separate"
-
+      RequestedLocales= ["en-GB" "it"];
       # ---- EXTENSIONS ----
       # Check about:support for extension/add-on ID strings.
       # Valid strings for installation_mode are "allowed", "blocked",

@@ -36,8 +36,11 @@
     #    openFirewall = true;
   };
 
+  # use en_GB locale so any app that grabs that knows i want dates in
+  # dd/MM/y
   i18n.supportedLocales =
-    [ "C.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "it_IT.UTF-8/UTF-8" ];
+    [ "C.UTF-8/UTF-8" "en_GB.UTF-8/UTF-8" "it_IT.UTF-8/UTF-8" ];
+  i18n.defaultLocale = "en_GB.UTF-8";
 
   # Perform garbage collection weekly to maintain low disk usage
   nix.gc = {

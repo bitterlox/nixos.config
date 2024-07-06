@@ -75,7 +75,7 @@ in {
         DB_DATABASE = cfg.databaseName;
         DB_USERNAME = defaultUsername;
         DB_SOCKET = "/run/mysqld/mysqld.sock";
-        DEFAULT_LOCALE = "it_IT";
+        DEFAULT_LOCALE = "en_GB";
         TZ = "Europe/Paris";
       };
       enableNginx = false;
