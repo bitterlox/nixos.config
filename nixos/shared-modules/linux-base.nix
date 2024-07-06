@@ -1,4 +1,4 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib,... }: {
   time.timeZone = "Europe/Rome";
 
   # Limit the number of generations to keep
@@ -40,7 +40,7 @@
   # dd/MM/y
   i18n.supportedLocales =
     [ "C.UTF-8/UTF-8" "en_GB.UTF-8/UTF-8" "it_IT.UTF-8/UTF-8" ];
-  i18n.defaultLocale = "en_GB.UTF-8";
+  i18n.defaultLocale = lib.mkDefault "en_GB.UTF-8";
 
   # Perform garbage collection weekly to maintain low disk usage
   nix.gc = {
