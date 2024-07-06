@@ -75,6 +75,8 @@ in {
         DB_DATABASE = cfg.databaseName;
         DB_USERNAME = defaultUsername;
         DB_SOCKET = "/run/mysqld/mysqld.sock";
+        DEFAULT_LOCALE = "it_IT";
+        TZ = "Europe/Paris";
       };
       enableNginx = false;
       virtualHost = cfg.virtualHosts.firefly-iii;

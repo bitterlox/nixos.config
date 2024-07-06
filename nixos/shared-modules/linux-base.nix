@@ -36,6 +36,9 @@
     #    openFirewall = true;
   };
 
+  i18n.supportedLocales =
+    [ "C.UTF-8/UTF-8" "en_US.UTF-8/UTF-8" "it_IT.UTF-8/UTF-8" ];
+
   # Perform garbage collection weekly to maintain low disk usage
   nix.gc = {
     automatic = true;
