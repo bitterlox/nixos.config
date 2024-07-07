@@ -88,8 +88,8 @@ in {
         APP_DEBUG = true;
         LOG_LEVEL = "debug";
         FIREFLY_III_URL = "https://${cfg.virtualHosts.firefly-iii}";
-        FIREFLY_III_ACCESS_TOKEN_FILE =
-          "/var/secrets/firefly-iii-data-importer-token.txt";
+        FIREFLY_III_CLIENT_ID_FILE =
+          "/var/secrets/firefly-iii-client-id.txt";
       };
     };
     services.phpfpm.settings = { log_level = "debug"; };
