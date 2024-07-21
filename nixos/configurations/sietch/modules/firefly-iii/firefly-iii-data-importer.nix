@@ -188,7 +188,7 @@ in {
       "${cfg.dataDir}/storage/framework/sessions"
       "${cfg.dataDir}/storage/framework/views"
       "${cfg.dataDir}/storage/logs"
-      "${cfg.dataDir}/storage/upload"
+      "${cfg.dataDir}/storage/uploads"
       "${cfg.dataDir}/cache"
     ] (n: {
       d = {
