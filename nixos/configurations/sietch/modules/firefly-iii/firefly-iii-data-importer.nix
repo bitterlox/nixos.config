@@ -138,10 +138,10 @@ in {
               The url where firefly-iii is served.
             '';
           };
-          FIREFLY_III_ACCESS_TOKEN_FILE = mkOption {
+          FIREFLY_III_CLIENT_ID_FILE = mkOption {
             type = str;
             description = ''
-              OAuth access token to connect to the firefly-iii api.
+              OAuth client id to connect to the firefly-iii api.
             '';
           };
         };
@@ -150,7 +150,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-
     services.phpfpm.pools.firefly-iii-data-importer = {
       group = firefly-iii-group;
       user = firefly-iii-user;
