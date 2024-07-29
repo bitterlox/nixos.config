@@ -1,51 +1,46 @@
 { lib, fetchFromGitHub, buildNpmPackage, php83
-, dataDir ? "/var/lib/firefly-iii-data-importer" }:
+, dataDir ? "/var/lib/firefly-pico" }:
 
 let
-  pname = "firefly-iii-data-importer";
-  version = "1.5.2";
+  pname = "firefly-pico";
+  version = "1.2.0";
   phpPackage = php83;
 
   # how does fetchFromGitHub work?? does it work with a gz file?
   src = fetchFromGitHub {
-    owner = "firefly-iii";
-    repo = "data-importer";
-    rev = "v${version}";
-    #rev = "develop-20240702";
-    # v1.5.2
-    hash = "sha256-xGYaSoK6luGTZ2/waGbnnvdXk1IoyseSbD/uW8KIqto=";
-    # develop/2024-07-02 
-    #hash = "sha256-soJ2Z3DO6Y1H787CEAgsZc1U18Oi1DdqYFrzB5n/e84=";
-
+    owner = "cioraneanu";
+    repo = "firefly-pico";
+    rev = "${version}";
+    hash = "sha256-zJOWuZm5doYXz/PwYy6qMbcCnFwbq8Hc5hhabYXuJQs=";
   };
 
   assets = buildNpmPackage {
     pname = "${pname}-assets";
-    inherit version src;
-    # v1.5.2
-    npmDepsHash = "sha256-ZSHMDalFM3Iu7gL0SoZ0akrS5UAH1FOWTRsGjzM7DWA=";
-    # develop/2024-07-02 
-    #npmDepsHash = "sha256-je37E3vE12HvZ1HIPfMYx6ReD4dwWVN9PqDg23BTMu8=";
+    inherit version;
+    src = "${src}/front";
+    npmDepsHash = "sha256-sxTuQaU7aMBS0hmo1Ai8trFZeYovhCYyv6ilQBndw+o=";
     dontNpmBuild = true;
     # from nixpkgs docs:
     # ... even if you don’t use them directly (the other hooks), it is good
     # practice to do so anyways for downstream users who would want to add a
     # postInstall by overriding your derivation.
+    # 
+    # disable nuxt telemetry because it asks it thru tty and since it can't
+    # get one then crashes build
     installPhase = ''
       runHook preInstall
-      npm run build --workspace=v2
+      NUXT_TELEMETRY_DISABLED=1 npm run build
       cp -r ./public $out/
       runHook postInstall
     '';
   };
 
 in phpPackage.buildComposerProject (finalAttrs: {
-  inherit pname src version;
+  inherit pname version;
 
-  # v1.5.2
-  vendorHash = "sha256-dSv8Xcd1YUBr9D/kKuMJSVzX6rel9t7HQv5Nf8NGWCc=";
-  # develop/2024-07-02 
-  #vendorHash = "sha256-4Sxl5GJh2iubMutNd7pIQZVJ4NWEEkeZDDZEMxG7U80=";
+  src = "${src}/back";
+
+  vendorHash = "sha256-RFOZJdt7Ejnj8RlikrWcl5apELAqu+1UaTTnd4yb4V4=";
 
   passthru = { inherit phpPackage; };
 
@@ -60,6 +55,6 @@ in phpPackage.buildComposerProject (finalAttrs: {
   meta = {
     changelog =
       "https://github.com/firefly-iii/data-importer/releases/tag/v${version}";
-    description = "Data importer for Firefly III";
+    description = "Lightweight mobile-first frontend for firefly-iii";
   };
 })
