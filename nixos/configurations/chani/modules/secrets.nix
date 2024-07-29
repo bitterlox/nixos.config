@@ -33,6 +33,7 @@ secrets-flake: agenix-module: lockbox-module:
       sshPubKeys = {
         inherit (secrets-flake.common.sshPubKeys) voidbook iphone;
         elewse = secrets-flake.elewse.ssh.public-key;
+        sietch = secrets-flake.sietch.ssh.public-key;
       };
     };
   };
