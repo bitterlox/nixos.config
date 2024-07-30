@@ -14,6 +14,9 @@ let
     hash = "sha256-zJOWuZm5doYXz/PwYy6qMbcCnFwbq8Hc5hhabYXuJQs=";
   };
 
+  # we run this with "node ${out}/server/index.mjs"
+  # set up systemd service for this
+  # use nodejs light
   assets = buildNpmPackage {
     pname = "${pname}-assets";
     inherit version;
@@ -30,7 +33,7 @@ let
     installPhase = ''
       runHook preInstall
       NUXT_TELEMETRY_DISABLED=1 npm run build
-      cp -r ./public $out/
+      cp -r .output $out/
       runHook postInstall
     '';
   };

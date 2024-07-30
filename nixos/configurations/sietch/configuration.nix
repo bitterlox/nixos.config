@@ -1,5 +1,5 @@
 myflakelib:
-{ config, ... }: {
+{ config, lib, ... }: {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
   ];
@@ -43,6 +43,7 @@ myflakelib:
       virtualHosts = {
         firefly-iii = "ff.bittervoid.io";
         data-importer = "http://localhost:1234";
+        firefly-pico = "ffp.bittervoid.io";
       };
     };
 
@@ -81,6 +82,10 @@ myflakelib:
       sshUser = "angel";
       protocol = "ssh-ng";
     }];
+    nix.settings.trusted-substituters = [ "ssh://chani" "ssh-ng://chani"  ];
+    nix.settings.trusted-public-keys = [
+      "chani-1:L30eiZk3KcfCWTmQGbG29d/5rB/AuwZS6KTMm5up1vc=" # this one is cache-pub-key.pem content
+    ];
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
     # on your system were taken. It's perfectly fine and recommended to leave

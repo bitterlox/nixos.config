@@ -17,10 +17,17 @@ let
   # "caddy" account on it own
   defaultUsername = "caddy";
 in {
-  imports = [ ./firefly-iii-data-importer.nix ];
+  imports = [ ./firefly-iii-data-importer.nix ./firefly-pico.nix ];
   options.firefly-iii = {
     enable = lib.mkEnableOption "firefly-iii";
     dataImporterPackage = lib.mkOption {
+      type = lib.types.package;
+      description = ''
+        The firefly-iii-data-importer package served by php-fpm and the webserver of choice.
+        This option can be used to point the webserver to the correct root.
+      '';
+    };
+    fireflyPicoPackage = lib.mkOption {
       type = lib.types.package;
       description = ''
         The firefly-iii-data-importer package served by php-fpm and the webserver of choice.
@@ -32,6 +39,7 @@ in {
       in lib.types.submodule {
         options.firefly-iii = virtualHostOption;
         options.data-importer = virtualHostOption;
+        options.firefly-pico = virtualHostOption;
       };
       example =
         "{ firefly-iii = 'ff.example.com'; data-importer = 'di.example.com'; }";
@@ -49,6 +57,12 @@ in {
       default = 3306;
       example = "3306";
       description = lib.mdDoc "port for mysql to listen on";
+    };
+    firefly-pico-frontend-url = lib.mkOption {
+      type = lib.types.str;
+      default = "127.0.0.1:3000";
+      example = "127.0.0.1:3000";
+      description = lib.mdDoc "address for nuxt-served firefly-pico frontend";
     };
     databaseName = lib.mkOption {
       type = lib.types.str;
@@ -88,8 +102,15 @@ in {
         APP_DEBUG = true;
         LOG_LEVEL = "debug";
         FIREFLY_III_URL = "https://${cfg.virtualHosts.firefly-iii}";
-        FIREFLY_III_CLIENT_ID_FILE =
-          "/var/secrets/firefly-iii-client-id.txt";
+        FIREFLY_III_CLIENT_ID_FILE = "/var/secrets/firefly-iii-client-id.txt";
+      };
+    };
+    customServices.firefly-pico = {
+      enable = true;
+      package = cfg.fireflyPicoPackage;
+      settings = {
+        FIREFLY_III_URL = "https://${cfg.virtualHosts.firefly-iii}";
+        DB_SOCKET = "/run/mysqld/mysqld.sock";
       };
     };
     services.phpfpm.settings = { log_level = "debug"; };
@@ -113,6 +134,11 @@ in {
         root * ${cfg.dataImporterPackage}/public
         php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii-data-importer.socket}
       '';
+
+      # virtualHosts."${cfg.virtualHosts.firefly-pico}".extraConfig = ''
+      #   reverse_proxy ${cfg.firefly-pico-frontend-url}
+      #   php_fastcgi unix/${config.services.phpfpm.pools.firefly-pico.socket}
+      # '';
     };
     # using socket authentication means that we need to authenticate from a user
     # account whose name is the same as the mysql user we're authenticating for
