@@ -45,24 +45,24 @@ in {
                   home.stateVersion = "23.05";
                 };
               };
-              # home-manager.users.root = { osConfig, ... }: {
-              #   imports = [ config.flake.homeModules.angel ];
-              #   config = {
-              #     home.username = lib.mkForce "root";
-              #     home.homeDirectory = lib.mkForce "/root";
-              #     programs.ssh.enable = true;
-              #     programs.ssh.includes = [ osConfig.lockbox.sshHostsPath ];
-              #     # This value determines the home Manager release that your
-              #     # configuration is compatible with. This helps avoid breakage
-              #     # when a new home Manager release introduces backwards
-              #     # incompatible changes.
-              #     #
-              #     # You can update home Manager without changing this value. See
-              #     # the home Manager release notes for a list of state version
-              #     # changes in each release.
-              #     home.stateVersion = "23.05";
-              #   };
-              # };
+               home-manager.users.root = { osConfig, ... }: {
+                 imports = [ config.flake.homeModules.angel ];
+                 config = {
+                   home.username = lib.mkForce "root";
+                   home.homeDirectory = lib.mkForce "/root";
+                   programs.ssh.enable = true;
+                   programs.ssh.includes = [ osConfig.lockbox.sshHostsPath ];
+                   # This value determines the home Manager release that your
+                   # configuration is compatible with. This helps avoid breakage
+                   # when a new home Manager release introduces backwards
+                   # incompatible changes.
+                   #
+                   # You can update home Manager without changing this value. See
+                   # the home Manager release notes for a list of state version
+                   # changes in each release.
+                   home.stateVersion = "23.05";
+                 };
+               };
             }
           ];
         });
