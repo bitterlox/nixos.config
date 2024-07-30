@@ -17,7 +17,7 @@
         hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
         openssh.authorizedKeys.keys = let keys = config.lockbox.sshPubKeys;
-        in [ keys.voidbook keys.iphone keys.elewse ];
+        in [ keys.voidbook keys.iphone keys.elewse keys.sietch ];
       };
     };
 
@@ -43,6 +43,8 @@
         };
       };
     };
+
+    nix.settings.secret-key-files = "/var/secrets/cache-priv-key.pem";
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
