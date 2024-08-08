@@ -71,6 +71,13 @@ in {
       description = lib.mdDoc
         "name for mysql database to be created and used by firefly-iii";
     };
+    picoDatabaseName = lib.mkOption {
+      type = lib.types.str;
+      default = "picodb";
+      example = "picodb";
+      description = lib.mdDoc
+        "name for mysql database to be created and used by firefly-pico";
+    };
   };
   config = lib.mkIf cfg.enable {
     # open firewall for caddy
@@ -110,6 +117,11 @@ in {
       package = cfg.fireflyPicoPackage;
       settings = {
         FIREFLY_III_URL = "https://${cfg.virtualHosts.firefly-iii}";
+        DB_CONNECTION = "mysql";
+        DB_HOST = cfg.bind-address;
+        DB_PORT = cfg.port;
+        DB_DATABASE = cfg.picoDatabaseName;
+        DB_USERNAME = defaultUsername;
         DB_SOCKET = "/run/mysqld/mysqld.sock";
       };
     };
@@ -149,10 +161,17 @@ in {
         bind-address = cfg.bind-address;
         port = cfg.port;
       };
-      initialDatabases = [{ name = cfg.databaseName; }];
+      initialDatabases =
+        [ { name = cfg.databaseName; } { name = cfg.picoDatabaseName; } ];
       ensureUsers = [{
         name = defaultUsername;
-        ensurePermissions = { "${cfg.databaseName}.*" = "ALL PRIVILEGES"; };
+        ensurePermissions = {
+          "${cfg.databaseName}.*" = "ALL PRIVILEGES";
+          # there's an error witha foreign key contstraint i think because the id
+          # is by default a bigint(20) and the transaction_template_id is a bigint(11)
+          # in table transaction_template_tags
+          "${cfg.picoDatabaseName}.*" = "ALL PRIVILEGES";
+        };
       }];
     };
     services.mysqlBackup = {

@@ -35,8 +35,7 @@ let
       ${artisan} package:discover
       ${artisan} cache:clear
       ${artisan} config:cache
-      ${artisan} key:generate
-      ${artisan} migrate
+      ${artisan} migrate -n --force
     '';
 
   commonServiceConfig = {

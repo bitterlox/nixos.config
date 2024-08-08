@@ -1,6 +1,8 @@
 { lib, fetchFromGitHub, buildNpmPackage, php83
 , dataDir ? "/var/lib/firefly-pico" }:
 
+# todo: port over streamlining from here
+# https://github.com/NixOS/nixpkgs/blob/master/pkgs/by-name/fi/firefly-iii/package.nix
 let
   pname = "firefly-pico";
   version = "1.2.0";
@@ -53,6 +55,7 @@ in phpPackage.buildComposerProject (finalAttrs: {
     cp -a ${assets} $out/public
     ln -s ${dataDir}/storage $out/storage
     ln -s ${dataDir}/cache $out/bootstrap/cache
+    chmod +x $out/artisan
   '';
 
   meta = {

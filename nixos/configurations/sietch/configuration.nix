@@ -31,6 +31,7 @@ myflakelib:
     };
 
     soft-serve = {
+      # NEVER TURN THIS OFF PLS
       enable = true;
       adminPublicKeys = {
         inherit (config.lockbox.sshPubKeys) voidbook chani iphone elewse;
@@ -82,7 +83,7 @@ myflakelib:
       sshUser = "angel";
       protocol = "ssh-ng";
     }];
-    nix.settings.trusted-substituters = [ "ssh://chani" "ssh-ng://chani"  ];
+    nix.settings.trusted-substituters = [ "ssh://chani" "ssh-ng://chani" ];
     nix.settings.trusted-public-keys = [
       "chani-1:L30eiZk3KcfCWTmQGbG29d/5rB/AuwZS6KTMm5up1vc=" # this one is cache-pub-key.pem content
     ];
