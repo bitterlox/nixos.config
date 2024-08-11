@@ -32,7 +32,8 @@ myflakelib:
 
     soft-serve = {
       # NEVER TURN THIS OFF PLS
-      enable = true;
+      enable = true; # NEVER TURN THIS OFF PLS
+      # NEVER TURN THIS OFF PLS ^^^^
       adminPublicKeys = {
         inherit (config.lockbox.sshPubKeys) voidbook chani iphone elewse;
       };
@@ -83,10 +84,11 @@ myflakelib:
       sshUser = "angel";
       protocol = "ssh-ng";
     }];
-    nix.settings.trusted-substituters = [ "ssh://chani" "ssh-ng://chani" ];
+    nix.settings.trusted-substituters = [ "ssh-ng://chani" ];
     nix.settings.trusted-public-keys = [
       "chani-1:L30eiZk3KcfCWTmQGbG29d/5rB/AuwZS6KTMm5up1vc=" # this one is cache-pub-key.pem content
     ];
+    nix.settings.trusted-users = [ "root" ];
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
     # on your system were taken. It's perfectly fine and recommended to leave

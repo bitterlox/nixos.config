@@ -123,6 +123,7 @@ in {
         DB_DATABASE = cfg.picoDatabaseName;
         DB_USERNAME = defaultUsername;
         DB_SOCKET = "/run/mysqld/mysqld.sock";
+        APP_KEY="base64:E4yHvgqXm7YOCQ3pYilu88V4TiM24P01VKyYYfslBBY=";
       };
     };
     services.phpfpm.settings = { log_level = "debug"; };
@@ -147,10 +148,12 @@ in {
         php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii-data-importer.socket}
       '';
 
-      # virtualHosts."${cfg.virtualHosts.firefly-pico}".extraConfig = ''
-      #   reverse_proxy ${cfg.firefly-pico-frontend-url}
-      #   php_fastcgi unix/${config.services.phpfpm.pools.firefly-pico.socket}
-      # '';
+      virtualHosts."${cfg.virtualHosts.firefly-pico}".extraConfig = ''
+        encode gzip
+        root * ${cfg.fireflyPicoPackage}/public
+        reverse_proxy / ${cfg.firefly-pico-frontend-url}
+        php_fastcgi /api unix/${config.services.phpfpm.pools.firefly-pico.socket}
+      '';
     };
     # using socket authentication means that we need to authenticate from a user
     # account whose name is the same as the mysql user we're authenticating for

@@ -182,9 +182,14 @@ in {
       before = [ "phpfpm-firefly-pico.service" ];
       serviceConfig = {
         Type = "simple";
-        ExecStart =
-          "${lib.getExe pkgs.nodejs-slim} ${cfg.package}/public/server/index.mjs";
-      } // commonServiceConfig;
+        ExecStart = "${
+            lib.getExe pkgs.nodejs-slim
+          } ${cfg.package}/public/server/index.mjs";
+        RemainAfterExit = true;
+        Restart = "on-failure";
+        User = firefly-iii-user;
+        Group = firefly-iii-group;
+      };
       unitConfig.JoinsNamespaceOf = "phpfpm-firefly-pico.service";
       restartTriggers = [ cfg.package ];
     };

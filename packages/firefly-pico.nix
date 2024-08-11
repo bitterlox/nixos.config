@@ -49,10 +49,23 @@ in phpPackage.buildComposerProject (finalAttrs: {
 
   passthru = { inherit phpPackage; };
 
+  prePatch = ''
+    substituteInPlace database/migrations/2023_10_02_124513_create_transaction_templates.php \
+    --replace \
+    '$table->integer("transaction_template_id")' \
+    '$table->unsignedBigInteger("transaction_template_id")'
+
+
+    substituteInPlace database/migrations/2024_02_22_131702_create_transaction_template_audio_names_table.php \
+    --replace \
+    '$table->integer("transaction_template_id")' \
+    '$table->unsignedBigInteger("transaction_template_id")'
+  '';
+
   postInstall = ''
     mv $out/share/php/${pname}/* $out/
-    rm -R $out/share $out/storage $out/bootstrap/cache $out/public
-    cp -a ${assets} $out/public
+    rm -R $out/share $out/storage $out/bootstrap/cache
+    cp -a ${assets}/* $out/public
     ln -s ${dataDir}/storage $out/storage
     ln -s ${dataDir}/cache $out/bootstrap/cache
     chmod +x $out/artisan
