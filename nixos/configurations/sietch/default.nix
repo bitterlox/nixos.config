@@ -15,7 +15,6 @@ in {
           in [{
             # add my own packages
             firefly-iii.dataImporterPackage = p.firefly-iii-data-importer;
-            firefly-iii.fireflyPicoPackage = p.firefly-pico;
             environment.systemPackages = [ p.neovim-light p.neovim-full ];
           }] ++ privateModules ++ [
             #shared-modules.agenix

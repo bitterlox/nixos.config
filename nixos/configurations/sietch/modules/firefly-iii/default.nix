@@ -17,17 +17,10 @@ let
   # "caddy" account on it own
   defaultUsername = "caddy";
 in {
-  imports = [ ./firefly-iii-data-importer.nix ./firefly-pico.nix ];
+  imports = [ ./firefly-iii-data-importer.nix ];
   options.firefly-iii = {
     enable = lib.mkEnableOption "firefly-iii";
     dataImporterPackage = lib.mkOption {
-      type = lib.types.package;
-      description = ''
-        The firefly-iii-data-importer package served by php-fpm and the webserver of choice.
-        This option can be used to point the webserver to the correct root.
-      '';
-    };
-    fireflyPicoPackage = lib.mkOption {
       type = lib.types.package;
       description = ''
         The firefly-iii-data-importer package served by php-fpm and the webserver of choice.
@@ -39,7 +32,6 @@ in {
       in lib.types.submodule {
         options.firefly-iii = virtualHostOption;
         options.data-importer = virtualHostOption;
-        options.firefly-pico = virtualHostOption;
       };
       example =
         "{ firefly-iii = 'ff.example.com'; data-importer = 'di.example.com'; }";
@@ -58,25 +50,12 @@ in {
       example = "3306";
       description = lib.mdDoc "port for mysql to listen on";
     };
-    firefly-pico-frontend-url = lib.mkOption {
-      type = lib.types.str;
-      default = "127.0.0.1:3000";
-      example = "127.0.0.1:3000";
-      description = lib.mdDoc "address for nuxt-served firefly-pico frontend";
-    };
     databaseName = lib.mkOption {
       type = lib.types.str;
       default = "fireflydb";
       example = "fireflydb";
       description = lib.mdDoc
         "name for mysql database to be created and used by firefly-iii";
-    };
-    picoDatabaseName = lib.mkOption {
-      type = lib.types.str;
-      default = "picodb";
-      example = "picodb";
-      description = lib.mdDoc
-        "name for mysql database to be created and used by firefly-pico";
     };
   };
   config = lib.mkIf cfg.enable {
@@ -112,20 +91,6 @@ in {
         FIREFLY_III_CLIENT_ID_FILE = "/var/secrets/firefly-iii-client-id.txt";
       };
     };
-    customServices.firefly-pico = {
-      enable = true;
-      package = cfg.fireflyPicoPackage;
-      settings = {
-        FIREFLY_III_URL = "https://${cfg.virtualHosts.firefly-iii}";
-        DB_CONNECTION = "mysql";
-        DB_HOST = cfg.bind-address;
-        DB_PORT = cfg.port;
-        DB_DATABASE = cfg.picoDatabaseName;
-        DB_USERNAME = defaultUsername;
-        DB_SOCKET = "/run/mysqld/mysqld.sock";
-        APP_KEY="base64:E4yHvgqXm7YOCQ3pYilu88V4TiM24P01VKyYYfslBBY=";
-      };
-    };
     services.phpfpm.settings = { log_level = "debug"; };
     services.caddy = {
       #user = defaultUsername;
@@ -140,19 +105,11 @@ in {
         root * ${config.services.firefly-iii.package}/public
         php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii.socket}
       '';
-
       virtualHosts."${cfg.virtualHosts.data-importer}".extraConfig = ''
         encode gzip
         file_server
         root * ${cfg.dataImporterPackage}/public
         php_fastcgi unix/${config.services.phpfpm.pools.firefly-iii-data-importer.socket}
-      '';
-
-      virtualHosts."${cfg.virtualHosts.firefly-pico}".extraConfig = ''
-        encode gzip
-        root * ${cfg.fireflyPicoPackage}/public
-        reverse_proxy / ${cfg.firefly-pico-frontend-url}
-        php_fastcgi /api unix/${config.services.phpfpm.pools.firefly-pico.socket}
       '';
     };
     # using socket authentication means that we need to authenticate from a user
@@ -164,17 +121,10 @@ in {
         bind-address = cfg.bind-address;
         port = cfg.port;
       };
-      initialDatabases =
-        [ { name = cfg.databaseName; } { name = cfg.picoDatabaseName; } ];
+      initialDatabases = [{ name = cfg.databaseName; }];
       ensureUsers = [{
         name = defaultUsername;
-        ensurePermissions = {
-          "${cfg.databaseName}.*" = "ALL PRIVILEGES";
-          # there's an error witha foreign key contstraint i think because the id
-          # is by default a bigint(20) and the transaction_template_id is a bigint(11)
-          # in table transaction_template_tags
-          "${cfg.picoDatabaseName}.*" = "ALL PRIVILEGES";
-        };
+        ensurePermissions = { "${cfg.databaseName}.*" = "ALL PRIVILEGES"; };
       }];
     };
     services.mysqlBackup = {

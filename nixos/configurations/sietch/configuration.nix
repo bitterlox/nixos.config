@@ -45,7 +45,6 @@ myflakelib:
       virtualHosts = {
         firefly-iii = "ff.bittervoid.io";
         data-importer = "http://localhost:1234";
-        firefly-pico = "ffp.bittervoid.io";
       };
     };
 

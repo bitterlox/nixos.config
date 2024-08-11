@@ -12,7 +12,6 @@
     } // (with pkgs; {
       firefly-iii-data-importer =
         (callPackage ./firefly-iii-data-importer.nix { });
-      firefly-pico = (callPackage ./firefly-pico.nix { });
     });
   };
   systems = [ "x86_64-linux" "aarch64-darwin" ];
