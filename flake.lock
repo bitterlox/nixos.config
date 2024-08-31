@@ -1340,11 +1340,11 @@
         "agenix": "agenix_2"
       },
       "locked": {
-        "lastModified": 1719485014,
+        "lastModified": 1723488510,
         "narHash": "sha256-yf7Rbg+tpW3JbvTCQ0ISrq+20aIiNGqIkxoa19AYxss=",
         "ref": "refs/heads/main",
-        "rev": "1ace561bbb6b6c084ea9e5d620f844ce08479a4c",
-        "revCount": 38,
+        "rev": "c85ebd7ead8cde9db6dcd2a3d2315946a9bda707",
+        "revCount": 41,
         "type": "git",
         "url": "ssh://git.bittervoid.io:23231/secrets-flake"
       },

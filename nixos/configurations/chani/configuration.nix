@@ -1,6 +1,7 @@
 { config, pkgs, ... }: {
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
+    ./modules/calibre
   ];
   config = {
     # Use the GRUB 2 boot loader.
@@ -21,6 +22,8 @@
       };
     };
 
+    # PROGRAMS #
+
     # maybe redundant ssh config
     # this is system level
     programs.ssh = {
@@ -29,6 +32,14 @@
         IdentityFile ${config.lockbox.sshKeyPath} 
       '';
     };
+
+    # SERVICES #
+    customServices.calibre = {
+      enable = true;
+      virtualHost = "books.bittervoid.io";
+    };
+
+    # HOME-MANAGER #
 
     # this is home-manager level
     home-manager.users.angel = {
