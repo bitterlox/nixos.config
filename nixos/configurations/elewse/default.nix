@@ -28,8 +28,8 @@ in {
               # add my own packages
               environment.systemPackages = let p = self'.packages;
               in [
-                p.neovim-light
-                p.neovim-full
+                p.nvim-light
+                p.nvim-full
                 inputs'.hyprpaper.packages.default
               ];
             }
