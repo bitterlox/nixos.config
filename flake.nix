@@ -18,10 +18,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
 
-    ## my-nvim-flake (soon to be folded in this repo) ##
-    my-nvim.url = "github:bitterlox/nvim-config-flake";
-    my-nvim.inputs.nixpkgs.follows = "nixpkgs";
-
     ## home-manager ##
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
@@ -52,6 +48,34 @@
 
     lanzaboote.url = "github:nix-community/lanzaboote/v0.3.0";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
+
+    ## misc coming from nvim-config-flake ##
+
+    efmls-configs = {
+      url = "github:creativenull/efmls-configs-nvim";
+      flake = false;
+    };
+    # themes i like: melange, adwaita, caret, sonokai is sort of like melange
+    sonokai-theme = {
+      url = "github:sainnhe/sonokai";
+      flake = false;
+    };
+    adwaita-theme = {
+      url = "github:Mofiqul/adwaita.nvim";
+      flake = false;
+    };
+    citruszest-theme = {
+      url = "github:zootedb0t/citruszest.nvim";
+      flake = false;
+    };
+    caret-theme = {
+      url = "github:projekt0n/caret.nvim";
+      flake = false;
+    };
+    melange-theme = {
+      url = "github:savq/melange-nvim";
+      flake = false;
+    };
   };
 
   outputs = { flake-parts, ... }@inputs:

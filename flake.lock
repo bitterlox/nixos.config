@@ -3,11 +3,11 @@
     "adwaita-theme": {
       "flake": false,
       "locked": {
-        "lastModified": 1702658572,
-        "narHash": "sha256-oQiVL/rTeeI+rE0gnnn3FgxZ7FPShm5GIk1VcYK2PdM=",
+        "lastModified": 1714294276,
+        "narHash": "sha256-foOWuS0xkX5XAc8ehYwc2lyzuAWZbnSLY529eyXjGqM=",
         "owner": "Mofiqul",
         "repo": "adwaita.nvim",
-        "rev": "981bce791959d79cd1316e59e23906e3c05efb44",
+        "rev": "c9379097755701ab597140bafd097fbaff3dd517",
         "type": "github"
       },
       "original": {
@@ -142,11 +142,11 @@
     "citruszest-theme": {
       "flake": false,
       "locked": {
-        "lastModified": 1707119791,
-        "narHash": "sha256-C4zdNL3K2Dbsp+Gd7lwwo+pA0YtL6O/dSFuntenS4Fc=",
+        "lastModified": 1724857670,
+        "narHash": "sha256-JgZ0mbvO/wymv5hGlqddo7AlKRZrRIkY+pRKiV4kz6Y=",
         "owner": "zootedb0t",
         "repo": "citruszest.nvim",
-        "rev": "7b0dad32e2af6176d4a2dfcf724bd0ea8ec8f1d5",
+        "rev": "d12c99f937114b908e935a9cda1953bb8f16bcc8",
         "type": "github"
       },
       "original": {
@@ -289,11 +289,11 @@
     "efmls-configs": {
       "flake": false,
       "locked": {
-        "lastModified": 1706235345,
-        "narHash": "sha256-5f5yzCbHpYcNn4zmArUZombrCPb/sWOERTkdkV6N0/0=",
+        "lastModified": 1725541489,
+        "narHash": "sha256-g30l+JpjEenBJq/8ZlVT6bNfUvnHWFXcQjeFWhaip6w=",
         "owner": "creativenull",
         "repo": "efmls-configs-nvim",
-        "rev": "00f922e261519ffba7ea1c6a71adcb2319b093cb",
+        "rev": "8474cdc5a8fc21091828487c3f7781d0b19c66fb",
         "type": "github"
       },
       "original": {
@@ -381,24 +381,6 @@
         "owner": "hercules-ci",
         "repo": "flake-parts",
         "rev": "dcc36e45d054d7bb554c9cdab69093debd91a0b5",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
-    "flake-parts_3": {
-      "inputs": {
-        "nixpkgs-lib": "nixpkgs-lib_2"
-      },
-      "locked": {
-        "lastModified": 1706830856,
-        "narHash": "sha256-a0NYyp+h9hlb7ddVz4LUn1vT/PLwqfrWYcHMvFB1xYg=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "b253292d9c0a5ead9bc98c4e9a26c6312e27d69f",
         "type": "github"
       },
       "original": {
@@ -901,43 +883,16 @@
     "melange-theme": {
       "flake": false,
       "locked": {
-        "lastModified": 1706412586,
-        "narHash": "sha256-zqvcPWBpfQyelKqX3H5t7/iu3iOTBjyf1RyFyR6pPU4=",
+        "lastModified": 1724774486,
+        "narHash": "sha256-BcI5iLaYE0DjHTpHWAaHrpVPXWeH4bmLnMekWzwrtjY=",
         "owner": "savq",
         "repo": "melange-nvim",
-        "rev": "258e5afa978aa886e7ac346612e5f920a2b6be59",
+        "rev": "36d02139979f840a170de8c19a72beaae2ef1741",
         "type": "github"
       },
       "original": {
         "owner": "savq",
         "repo": "melange-nvim",
-        "type": "github"
-      }
-    },
-    "my-nvim": {
-      "inputs": {
-        "adwaita-theme": "adwaita-theme",
-        "caret-theme": "caret-theme",
-        "citruszest-theme": "citruszest-theme",
-        "efmls-configs": "efmls-configs",
-        "flake-parts": "flake-parts_3",
-        "melange-theme": "melange-theme",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "sonokai-theme": "sonokai-theme"
-      },
-      "locked": {
-        "lastModified": 1717164049,
-        "narHash": "sha256-Ps+6f13WlvSR7s+W5ne9Ztm7Rxcokwjubujf7ETSp9E=",
-        "owner": "bitterlox",
-        "repo": "nvim-config-flake",
-        "rev": "4b1e13d3f16b5068d511ebea40d67bea6638328d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "bitterlox",
-        "repo": "nvim-config-flake",
         "type": "github"
       }
     },
@@ -1060,24 +1015,6 @@
       "original": {
         "type": "tarball",
         "url": "https://github.com/NixOS/nixpkgs/archive/5daf0514482af3f97abaefc78a6606365c9108e2.tar.gz"
-      }
-    },
-    "nixpkgs-lib_2": {
-      "locked": {
-        "dir": "lib",
-        "lastModified": 1706550542,
-        "narHash": "sha256-UcsnCG6wx++23yeER4Hg18CXWbgNpqNXcHIo5/1Y+hc=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "97b17f32362e475016f942bbdfda4a4a72a8a652",
-        "type": "github"
-      },
-      "original": {
-        "dir": "lib",
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
       }
     },
     "nixpkgs-regression": {
@@ -1294,8 +1231,12 @@
     },
     "root": {
       "inputs": {
+        "adwaita-theme": "adwaita-theme",
         "agenix": "agenix",
+        "caret-theme": "caret-theme",
+        "citruszest-theme": "citruszest-theme",
         "devenv": "devenv",
+        "efmls-configs": "efmls-configs",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager_2",
         "home-manager-stable": "home-manager-stable",
@@ -1303,11 +1244,12 @@
         "hyprpaper": "hyprpaper",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
-        "my-nvim": "my-nvim",
+        "melange-theme": "melange-theme",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable_3",
-        "secrets-flake": "secrets-flake"
+        "secrets-flake": "secrets-flake",
+        "sonokai-theme": "sonokai-theme"
       }
     },
     "rust-overlay": {
@@ -1356,11 +1298,11 @@
     "sonokai-theme": {
       "flake": false,
       "locked": {
-        "lastModified": 1706047832,
-        "narHash": "sha256-Yu9CuYegeJj8hDrfdE4doF0clz0XW+VS1RxbmxUNCM0=",
+        "lastModified": 1725257867,
+        "narHash": "sha256-zKkc7PtQf09hiW5m3fYoz24DmBmEVdVKuA+UZY3uVuk=",
         "owner": "sainnhe",
         "repo": "sonokai",
-        "rev": "42822f8f9b3a5088f05cf72a0aa1477598ad1a40",
+        "rev": "a9d4d398999b5f74a6dfe3af400f824e2cbddf6f",
         "type": "github"
       },
       "original": {

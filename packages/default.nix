@@ -5,15 +5,34 @@
   #    sharedModules = [{ nixpkgs.overlays = [ overlay-nvim ]; }];
   #  };
   #}];
-  perSystem = { inputs', system, pkgs, ... }: {
-    packages = {
-      neovim-full = inputs'.my-nvim.packages.nvim-full;
-      neovim-light = inputs'.my-nvim.packages.nvim-light;
-    } // (with pkgs; {
-      firefly-iii-data-importer =
-        (callPackage ./firefly-iii-data-importer.nix { });
-    });
-  };
+  imports = [ ./nvim ];
+  perSystem = { inputs', system, pkgs, ... }:
+    let
+      themePackages = let
+        suffix = "-theme";
+        hasSuffix = (a: _: lib.strings.hasSuffix suffix a);
+        buildPlugin = name: src:
+          pkgs.vimUtils.buildVimPlugin { inherit name src; };
+        removeSuffix = attrName: (lib.strings.removeSuffix suffix attrName);
+        filtered = lib.attrsets.filterAttrs hasSuffix inputs;
+      in lib.attrsets.mapAttrs' (n: v:
+        let newAttrName = (removeSuffix n);
+        in lib.attrsets.nameValuePair newAttrName (buildPlugin newAttrName v))
+      filtered;
+    in {
+      packages = {
+        # neovim-full = inputs'.my-nvim.packages.nvim-full;
+        # neovim-light = inputs'.my-nvim.packages.nvim-light;
+        efmls-configs = pkgs.vimUtils.buildVimPlugin {
+          name = "efmls-configs-nvim";
+          src = inputs.efmls-configs;
+        };
+      } // (with pkgs; {
+        firefly-iii-data-importer =
+          (callPackage ./firefly-iii-data-importer.nix { });
+        bash-language-server = (callPackage ./bash-language-server.nix { });
+      }) // themePackages;
+    };
   systems = [ "x86_64-linux" "aarch64-darwin" ];
 }
 # TODO:
