@@ -5,6 +5,7 @@
   #    sharedModules = [{ nixpkgs.overlays = [ overlay-nvim ]; }];
   #  };
   #}];
+  imports = [ ./nvim ];
   perSystem = { inputs', system, pkgs, ... }:
     let
       themePackages = let
@@ -20,8 +21,8 @@
       filtered;
     in {
       packages = {
-        neovim-full = inputs'.my-nvim.packages.nvim-full;
-        neovim-light = inputs'.my-nvim.packages.nvim-light;
+        # neovim-full = inputs'.my-nvim.packages.nvim-full;
+        # neovim-light = inputs'.my-nvim.packages.nvim-light;
         efmls-configs = pkgs.vimUtils.buildVimPlugin {
           name = "efmls-configs-nvim";
           src = inputs.efmls-configs;
