@@ -11,6 +11,7 @@
     git
     htop
     psmisc # killall + other utils
+    unzip
   ];
 
   # Enable the OpenSSH daemon.

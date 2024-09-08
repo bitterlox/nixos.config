@@ -3,10 +3,13 @@ hyprlandPackage:
   imports =
     [ ./hardware.nix (import ./compositor.nix hyprlandPackage) ./greeter.nix ];
 
+  # we have mkBefore here due to the interactions between this declaration
+  # of environment.systemPackages and the one in linux-base NixOSmodule
   environment.systemPackages = lib.mkBefore (with pkgs; [
     git
     brightnessctl
     libreoffice-qt6-fresh
+    joplin-desktop
     #  wget
   ]);
 
