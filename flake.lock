@@ -3,6 +3,22 @@
     "adwaita-theme": {
       "flake": false,
       "locked": {
+        "lastModified": 1714294276,
+        "narHash": "sha256-foOWuS0xkX5XAc8ehYwc2lyzuAWZbnSLY529eyXjGqM=",
+        "owner": "Mofiqul",
+        "repo": "adwaita.nvim",
+        "rev": "c9379097755701ab597140bafd097fbaff3dd517",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Mofiqul",
+        "repo": "adwaita.nvim",
+        "type": "github"
+      }
+    },
+    "adwaita-theme_2": {
+      "flake": false,
+      "locked": {
         "lastModified": 1702658572,
         "narHash": "sha256-oQiVL/rTeeI+rE0gnnn3FgxZ7FPShm5GIk1VcYK2PdM=",
         "owner": "Mofiqul",
@@ -139,7 +155,39 @@
         "type": "github"
       }
     },
+    "caret-theme_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1705040065,
+        "narHash": "sha256-caaoHziV2VyYzmcCd2Y7FQImE9o8rlF1lrVXTpqdrHs=",
+        "owner": "projekt0n",
+        "repo": "caret.nvim",
+        "rev": "62a18089e5eedc329dea7fb5f1436d1c1bf672b1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "projekt0n",
+        "repo": "caret.nvim",
+        "type": "github"
+      }
+    },
     "citruszest-theme": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1724857670,
+        "narHash": "sha256-JgZ0mbvO/wymv5hGlqddo7AlKRZrRIkY+pRKiV4kz6Y=",
+        "owner": "zootedb0t",
+        "repo": "citruszest.nvim",
+        "rev": "d12c99f937114b908e935a9cda1953bb8f16bcc8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zootedb0t",
+        "repo": "citruszest.nvim",
+        "type": "github"
+      }
+    },
+    "citruszest-theme_2": {
       "flake": false,
       "locked": {
         "lastModified": 1707119791,
@@ -287,6 +335,22 @@
       }
     },
     "efmls-configs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1725541489,
+        "narHash": "sha256-g30l+JpjEenBJq/8ZlVT6bNfUvnHWFXcQjeFWhaip6w=",
+        "owner": "creativenull",
+        "repo": "efmls-configs-nvim",
+        "rev": "8474cdc5a8fc21091828487c3f7781d0b19c66fb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "creativenull",
+        "repo": "efmls-configs-nvim",
+        "type": "github"
+      }
+    },
+    "efmls-configs_2": {
       "flake": false,
       "locked": {
         "lastModified": 1706235345,
@@ -901,6 +965,22 @@
     "melange-theme": {
       "flake": false,
       "locked": {
+        "lastModified": 1724774486,
+        "narHash": "sha256-BcI5iLaYE0DjHTpHWAaHrpVPXWeH4bmLnMekWzwrtjY=",
+        "owner": "savq",
+        "repo": "melange-nvim",
+        "rev": "36d02139979f840a170de8c19a72beaae2ef1741",
+        "type": "github"
+      },
+      "original": {
+        "owner": "savq",
+        "repo": "melange-nvim",
+        "type": "github"
+      }
+    },
+    "melange-theme_2": {
+      "flake": false,
+      "locked": {
         "lastModified": 1706412586,
         "narHash": "sha256-zqvcPWBpfQyelKqX3H5t7/iu3iOTBjyf1RyFyR6pPU4=",
         "owner": "savq",
@@ -916,12 +996,12 @@
     },
     "my-nvim": {
       "inputs": {
-        "adwaita-theme": "adwaita-theme",
-        "caret-theme": "caret-theme",
-        "citruszest-theme": "citruszest-theme",
-        "efmls-configs": "efmls-configs",
+        "adwaita-theme": "adwaita-theme_2",
+        "caret-theme": "caret-theme_2",
+        "citruszest-theme": "citruszest-theme_2",
+        "efmls-configs": "efmls-configs_2",
         "flake-parts": "flake-parts_3",
-        "melange-theme": "melange-theme",
+        "melange-theme": "melange-theme_2",
         "nixpkgs": [
           "nixpkgs"
         ],
@@ -1294,8 +1374,12 @@
     },
     "root": {
       "inputs": {
+        "adwaita-theme": "adwaita-theme",
         "agenix": "agenix",
+        "caret-theme": "caret-theme",
+        "citruszest-theme": "citruszest-theme",
         "devenv": "devenv",
+        "efmls-configs": "efmls-configs",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager_2",
         "home-manager-stable": "home-manager-stable",
@@ -1303,11 +1387,13 @@
         "hyprpaper": "hyprpaper",
         "impermanence": "impermanence",
         "lanzaboote": "lanzaboote",
+        "melange-theme": "melange-theme",
         "my-nvim": "my-nvim",
         "nixos-hardware": "nixos-hardware",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-stable": "nixpkgs-stable_3",
-        "secrets-flake": "secrets-flake"
+        "secrets-flake": "secrets-flake",
+        "sonokai-theme": "sonokai-theme_2"
       }
     },
     "rust-overlay": {
@@ -1361,6 +1447,22 @@
         "owner": "sainnhe",
         "repo": "sonokai",
         "rev": "42822f8f9b3a5088f05cf72a0aa1477598ad1a40",
+        "type": "github"
+      },
+      "original": {
+        "owner": "sainnhe",
+        "repo": "sonokai",
+        "type": "github"
+      }
+    },
+    "sonokai-theme_2": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1725257867,
+        "narHash": "sha256-zKkc7PtQf09hiW5m3fYoz24DmBmEVdVKuA+UZY3uVuk=",
+        "owner": "sainnhe",
+        "repo": "sonokai",
+        "rev": "a9d4d398999b5f74a6dfe3af400f824e2cbddf6f",
         "type": "github"
       },
       "original": {
