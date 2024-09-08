@@ -18,10 +18,6 @@
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixpkgs-stable.url = "github:NixOS/nixpkgs/nixos-24.05";
 
-    ## my-nvim-flake (soon to be folded in this repo) ##
-    my-nvim.url = "github:bitterlox/nvim-config-flake";
-    my-nvim.inputs.nixpkgs.follows = "nixpkgs";
-
     ## home-manager ##
     home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
