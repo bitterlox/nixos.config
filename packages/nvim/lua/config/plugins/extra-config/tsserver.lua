@@ -7,7 +7,7 @@ local make_on_attach_callback = vim.g.helpers.lsp.make_on_attach_callback(
 )
 
 lspconfig["tsserver"].setup {
-  cmd = { "typescript-language-server --stdio" },
+  cmd = { "typescript-language-server", "--stdio" },
   capabilities = capabilities,
   on_attach = make_on_attach_callback(),
 }
