@@ -12,7 +12,11 @@
   networking.networkmanager.enable = true;
 
   # bluetooth #
-  hardware.bluetooth.enable = true;
+  hardware.bluetooth = {
+    enable = true;
+    # thought i needed this for magic mouse but no
+    #input = { General.UserspaceHID = true; };
+  };
   #environment.systemPackages = [ pkgs.overskride ];
   environment.systemPackages = [ pkgs.blueman ];
 
