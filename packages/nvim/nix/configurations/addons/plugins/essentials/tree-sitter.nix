@@ -4,6 +4,8 @@ addon.makePluginAddon {
     (pkgs.vimPlugins.nvim-treesitter.withPlugins (p: [
       p.vimdoc
       p.vim
+      p.nix
+      p.hoon
       p.go
       p.c
       p.lua
