@@ -39,6 +39,9 @@ in {
       action = runScript;
     };
   };
+  # getting readonly filesystem error, fix is here
+  # https://discourse.nixos.org/t/temporarily-disabling-a-systemd-service/26225/13
+  # explore udev bvs acpid
   systemd.services."lid-monitor-lock-check" = {
     after = [ "suspend.target" ];
     wantedBy = [ "multi-user.target" "suspend.target" ];
