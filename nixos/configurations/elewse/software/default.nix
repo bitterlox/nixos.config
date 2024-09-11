@@ -1,7 +1,7 @@
 hyprlandPackage:
 { config, pkgs, lib, ... }: {
   imports =
-    [ ./hardware.nix (import ./compositor.nix hyprlandPackage) ./greeter.nix ];
+    [ ./hardware (import ./compositor.nix hyprlandPackage) ./greeter.nix ];
 
   # we have mkBefore here due to the interactions between this declaration
   # of environment.systemPackages and the one in linux-base NixOSmodule

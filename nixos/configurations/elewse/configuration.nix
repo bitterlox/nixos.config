@@ -20,6 +20,7 @@ myflakelib: hyprlandPackage:
   boot.kernelPackages = pkgs.linuxPackages_6_8;
 
   # this configures the kernel module for apple magicmouse
+  # FIXME: whenever it sleeps or smth and then starts back up scroll doesnt work
   boot.extraModprobeConfig = ''
     options hid_magicmouse scroll_acceleration=1 scroll_speed=20 emulate_3button=1 emulate_scroll_wheel=1 
   '';
