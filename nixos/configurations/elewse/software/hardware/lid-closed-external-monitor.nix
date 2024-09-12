@@ -1,25 +1,53 @@
 # this nixos module defines behaviour that should trigger when we close
-# the laptop lid and are connected to an external display
+# the laptop lid and are connected to an external display (at the system level)
+
+# list of stuff:
+# - temp disable fprind service
 { pkgs, lib, ... }:
 let
   LOCKFILE_PATH = "/tmp/lidswitch-lock";
-  script = pkgs.writeScript "ctrl-fprintd-lid-switch" ''
-    lock=${LOCKFILE_PATH}
+  script = pkgs.writeShellApplication {
+    name = "disable-fprintd";
+    runtimeInputs = with pkgs; [ gnugrep systemd coreutils ];
+    text = ''
+      lock=${LOCKFILE_PATH}
+      # when this is = to "masked-runtime" it means it's disabled
+      # we exit with 0 because this script is prefixed with set -e
+      # and it would exit
+      status=$(systemctl is-enabled fprintd.service; exit 0)
 
-    if grep -Fq closed /proc/acpi/button/lid/LID0/state &&
-       grep -Fxq connected /sys/class/drm/card1-eDP-1/status
-    then
-      touch "$lock"
-      systemctl stop fprintd
-      systemctl disable fprintd
-    elif [ -f "$lock" ]
-    then
-      systemctl enable fprintd
-      systemctl start fprintd
-      rm "$lock"
-    fi
-  '';
-  runScript = "${lib.getExe pkgs.bash} ${script}";
+      if grep -Fq closed /proc/acpi/button/lid/LID0/state &&
+         grep -Fxq connected /sys/class/drm/card1-eDP-1/status
+      then
+      # re: second condition
+      # on reboot fprintd is started by default
+      # and the transient symlink probably removed
+        echo "lid closed and monitor connected, attempting to disable fprintd."
+        if [ ! -f $lock ] || { [ -f "$lock" ] && [ "$status" != "masked-runtime" ]; }; then
+          # confirm last addition
+          if { [ -f "$lock" ] && [ "$status" != "masked-runtime" ]; }; then
+            echo "stale lockfile";
+          fi
+          touch "$lock"
+          systemctl stop fprintd
+          ln -s /dev/null /run/systemd/transient/fprintd.service
+          systemctl daemon-reload
+          echo "disabled fprintd"
+        else
+          echo "lockfile already present, doing nothing."
+        fi
+      elif [ -f "$lock" ];
+      then
+        echo "lid open or monitor disconnected, enabling fprintd."
+        rm -f /run/systemd/transient/fprintd.service
+        rm "$lock"
+        systemctl daemon-reload
+        echo "enabled fprintd."
+      else
+        echo "lid closed, lockfile present, exiting"
+      fi
+    '';
+  };
 in {
   # add tmpfile rule for lockfile
   # the bang and age = 0 should yield that this lockfile is removed
@@ -36,7 +64,7 @@ in {
     # thx https://unix.stackexchange.com/questions/678609/
     handlers."fprint-lid" = {
       event = "button/lid.*";
-      action = runScript;
+      action = lib.getExe script;
     };
   };
   # getting readonly filesystem error, fix is here
@@ -45,9 +73,10 @@ in {
   systemd.services."lid-monitor-lock-check" = {
     after = [ "suspend.target" ];
     wantedBy = [ "multi-user.target" "suspend.target" ];
-    serviceConfig = { ExecStart = runScript; };
+    serviceConfig = { ExecStart = lib.getExe script; };
     unitConfig = {
-      Description = "runs script for lapotop lid/fprintd on reboot";
+      Description =
+        "disables/enables fprintd depending on laptop lid/external monitor";
     };
   };
 }
