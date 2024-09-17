@@ -215,7 +215,7 @@
 (bottom)))
 
 ;; Bar Widgets ;;
-(defwidget bar []
+(defwidget widget_bar []
     (box :class "eww_bar" 
          :orientation "v" 
          :vexpand "false" 
@@ -226,8 +226,10 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;                            Window Section's                           ;;    
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defvar show_bar false)
 ;; Bar Windows ;;
 (defwindow bar
+    :style "padding: 1px"
     :geometry (geometry :x "0" 
                         :y "0" 
                         :height "100%" 
@@ -242,7 +244,14 @@
     ;; :hexpand "false"
     ;; :stacking "bottom"
     ;; :vexpand "false"
-(bar))
+(revealer-on-hover :class "hl-on-hover"
+                       :var reveal
+                       :varname "reveal"
+                       :transition "slideleft"
+          
+      (box :height "100%" :width "47px" (label :style "opacity: 0.5; color: rgba(0, 0, 0, 0.5)" :text "foo"))
+      (widget_bar)
+      (box :height "100%" :width "47px" (label :style "opacity: 0.5; color: rgba(0, 0, 0, 0.5)" :text "bar"))))
 
 ;; Calendar Windows ;;
 (defwindow calendar
@@ -252,3 +261,50 @@
                         :width "270px" 
                         :height "60px")
 (cal))
+
+(defwindow test
+  :monitor 0
+  :hexpand false
+  :vexpand false
+  :geometry (geometry :anchor "top left" :x 350 :y 30 :width "300px" :height "30px")
+  :anchor "top left"
+  (box :space-evenly false
+       :halign "end"
+    (hover-module)))
+
+(defvar reveal false)
+
+; NOTE: GTK revealer transitions are kinda stupid
+(defwidget hovered-sign [var]
+  (box :space-evenly false
+      (revealer :reveal {!var}
+                :duration "100ms"
+                :transition "slideleft"
+        (children :nth 0)) 
+      (revealer :reveal {var}
+                :duration "100ms"
+                :transition "slideleft"
+        (children :nth 1)))) 
+
+; Revealer on hover, using children
+(defwidget revealer-on-hover [var varname ?class ?duration ?transition]
+  (box :class "${class} revealer-on-hover"
+       :orientation "h"
+       :space-evenly false
+    (eventbox :class "eventbox"
+              :onhover "eww update ${varname}=true"
+              :onhoverlost "eww update ${varname}=false"
+      (box :space-evenly false
+        (children :nth 0)
+        (revealer :reveal var
+                  :transition {transition ?: "slideright"}
+                  :duration {duration ?: "500ms"}
+          (children :nth 1))
+        (children :nth 2)))))
+
+
+(defwidget hover-module [?class]
+  (box :space-evenly false
+       :class "hover-module ${class}"
+    ))
+

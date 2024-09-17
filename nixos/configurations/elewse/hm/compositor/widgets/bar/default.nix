@@ -20,6 +20,7 @@ let
 in pkgs.stdenv.mkDerivation {
   name = "bar";
   bash = "${pkgs.bash}/bin/bash";
+  eww = "${pkgs.eww}/bin/eww";
   inherit batteryScript calendarScript popupScript wifiScript
     getWorkspacesScript getActiveWorkspaceScript changeActiveWorkspaceScript
     getWindowTitleScript;
