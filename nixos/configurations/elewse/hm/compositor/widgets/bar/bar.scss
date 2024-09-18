@@ -6,7 +6,7 @@
 }
 
 // Variable Color's
-$background: #1A1B26;
+$background: rgba(0, 0, 0);
 $foreground: #A9B1D6;
 
 $black: #24283B;
@@ -21,8 +21,10 @@ $white: $foreground;
 
 // EWW BAR
 .eww_bar{
-  background-color: $background;
+  background-color: color.change($background, $alpha:0.5);
   padding: .3rem;
+  margin: 10px 0;
+  border-radius: 7px;
 }
 
 // Launcher
@@ -165,6 +167,7 @@ scale trough {
   border-radius: 5px;
   min-height: 80px;
   min-width: 10px;
+  border: 0px;
   margin: .3rem 0 .3rem 0;
 }
 .volbar trough highlight {

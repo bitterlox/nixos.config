@@ -229,11 +229,10 @@
 (defvar show_bar false)
 ;; Bar Windows ;;
 (defwindow bar
-    :style "padding: 1px"
     :geometry (geometry :x "0" 
                         :y "0" 
-                        :height "100%" 
-                        :width "47px"
+                        :width "47px" 
+                        :height "100%"
                         ;; https://github.com/elkowar/eww/issues/296
                         :anchor "left center"
                         )
@@ -249,9 +248,10 @@
                        :varname "reveal"
                        :transition "slideleft"
           
-      (box :height "100%" :width "47px" (label :style "opacity: 0.5; color: rgba(0, 0, 0, 0.5)" :text "foo"))
+
+      (box (label :style "color: rgba(0, 0, 0, 0)" :text "foo"))
       (widget_bar)
-      (box :height "100%" :width "47px" (label :style "opacity: 0.5; color: rgba(0, 0, 0, 0.5)" :text "bar"))))
+      (box (label :style "color: rgba(0, 0, 0, 0)" :text "bar"))))
 
 ;; Calendar Windows ;;
 (defwindow calendar
@@ -261,16 +261,6 @@
                         :width "270px" 
                         :height "60px")
 (cal))
-
-(defwindow test
-  :monitor 0
-  :hexpand false
-  :vexpand false
-  :geometry (geometry :anchor "top left" :x 350 :y 30 :width "300px" :height "30px")
-  :anchor "top left"
-  (box :space-evenly false
-       :halign "end"
-    (hover-module)))
 
 (defvar reveal false)
 
