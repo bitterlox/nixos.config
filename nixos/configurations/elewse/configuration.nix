@@ -3,7 +3,7 @@ myflakelib: hyprlandPackage:
 
 {
   imports = [ # Include the results of the hardware scan.
-    ./hardware-configuration.nix
+    ./hardware
     (import ./software hyprlandPackage)
   ];
 
@@ -18,12 +18,6 @@ myflakelib: hyprlandPackage:
   # https://community.frame.work/t/usb-c-error-on-boot/52012
   # boot.kernelPackages = pkgs.linuxPackages_6_9;
   boot.kernelPackages = pkgs.linuxPackages_6_8;
-
-  # this configures the kernel module for apple magicmouse
-  # FIXME: whenever it sleeps or smth and then starts back up scroll doesnt work
-  boot.extraModprobeConfig = ''
-    options hid_magicmouse scroll_acceleration=1 scroll_speed=20 emulate_3button=1 emulate_scroll_wheel=1 
-  '';
 
   boot.loader.efi.canTouchEfiVariables = true;
 

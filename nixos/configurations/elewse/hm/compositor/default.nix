@@ -34,7 +34,7 @@ in {
       ################
 
       # See https://wiki.hyprland.org/Configuring/Monitors/
-      monitor = ",preferred,auto,auto";
+      # monitor = ",preferred,auto,auto";
 
       ###################
       ###   BINDINGS  ###
@@ -375,5 +375,39 @@ in {
         shadow_passes = 2;
       }];
     };
+  };
+
+  # to config this see nix shell nixpkgs#sway
+  # man 5 sway-output
+
+  home.packages = [ pkgs.kanshi ];
+  services.kanshi = {
+    enable = true;
+    systemdTarget = "hyprland-session.target";
+
+    settings = [
+      {
+        profile.name = "undocked";
+        profile.outputs = [{
+          criteria = "eDP-1";
+          status = "enable";
+          position = "0,0";
+        }];
+      }
+      {
+        profile.name = "asus-monitor";
+        profile.outputs = [
+          {
+            criteria = "ASUSTek COMPUTER INC PG32UCDM S5LMQS055583";
+            status = "enable";
+            position = "0,0";
+          }
+          {
+            criteria = "eDP-1";
+            status = "disable";
+          }
+        ];
+      }
+    ];
   };
 }

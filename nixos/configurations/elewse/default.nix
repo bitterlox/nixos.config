@@ -11,12 +11,18 @@ in {
   flake.nixosConfigurations = {
     "elewse" = withSystem "x86_64-linux"
       (ctx@{ inputs', self', system, pkgs, ... }:
-        inputs.nixpkgs-stable.lib.nixosSystem {
+        let unstable-pkgs = import inputs.nixpkgs { inherit system; };
+        in inputs.nixpkgs-stable.lib.nixosSystem {
           inherit system;
           # If you need to pass other parameters,
           # you must use `specialArgs` by uncomment the following line:
           specialArgs = { };
           modules = [
+            # {
+            #   nixpkgs.overlays =
+            #     [ (final: previous: { bluez = unstable-pkgs.bluez; }) ];
+            # }
+            { hardware.bluetooth.package = unstable-pkgs.bluez; }
             {
               # this system uses nixpkgs-stable
               nixpkgs.pkgs = (import inputs.nixpkgs-stable {
@@ -27,10 +33,7 @@ in {
             {
               # add my own packages
               environment.systemPackages = let p = self'.packages;
-              in [
-                p.nvim-full
-                inputs'.hyprpaper.packages.default
-              ];
+              in [ p.nvim-full inputs'.hyprpaper.packages.default ];
             }
           ] ++ privateModules ++ [
             inputs.nixos-hardware.nixosModules.framework-16-7040-amd

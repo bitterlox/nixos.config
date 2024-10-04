@@ -34,7 +34,13 @@ let
     });
   };
 in {
-  imports = [ angelBaseModule impermanenceHmModule ./compositor ./browsers ./shells.nix ];
+  imports = [
+    angelBaseModule
+    impermanenceHmModule
+    ./compositor
+    ./browsers
+    ./shells.nix
+  ];
   config = {
     home.packages = let
       overriden = with overrides; [ nerdfonts popcorntime ];
@@ -44,8 +50,10 @@ in {
         shotman
         libnotify
         obsidian
-        ungoogled-chromium
         hyprpicker
+        pavucontrol
+        protonmail-desktop
+        protonvpn-gui
       ];
     in overriden ++ vanilla;
     #home.extraOutputsToInstall = [ "share" ];
