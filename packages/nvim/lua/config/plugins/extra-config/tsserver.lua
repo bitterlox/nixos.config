@@ -6,7 +6,7 @@ local make_on_attach_callback = vim.g.helpers.lsp.make_on_attach_callback(
   require("telescope.builtin")
 )
 
-lspconfig["tsserver"].setup {
+lspconfig["ts_ls"].setup {
   cmd = { "typescript-language-server", "--stdio" },
   capabilities = capabilities,
   on_attach = make_on_attach_callback(),
