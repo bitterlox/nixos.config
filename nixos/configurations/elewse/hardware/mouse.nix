@@ -7,24 +7,26 @@ let
     name = "magic-mouse-2-add.sh";
     runtimeInputs = [ pkgs.kmod ];
     text = ''
-          FILE=${LOCKFILE_PATH}
+        FILE=${LOCKFILE_PATH}
 
-          reload() {
-            if [ ! -f "$FILE" ]; then
-              touch $FILE
+        reload() {
+          if [ ! -f "$FILE" ]; then
+            touch $FILE
 
-                modprobe -r hid_magicmouse
-                sleep 2
-                modprobe hid-generic
-                modprobe hid_magicmouse ${MODPROBE_OPTIONS}
+              modprobe -r hid_magicmouse
+              sleep 2
+              modprobe hid-generic
+              modprobe hid_magicmouse ${MODPROBE_OPTIONS}
 
-                sleep 2
-                rm -f "$FILE"
+              sleep 2
+              rm -f "$FILE"
 
-                fi
-          }
+              fi
+        }
 
-        reload &
+      echo "running hid_magicmouse reload"
+
+      reload
     '';
   };
   script-systemd = pkgs.writeShellApplication {
@@ -77,19 +79,17 @@ in {
     };
   };
 
-  # services.udev = {
-  #   enable = true;
-  #   extraRules = ''
-  #     SUBSYSTEM=="input", \
-  #     KERNEL=="mouse*", \
-  #     DRIVER=="", \
-  #     SUBSYSTEMS=="hid", \
-  #     KERNELS=="0005:004C:0269*", \
-  #     DRIVERS=="hid-generic|magicmouse", \
-  #     ACTION=="add", \
-  #     SYMLINK+="input/magicmouse-%k", \
-  #     RUN+="${lib.getExe script-udev}"
-  #   '';
-  # };
+  services.udev = {
+    enable = true;
+    extraRules = ''
+      DRIVERS=="magicmouse", \
+      ACTION=="add", \
+      SYMLINK+="input/magicmouse-%k", \
+      RUN+="${lib.getExe script-udev}"
+    '';
+    # extraRules = ''
+    #   ATTRS{phys}=="fc:b0:de:18:08:56", ACTION=="add", SYMLINK+="input/magicmouse-%k", RUN+="${lib.getExe script-udev}"
+    # '';
+  };
 
 }
