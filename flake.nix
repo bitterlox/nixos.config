@@ -36,11 +36,15 @@
     devenv.url = "github:cachix/devenv";
 
     ## laptop stuff ##
-    hyprland.url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
-    hyprland.inputs.nixpkgs.follows = "nixpkgs-stable";
+    hyprland = {
+      type = "git";
+      url = "https://github.com/hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+      submodules = true;
+    };
 
-    hyprpaper.url = "github:hyprwm/hyprpaper";
-    hyprpaper.inputs.nixpkgs.follows = "nixpkgs-stable";
+    hyprpaper.url = "github:hyprwm/hyprpaper?submodules=1";
+    hyprpaper.inputs.nixpkgs.follows = "nixpkgs";
 
     nixos-hardware.url = "github:NixOS/nixos-hardware/master";
 

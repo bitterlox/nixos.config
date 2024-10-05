@@ -99,6 +99,9 @@ impermanenceModule:
     environment.persistence."/persist" = {
       directories = [
         "/etc/nixos"
+        # this is important to have deterministic UIDs/GIDs
+        # https://github.com/nix-community/impermanence/issues/178
+        "/var/lib/nixos"
         # wifi connections
         "/etc/NetworkManager/system-connections"
         # bluetooth connections

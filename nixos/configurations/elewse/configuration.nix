@@ -17,7 +17,7 @@ myflakelib: hyprlandPackage:
   # kernel 6.9.x has this error on log-on screen with bothers me
   # https://community.frame.work/t/usb-c-error-on-boot/52012
   # boot.kernelPackages = pkgs.linuxPackages_6_9;
-  boot.kernelPackages = pkgs.linuxPackages_6_8;
+  boot.kernelPackages = pkgs.linuxPackages_6_10;
 
   boot.loader.efi.canTouchEfiVariables = true;
 
@@ -98,6 +98,9 @@ myflakelib: hyprlandPackage:
     user = "root";
     startAt = "weekly";
   };
+
+  # nix.settings = { };
+
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
