@@ -2,6 +2,7 @@
   imports = [ # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./modules/calibre
+    ./modules/urbit
   ];
   config = {
     # Use the GRUB 2 boot loader.
@@ -37,6 +38,11 @@
     customServices.calibre = {
       enable = true;
       virtualHost = "books.bittervoid.io";
+    };
+
+    customServices.urbit = {
+      enable = true;
+      virtualHost = "${config.lockbox.urbit-moon-patp}.bittervoid.io";
     };
 
     # HOME-MANAGER #

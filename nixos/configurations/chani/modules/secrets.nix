@@ -35,6 +35,7 @@ secrets-flake: agenix-module: lockbox-module:
         elewse = secrets-flake.elewse.ssh.public-key;
         sietch = secrets-flake.sietch.ssh.public-key;
       };
+      urbit-moon-patp = secrets-flake.common.urbit-moons.moon1;
     };
   };
 }
