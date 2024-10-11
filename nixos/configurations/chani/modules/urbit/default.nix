@@ -45,7 +45,7 @@ in {
       virtualHosts."${cfg.moon1virtualHost}".extraConfig = ''
         reverse_proxy ${urbitHost}:${builtins.toString cfg.moon1Port}
       '';
-      virtualHosts."${cfg.moon1virtualHost}".extraConfig = ''
+      virtualHosts."${cfg.moon2virtualHost}".extraConfig = ''
         reverse_proxy ${urbitHost}:${builtins.toString cfg.moon2Port}
       '';
     };
