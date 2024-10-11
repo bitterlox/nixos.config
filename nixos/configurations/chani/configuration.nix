@@ -42,7 +42,10 @@
 
     customServices.urbit = {
       enable = true;
-      virtualHost = "${config.lockbox.urbit-moon-patp}.bittervoid.io";
+      moon1virtualHost = "${config.lockbox.urbit-moon1-patp}.bittervoid.io";
+      moon1Port = 8080;
+      moon2virtualHost = "${config.lockbox.urbit-moon2-patp}.bittervoid.io";
+      moon2Port = 8081;
     };
 
     # HOME-MANAGER #
