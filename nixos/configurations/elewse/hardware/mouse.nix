@@ -1,4 +1,14 @@
 { pkgs, lib, ... }:
+# used this guide to figure out how to write udev rules
+# - http://reactivated.net/writing_udev_rules.html
+# commands used to debug this issue:
+# udevadm control ( --property )
+# - this shows like udev events as they come in
+# udevadm control --log-priority debug
+# - sets udev loglevel
+# - with journalctl -u systemd-udevd.service
+# dmesg -w
+# - shows mouse connecting? -w is follow option
 let
   LOCKFILE_PATH = "/tmp/add-magicmouse-lock";
   MODPROBE_OPTIONS =
@@ -6,6 +16,10 @@ let
   script-udev = pkgs.writeShellApplication {
     name = "magic-mouse-2-add.sh";
     runtimeInputs = [ pkgs.kmod ];
+    # the first 'sleep 1' is so udev properly loads the battery from the mouse
+    # otherwise it show battery capacity as 0 
+    # btw the mouse battery can be found at
+    # /sys/devices/virtual/misc/uhid/<id>/power_supply/hid-<mac-address>-battery/capacity
     text = ''
         FILE=${LOCKFILE_PATH}
 
@@ -13,35 +27,27 @@ let
           if [ ! -f "$FILE" ]; then
             touch $FILE
 
-              modprobe -r hid_magicmouse
-              sleep 2
-              modprobe hid-generic
-              modprobe hid_magicmouse ${MODPROBE_OPTIONS}
+            sleep 1
 
-              sleep 2
-              rm -f "$FILE"
+            modprobe -r hid_magicmouse
+            modprobe hid_magicmouse ${MODPROBE_OPTIONS}
 
-              fi
+            sleep 2
+            rm -f "$FILE"
+
+            fi
         }
 
-      echo "running hid_magicmouse reload"
+      echo "reloading hid_magicmouse kmod"
 
       reload
-    '';
-  };
-  script-systemd = pkgs.writeShellApplication {
-    name = "magic-mouse-2-add.sh";
-    runtimeInputs = [ pkgs.kmod ];
-    text = ''
-      modprobe -r hid_magimagic-mouse-2-add.shcmouse && modprobe hid_magicmouse
-      echo "restarted hid_magicmouse kernel module"
-    '';
-  };
 
+      echo "reloaded hid_magicmouse kmod"
+    '';
+  };
 in {
 
-  # this configures the kernel module for apple magicmouse
-  # FIXME: whenever it sleeps or smth and then starts back up scroll doesnt work
+  # set my preferred options at boot
   boot.extraModprobeConfig = ''
     options hid_magicmouse ${MODPROBE_OPTIONS}
   '';
@@ -50,25 +56,6 @@ in {
   #   modprobe -r hid_magicmouse && modprobe hid_magicmouse
   #   echo "restarted hid_magicmouse kernel module"
   # '';
-
-  # systemd.services.restart-magicmouse-kmod = {
-  #   description = "Service description here";
-  #   # wantedBy = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-then-hibernate.target" "post-resume.target" ];
-  #   wantedBy = [
-  #     "suspend.target"
-  #     "hibernate.target"
-  #     "hybrid-sleep.target"
-  #     "suspend-then-hibernate.target"
-  #   ];
-  #   after = [
-  #     "suspend.target"
-  #     "hibernate.target"
-  #     "hybrid-sleep.target"
-  #     "suspend-then-hibernate.target"
-  #   ];
-  #   script = (lib.getExe script-systemd);
-  #   serviceConfig.Type = "oneshot";
-  # };
 
   systemd.tmpfiles.settings = {
     "10-add-magicmouse"."${LOCKFILE_PATH}"."f" = {
@@ -80,15 +67,27 @@ in {
   };
 
   services.udev = {
+    # http://reactivated.net/writing_udev_rules.html#sysfsmatch
     enable = true;
+    # this works but maybe runs extra times, as we are targeting
+    # bluetooth devices connecting
     extraRules = ''
-      DRIVERS=="magicmouse", \
       ACTION=="add", \
-      SYMLINK+="input/magicmouse-%k", \
+      KERNEL=="hci0:*", \
+      SUBSYSTEM=="bluetooth", \
+      SUBSYSTEMS=="usb", \
+      DRIVERS=="btusb", \
       RUN+="${lib.getExe script-udev}"
     '';
+    # this worked but not completely:
+    # we targeted this attribute which is changed on every reconnect.
+    # this causes an infinite loop because it also changes
+    # when we reload the kmod
     # extraRules = ''
-    #   ATTRS{phys}=="fc:b0:de:18:08:56", ACTION=="add", SYMLINK+="input/magicmouse-%k", RUN+="${lib.getExe script-udev}"
+    #   ATTR{power/wakeup_last_time_ms}=="*", \
+    #   SUBSYSTEMS=="hid", \
+    #   DRIVERS=="magicmouse", \
+    #   RUN+="${lib.getExe script-udev}"
     # '';
   };
 

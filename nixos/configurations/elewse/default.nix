@@ -18,11 +18,6 @@ in {
           # you must use `specialArgs` by uncomment the following line:
           specialArgs = { };
           modules = [
-            # {
-            #   nixpkgs.overlays =
-            #     [ (final: previous: { bluez = unstable-pkgs.bluez; }) ];
-            # }
-            { hardware.bluetooth.package = unstable-pkgs.bluez; }
             {
               # this system uses nixpkgs-stable
               nixpkgs.pkgs = (import inputs.nixpkgs-stable {
