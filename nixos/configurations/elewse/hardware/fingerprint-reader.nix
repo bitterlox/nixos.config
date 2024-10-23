@@ -1,8 +1,7 @@
-# this nixos module defines behaviour that should trigger when we close
-# the laptop lid and are connected to an external display (at the system level)
-
-# list of stuff:
-# - temp disable fprind service
+# currently the only functionality here is masking the fprintd service when
+# the laptop lid is closed; since we can't use the systemctl command to mask
+# we're making a symlink to the systemd transient directory wich is basically
+# the same thing
 { pkgs, lib, ... }:
 let
   LOCKFILE_PATH = "/tmp/lidswitch-lock";
@@ -19,9 +18,8 @@ let
       if grep -Fq closed /proc/acpi/button/lid/LID0/state &&
          grep -Fxq connected /sys/class/drm/card1-eDP-1/status
       then
-      # re: second condition
-      # on reboot fprintd is started by default
-      # and the transient symlink probably removed
+      # second condition handles the following case: on reboot fprintd is
+      # started automatically and and the transient symlink probably removed
         echo "lid closed and monitor connected, attempting to disable fprintd."
         if [ ! -f $lock ] || { [ -f "$lock" ] && [ "$status" != "masked-runtime" ]; }; then
           # confirm last addition

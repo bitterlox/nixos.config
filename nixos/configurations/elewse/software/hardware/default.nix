@@ -1,7 +1,5 @@
 { config, pkgs, lib, ... }: {
 
-  imports = [ ./lid-closed-external-monitor.nix ];
-
   # network #
   networking.hostName = "elewse"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
