@@ -29,18 +29,13 @@ in {
       # Create your files separately and then link them to this file like this:
       # source = ~/.config/hypr/myColors.conf
 
-      ################
-      ### MONITORS ###
-      ################
-
-      # See https://wiki.hyprland.org/Configuring/Monitors/
-      # monitor = ",preferred,auto,auto";
-
       ###################
       ###   BINDINGS  ###
       ###################
 
-      "$mod" = "SUPER";
+      # for keychron k6 in window mode;
+      # todo: figure out how to turn this off for laptop keyboard
+      "$mod" = "ALT";
 
       # See https://wiki.hyprland.org/Configuring/Keywords/
       # Set programs that you use
@@ -169,8 +164,8 @@ in {
       input = {
         kb_layout = "us";
         kb_variant = "";
-        kb_model = "";
-        kb_options = "";
+        kb_model = "pc104";
+        kb_options = "ctrl:nocaps";
         kb_rules = "";
 
         follow_mouse = 1;
@@ -196,6 +191,8 @@ in {
       ###################
       ### KEYBINDINGS ###
       ###################
+
+      # todo: setup print key to open a screenshot program
 
       # Example binds, see https://wiki.hyprland.org/Configuring/Binds/ for more
       # can use wev program to find key names
@@ -260,6 +257,12 @@ in {
         # Move/resize windows with mainMod + LMB/RMB and dragging
         "$mod, mouse:272, movewindow"
         "$mod, mouse:273, resizewindow"
+      ];
+
+      bindl = [
+        # trigger when the switch is toggled
+        # should make this conditional on external monitor disconnected
+        ", switch:on:Lid Switch, exec, pidof hyprlock || hyprlock"
       ];
 
       ##############################
@@ -375,39 +378,5 @@ in {
         shadow_passes = 2;
       }];
     };
-  };
-
-  # to config this see nix shell nixpkgs#sway
-  # man 5 sway-output
-
-  home.packages = [ pkgs.kanshi ];
-  services.kanshi = {
-    enable = true;
-    systemdTarget = "hyprland-session.target";
-
-    settings = [
-      {
-        profile.name = "undocked";
-        profile.outputs = [{
-          criteria = "eDP-1";
-          status = "enable";
-          position = "0,0";
-        }];
-      }
-      {
-        profile.name = "asus-monitor";
-        profile.outputs = [
-          {
-            criteria = "ASUSTek COMPUTER INC PG32UCDM S5LMQS055583";
-            status = "enable";
-            position = "0,0";
-          }
-          {
-            criteria = "eDP-1";
-            status = "disable";
-          }
-        ];
-      }
-    ];
   };
 }

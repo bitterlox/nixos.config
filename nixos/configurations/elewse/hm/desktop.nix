@@ -40,6 +40,7 @@ in {
     ./compositor
     ./browsers
     ./shells.nix
+    ./hardware
   ];
   config = {
     home.packages = let

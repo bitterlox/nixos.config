@@ -1,1 +1,1 @@
-{ ... }: { imports = [ ./mouse.nix ./fingerprint-reader ./general.nix ]; }
+{ ... }: { imports = [ ./mouse.nix ./fingerprint-reader.nix ./general.nix ]; }
