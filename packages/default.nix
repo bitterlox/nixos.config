@@ -5,7 +5,7 @@
   #    sharedModules = [{ nixpkgs.overlays = [ overlay-nvim ]; }];
   #  };
   #}];
-  imports = [ ./nvim ];
+  imports = [ ./nvim ./nixvim ];
   perSystem = { inputs', system, pkgs, ... }:
     let
       themePackages = let

@@ -53,6 +53,17 @@
     lanzaboote.url = "github:nix-community/lanzaboote/v0.3.0";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
 
+    ## nvim stuff ##
+    nixvim-unstable = {
+      url = "github:nix-community/nixvim";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nixvim-stable = {
+      url = "github:nix-community/nixvim/nixos-24.05";
+      inputs.nixpkgs.follows = "nixpkgs-stable";
+    };
+
     ## misc coming from nvim-config-flake ##
 
     efmls-configs = {
