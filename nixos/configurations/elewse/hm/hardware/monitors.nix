@@ -1,7 +1,5 @@
 # configure monitors stuff:
 # - automatically switch over to external monitor when connected
-# - when external monitor is connected and we open laptop lid mirror external
-#   monitor
 { config, lib, ... }: {
 
   wayland.windowManager.hyprland.settings = {
@@ -12,12 +10,14 @@
     # See https://wiki.hyprland.org/Configuring/Monitors/
     monitor = "eDP-1,preferred,auto,auto";
 
+    # this was nifty but was making it crash and i don't want to figure this out
+    # in the end i'm happy with just automatically switching from / to docked
     # the l flag makes it work even with modifiers active like lockscreen
-    bindl = [
-      ", switch:on:Lid Switch, exec, hyprctl keyword monitor eDP-1, disable"
-      # should switch DP-2 with script that finds monitor name automatically
-      ", switch:off:Lid Switch, exec, hyprctl keyword monitor eDP-1, preferred, auto, auto, mirror, DP-2"
-    ];
+    # bindl = [
+    #   ", switch:on:Lid Switch, exec, hyprctl keyword monitor eDP-1, disable"
+    #   # should switch DP-2 with script that finds monitor name automatically
+    #   ", switch:off:Lid Switch, exec, hyprctl keyword monitor eDP-1, preferred, auto, auto, mirror, DP-2"
+    # ];
   };
 
   # to config this see nix shell nixpkgs#sway
@@ -35,7 +35,6 @@
         profile.outputs = [{
           criteria = "eDP-1";
           status = "enable";
-          scale = 1.0;
         }];
       }
       {
