@@ -6,7 +6,7 @@ top@{ inputs, lib, ... }: {
         nixvim-unstable =
           top.inputs.nixvim-unstable.legacyPackages.${system}.makeNixvimWithModule {
             pkgs = import top.inputs.nixpkgs { inherit system; };
-            module = { extraConfigLua = "print('hi')"; };
+            module = ./modules/editor-config;
           };
       };
       packagesToApps = packages:
