@@ -129,17 +129,17 @@
       options.silent = true;
     }
 
-    {
-      mode = "n";
-      key = "<leader>f";
-      action = "<C_O>";
-    }
+    # {
+    #   mode = "n";
+    #   key = "<leader>f";
+    #   action = "<C_O>";
+    # }
 
-    {
-      mode = "n";
-      key = "<leader>p";
-      action = "<C_P>";
-    }
+    # {
+    #   mode = "n";
+    #   key = "<leader>p";
+    #   action = "<C_P>";
+    # }
 
     # gl - > $
     # gh - > 0
