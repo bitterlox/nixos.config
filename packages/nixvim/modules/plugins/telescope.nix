@@ -1,4 +1,3 @@
-# trace: { config = <CODE>; helpers = <CODE>; lib = <CODE>; options = <CODE>; pkgs = <CODE>; specialArgs = <CODE>; }
 arg@{ config, helpers, lib, options, pkgs, specialArgs }: {
 
   # maybe missing leader d keymap to lsp stuff
