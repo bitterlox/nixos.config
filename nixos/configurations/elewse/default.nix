@@ -27,6 +27,7 @@ in {
             }
             {
               # add my own packages
+              programs.hyprland.package = inputs'.hyprland.packages.hyprland;
               environment.systemPackages = let p = self'.packages;
               in [ p.nvim-full inputs'.hyprpaper.packages.default ];
             }
@@ -36,8 +37,7 @@ in {
             impermanenceModule
             secretsModule
             sharedModules.linux-base
-            (import ./configuration.nix config.flake.lib
-              inputs'.hyprland.packages.hyprland)
+            (import ./configuration.nix config.flake.lib)
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`
             inputs.home-manager-stable.nixosModules.home-manager

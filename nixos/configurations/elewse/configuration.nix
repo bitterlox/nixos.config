@@ -1,10 +1,10 @@
-myflakelib: hyprlandPackage:
+myflakelib:
 { config, pkgs, lib, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
     ./hardware
-    (import ./software hyprlandPackage)
+    ./software
   ];
 
   # Bootloader.
@@ -100,7 +100,6 @@ myflakelib: hyprlandPackage:
   };
 
   # nix.settings = { };
-
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
