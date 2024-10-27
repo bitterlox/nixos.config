@@ -58,8 +58,6 @@ let
   };
 in {
 
-  # maybe missing leader d keymap to lsp stuff
-
   extraPlugins = [{
     plugin = pkgs.vimPlugins.nvim-cokeline;
     config = "luafile ${luaconfig}";

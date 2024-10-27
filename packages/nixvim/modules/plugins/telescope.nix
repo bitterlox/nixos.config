@@ -1,5 +1,6 @@
 arg@{ config, helpers, lib, options, pkgs, specialArgs }: {
 
+  # TODO: enable native sorter to improve performance
   # maybe missing leader d keymap to lsp stuff
 
   plugins.telescope.enable = true;

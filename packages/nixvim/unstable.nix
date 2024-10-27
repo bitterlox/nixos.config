@@ -1,5 +1,12 @@
 # this is a flake-parts module
 top@{ inputs, lib, ... }: {
+  # TODO: handle runtime tool dependencies as follows:
+  # - define a custom option, `runtimeBinaries` of type list of pkgs
+  #   to which we'll add pkgs in our files
+  #
+  # - here at the top level copy the wrapping code from the other nvim derivation
+  #   and mash them all into a single PATH, using the config.package option
+  #
   perSystem = { inputs', config, system, pkgs, ... }:
     let
       packages = {
