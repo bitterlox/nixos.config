@@ -1,4 +1,5 @@
-arg@{ config, helpers, lib, options, pkgs, specialArgs }:
+# this is a nixvim module
+args@{ config, helpers, lib, options, pkgs, specialArgs }:
 let
   luaconfig = pkgs.writeTextFile {
     name = "nvim-cokeline.lua";

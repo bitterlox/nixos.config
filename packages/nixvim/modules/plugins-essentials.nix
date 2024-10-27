@@ -1,4 +1,5 @@
-arg@{ config, helpers, lib, options, specialArgs }: {
+# this is a nixvim module
+args@{ config, helpers, lib, options, specialArgs }: {
   imports = [
     ./plugins/telescope.nix
     ./plugins/nvim-cokeline.nix

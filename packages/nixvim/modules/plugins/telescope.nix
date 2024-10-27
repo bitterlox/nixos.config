@@ -1,4 +1,5 @@
-arg@{ config, helpers, lib, options, pkgs, specialArgs }: {
+# this is a nixvim module
+args@{ config, helpers, lib, options, pkgs, specialArgs }: {
 
   # TODO: enable native sorter to improve performance
   # maybe missing leader d keymap to lsp stuff
