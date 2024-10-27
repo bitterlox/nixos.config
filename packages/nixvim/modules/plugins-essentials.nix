@@ -23,6 +23,9 @@ args@{ config, helpers, lib, options, specialArgs }: {
     ./plugins/tree-sitter.nix
     # tree of past changes to go back to
     ./plugins/undo-tree.nix
+
+    # common language plugins + lsp config
+    ./plugins/languages/common.nix
   ];
   config = { plugins.web-devicons.enable = true; };
 }
