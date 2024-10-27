@@ -3,18 +3,20 @@ arg@{ config, helpers, lib, options, pkgs, specialArgs }: {
   # TODO: enable native sorter to improve performance
   # maybe missing leader d keymap to lsp stuff
 
+  runtimeBinaries = [ pkgs.ripgrep pkgs.fd ];
+
   plugins.telescope.enable = true;
 
-  plugins.telescope.settings.defaults.vimgrep_arguments =
-    helpers.listToUnkeyedAttrs [
-      "${lib.getExe pkgs.ripgrep}"
-      "--color=never"
-      "--no-heading"
-      "--with-filename"
-      "--line-number"
-      "--column"
-      "--smart-case"
-    ];
+  # plugins.telescope.settings.defaults.vimgrep_arguments =
+  #   helpers.listToUnkeyedAttrs [
+  #     "${lib.getExe pkgs.ripgrep}"
+  #     "--color=never"
+  #     "--no-heading"
+  #     "--with-filename"
+  #     "--line-number"
+  #     "--column"
+  #     "--smart-case"
+  #   ];
 
   plugins.telescope.settings.pickers = {
     find_files.theme = "dropdown";
