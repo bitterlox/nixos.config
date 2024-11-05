@@ -34,8 +34,14 @@ in {
     };
   };
   config = lib.mkIf cfg.enable {
-     # why??
-    networking.firewall.allowedTCPPorts = [ 80 443 ];
+    # urbit ports explainer:
+    # https://github.com/urbit/urbit/issues/1268#issuecomment-488755907
+    # open ports for caddy
+    networking.firewall.allowedUDPPorts = [ cfg.moon1Port cfg.moon1Port ];
+    networking.firewall.allowedTCPPortRanges = [{
+      from = 12321;
+      to = 12325;
+    }];
     services.caddy = {
       enable = true;
       # there is an issue with the mimetype of files and the
