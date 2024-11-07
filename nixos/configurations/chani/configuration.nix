@@ -46,6 +46,8 @@
       moon1Port = 8080;
       moon2virtualHost = "${config.lockbox.urbit-moon2-patp}.bittervoid.io";
       moon2Port = 8081;
+      moon3virtualHost = "${config.lockbox.urbit-moon3-patp}.bittervoid.io";
+      moon3Port = 8082;
     };
 
     # HOME-MANAGER #

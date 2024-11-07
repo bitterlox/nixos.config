@@ -37,6 +37,7 @@ secrets-flake: agenix-module: lockbox-module:
       };
       urbit-moon1-patp = secrets-flake.common.urbit-moons.moon1;
       urbit-moon2-patp = secrets-flake.common.urbit-moons.moon2;
+      urbit-moon3-patp = secrets-flake.common.urbit-moons.moon3;
     };
   };
 }

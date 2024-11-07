@@ -31,6 +31,18 @@ in {
         example = "8081";
         description = lib.mdDoc "port where the moon runs";
       };
+      moon3virtualHost = lib.mkOption {
+        type = lib.types.str;
+        example = "sampel-palnet.example.com";
+        description =
+          lib.mdDoc "external addresses for firefly-iii and the data-importer";
+      };
+      moon3Port = lib.mkOption {
+        type = lib.types.port;
+        default = 8081;
+        example = "8081";
+        description = lib.mdDoc "port where the moon runs";
+      };
     };
   };
   config = lib.mkIf cfg.enable {
@@ -53,6 +65,9 @@ in {
       '';
       virtualHosts."${cfg.moon2virtualHost}".extraConfig = ''
         reverse_proxy ${urbitHost}:${builtins.toString cfg.moon2Port}
+      '';
+      virtualHosts."${cfg.moon3virtualHost}".extraConfig = ''
+        reverse_proxy ${urbitHost}:${builtins.toString cfg.moon3Port}
       '';
     };
   };
