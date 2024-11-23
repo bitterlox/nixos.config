@@ -1,3 +1,17 @@
+###############################################################################
+#                                   TODO                                      #
+###############################################################################
+#                                                                             #
+# + lua/globals                                                               #
+# + lua/config/editor-config                                                  #
+# + lua/config/plugins/plugin-config                                          #
+# + lua/config/plugins/plugin-keybindings -- except neotest                   #
+# + lua/config/plugins/plugin-config      -- except neotest, lsp-inlayhints   #
+# - lua/config/plugins/extra-config       -- except neotest                   #
+#                                                                             #
+###############################################################################
+
+
 # this is a nixvim module
 args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   imports =
