@@ -24,8 +24,12 @@ args@{ config, helpers, lib, options, specialArgs }: {
     # tree of past changes to go back to
     ./plugins/undo-tree.nix
 
+    # lsps #
+
     # common language plugins + lsp config
     ./plugins/languages/common.nix
+    # golang lsp
+    ./plugins/languages/go.nix
   ];
   config = { plugins.web-devicons.enable = true; };
 }

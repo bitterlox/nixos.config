@@ -7,7 +7,8 @@
 # + lua/config/plugins/plugin-config                                          #
 # + lua/config/plugins/plugin-keybindings -- except neotest                   #
 # + lua/config/plugins/plugin-config      -- except neotest, lsp-inlayhints   #
-# - lua/config/plugins/extra-config       -- except neotest                   #
+# ? lua/config/plugins/extra-config       -- except neotest                   #
+#   ? lua/config/plugins/extra-config/gopls                                   #
 #                                                                             #
 ###############################################################################
 
@@ -18,7 +19,7 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     [ ./options.nix ./modules/editor-config ./modules/plugins-essentials.nix ];
 
   # we do this so we can add binaries to nvim's path, as some plugins require
-  # external tools
+  # external tool?
 
   package = let neovim = options.package.default;
   in pkgs.symlinkJoin {
