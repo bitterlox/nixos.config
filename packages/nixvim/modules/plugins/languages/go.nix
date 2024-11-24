@@ -1,15 +1,16 @@
 # this is a nixvim module
 args@{ config, helpers, lib, options, pkgs, specialArgs }: {
 
-  plugins.lsp.capabilities =
-    helpers.mkRaw "require('cmp_nvim_lsp').default_capabilities()";
-
   plugins.lsp.servers.gopls.enable = true;
-  plugins.lsp.servers.gopls.onAttach =
-    helpers.mkRaw "require('telescope.builtin')";
 
   plugins.lsp.servers.gopls.cmd = [ "gopls" "serve" ];
   plugins.lsp.servers.gopls.filetypes = [ "go" "gomod" ];
+  plugins.lsp.servers.gopls.onAttach.function = ''
+    if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+          vim.print("tt") 
+            end
+
+  '';
   plugins.lsp.servers.gopls.rootDir = helpers.mkRaw
     "require('lspconfig.util').root_pattern('go.work', 'go.mod', '.git')";
   plugins.lsp.servers.gopls.settings = {

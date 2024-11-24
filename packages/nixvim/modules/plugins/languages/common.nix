@@ -20,6 +20,17 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   # through it;
   plugins.lsp.enable = true;
   plugins.lsp.inlayHints = true;
+  plugins.lsp.onAttach = "require('telescope.builtin')";
+
+  # thanks to this commit
+  # https://github.com/nix-community/nixvim/pull/1776/commits/3a8d4fee35642ee326f5fea8ddb7aacd1176f23e
+  plugins.lsp.capabilities = ''
+    capabilities = vim.tbl_deep_extend(
+      "force",
+      capabilities,
+      require('cmp_nvim_lsp').default_capabilities()
+    )
+  '';
 
   # lua code - unused, was using only for keybindings and inlayHints
   # plugins.lsp.onAttach = "";
