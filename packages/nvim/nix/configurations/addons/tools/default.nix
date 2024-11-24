@@ -18,6 +18,7 @@ in {
   nixfmt = addon.makeToolAddon { pkg = pkgs.nixfmt; };
 
   # misc
+  go = addon.makeToolAddon { pkg = pkgs.go; };
   ripgrep = addon.makeToolAddon { pkg = pkgs.ripgrep; };
   fd = addon.makeToolAddon { pkg = pkgs.fd; };
 }

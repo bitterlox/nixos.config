@@ -16,6 +16,7 @@
         # required by tree-sitter
         tools.ripgrep
         tools.fd
+        tools.go
       ];
     in {
       config.neovim.editors = [
