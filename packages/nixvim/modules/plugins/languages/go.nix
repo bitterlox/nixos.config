@@ -5,12 +5,12 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
 
   plugins.lsp.servers.gopls.cmd = [ "gopls" "serve" ];
   plugins.lsp.servers.gopls.filetypes = [ "go" "gomod" ];
-  plugins.lsp.servers.gopls.onAttach.function = ''
-    if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-          vim.print("tt") 
-            end
+  # plugins.lsp.servers.gopls.onAttach.function = ''
+  #   if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
+  #         vim.print("tt") 
+  #           end
 
-  '';
+  # '';
   plugins.lsp.servers.gopls.rootDir = helpers.mkRaw
     "require('lspconfig.util').root_pattern('go.work', 'go.mod', '.git')";
   plugins.lsp.servers.gopls.settings = {

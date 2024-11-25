@@ -5,21 +5,21 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
 
   # completion sources
   # maybe i should switch to auto enable sources
-  # edit: i tried, i don't like it
   # TODO: add
   # - cmp-nvim-lsp-signature-help 
   # - cmp-nvim-lsp-document-symbol
   # - otter.nvim
-  plugins.cmp-buffer.enable = true;
-  plugins.cmp-path.enable = true;
-  plugins.cmp-cmdline.enable = true;
-  plugins.cmp-nvim-lsp.enable = true;
+  # plugins.cmp-buffer.enable = true;
+  # plugins.cmp-path.enable = true;
+  # plugins.cmp-cmdline.enable = true;
+  # plugins.cmp-nvim-lsp.enable = true;
+  # plugins.cmp_luasnip.enable = true;
 
-  plugins.cmp_luasnip.enable = true;
+  plugins.cmp.settings.autoEnableSoures = true;
 
   plugins.luasnip.enable = true;
   plugins.friendly-snippets.enable = true;
-# load snippets
+  # load snippets
   plugins.luasnip.fromVscode = [ { } ];
 
   # luasnip
