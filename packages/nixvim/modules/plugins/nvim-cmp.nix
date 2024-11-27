@@ -9,17 +9,17 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   # - cmp-nvim-lsp-signature-help 
   # - cmp-nvim-lsp-document-symbol
   # - otter.nvim
-  # plugins.cmp-buffer.enable = true;
-  # plugins.cmp-path.enable = true;
-  # plugins.cmp-cmdline.enable = true;
-  # plugins.cmp-nvim-lsp.enable = true;
-  # plugins.cmp_luasnip.enable = true;
+  plugins.cmp-buffer.enable = true;
+  plugins.cmp-path.enable = true;
+  plugins.cmp-cmdline.enable = true;
+  plugins.cmp-nvim-lsp.enable = true;
+  plugins.cmp_luasnip.enable = true;
 
-  plugins.cmp.settings.autoEnableSoures = true;
+  # plugins.cmp.settings.autoEnableSoures = true;
 
   plugins.luasnip.enable = true;
   plugins.friendly-snippets.enable = true;
-  # load snippets
+  # load snippets - this might be redundant
   plugins.luasnip.fromVscode = [ { } ];
 
   # luasnip

@@ -20,7 +20,12 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   # through it;
   plugins.lsp.enable = true;
   plugins.lsp.inlayHints = true;
-  plugins.lsp.onAttach = "require('telescope.builtin')";
+  plugins.lsp.onAttach = ''
+    require('telescope.builtin')
+    -- 0 = trace
+    -- 1 = debug
+    -- vim.lsp.log.set_level(0)
+  '';
 
   # thanks to this commit
   # https://github.com/nix-community/nixvim/pull/1776/commits/3a8d4fee35642ee326f5fea8ddb7aacd1176f23e
