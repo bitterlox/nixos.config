@@ -1,16 +1,12 @@
 # this is a nixvim module
 args@{ config, helpers, lib, options, pkgs, specialArgs }: {
 
+  # lsp configuration #
+
   plugins.lsp.servers.gopls.enable = true;
 
   plugins.lsp.servers.gopls.cmd = [ "gopls" "serve" ];
   plugins.lsp.servers.gopls.filetypes = [ "go" "gomod" ];
-  # plugins.lsp.servers.gopls.onAttach.function = ''
-  #   if client.server_capabilities.inlayHintProvider and vim.lsp.inlay_hint then
-  #         vim.print("tt") 
-  #           end
-
-  # '';
   plugins.lsp.servers.gopls.rootDir = helpers.mkRaw
     "require('lspconfig.util').root_pattern('go.work', 'go.mod', '.git')";
   plugins.lsp.servers.gopls.settings = {
@@ -51,4 +47,10 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
       };
     };
   };
+
+  # neotest adapter for go #
+  # mostly works but sometimes it returns an error about
+  # non-associated tests not running; i think if you do table tests
+  # this doesn't occur
+  plugins.neotest.adapters.golang.enable = true;
 }

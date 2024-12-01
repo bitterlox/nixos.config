@@ -3,6 +3,7 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   plugins.treesitter.enable = true;
 
   # default is allGrammars
+  # maybe reconsider this if build times are affected
   plugins.treesitter.grammarPackages =
     config.plugins.treesitter.package.passthru.allGrammars;
   plugins.treesitter.nixGrammars = true;

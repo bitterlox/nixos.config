@@ -27,13 +27,34 @@ args@{ config, helpers, lib, options, specialArgs }: {
     # completion
     ./plugins/nvim-cmp.nix
 
+    # testing
+    ./plugins/neotest.nix
+
+    # nvim-lspconfig
+    ./plugins/lsp.nix
+
     # lsps #
 
     # common language plugins + lsp config
     ./plugins/languages/common.nix
-    # golang lsp
+
+    # golang support
     ./plugins/languages/go.nix
-    ./plugins/languages/tsserver.nix
+
+    # typescript support
+    ./plugins/languages/typescript.nix
+
+    # bash support
+    ./plugins/languages/bash.nix
+
+    # lua support
+    ./plugins/languages/lua.nix
+
+    # nix support
+    ./plugins/languages/rust.nix
+
+    # nix support
+    ./plugins/languages/nix.nix
   ];
   config = { plugins.web-devicons.enable = true; };
 }
