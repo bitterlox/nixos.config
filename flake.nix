@@ -80,6 +80,8 @@
       url = "github:savq/melange-nvim";
       flake = false;
     };
+
+    rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
   };
 
   outputs = { flake-parts, ... }@inputs:

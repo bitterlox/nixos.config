@@ -71,7 +71,11 @@ in {
 
       # See https://wiki.hyprland.org/Configuring/Environment-variables/
 
-      env = [ "XCURSOR_SIZE,24" "HYPRCURSOR_SIZE,24" ];
+      env = [
+        "XCURSOR_SIZE,24"
+        "HYPRCURSOR_SIZE,24"
+        "HYPRCURSOR_THEME,rose-pine-hyprcursor"
+      ];
 
       ###################
       ## LOOK AND FEEL ##
@@ -286,6 +290,10 @@ in {
       debug = { disable_logs = false; };
     };
   };
+
+  # not suppported yet, added here
+  # https://github.com/nix-community/home-manager/commit/445d721ecfbd92d83f857f12f1f99f5c8fa79951
+  # home.pointerCursor.hyprcursor.enable = true;
 
   services.hyprpaper = {
     enable = true;

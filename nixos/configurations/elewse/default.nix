@@ -29,7 +29,12 @@ in {
               # add my own packages
               programs.hyprland.package = inputs'.hyprland.packages.hyprland;
               environment.systemPackages = let p = self'.packages;
-              in [ p.nvim-full inputs'.hyprpaper.packages.default ];
+              in [
+                p.nvim-full
+                inputs'.hyprpaper.packages.default
+                inputs'.rose-pine-hyprcursor.packages.default
+              ];
+              environment.pathsToLink = [ "/share/icons" ];
             }
           ] ++ privateModules ++ [
             inputs.nixos-hardware.nixosModules.framework-16-7040-amd
@@ -46,9 +51,13 @@ in {
               home-manager.useUserPackages = true;
 
               # Optionally, use home-manager.extraSpecialArgs to pass arguments to this
-              home-manager.users.angel =
-                (import ./hm/desktop.nix config.flake.homeModules.angel
-                  inputs.impermanence.nixosModules.home-manager.impermanence);
+              home-manager.users.angel = { ... }: {
+                imports = [
+                  (import ./hm/desktop.nix config.flake.homeModules.angel
+                    inputs.impermanence.nixosModules.home-manager.impermanence)
+                ];
+                config = { };
+              };
             }
           ];
         });
