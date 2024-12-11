@@ -10,13 +10,14 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   # https://github.com/bash-lsp/bash-language-server/blob/main/server/src/config.ts
   plugins.lsp.servers.bashls.settings = {
     # TODO: look into setting up local explainshell to hook up with this
-    explainShellEndpoint = "";
+    # explainShellEndpoint = "";
     includeAllWorkspaceSymbols = true;
 
     shellCheckPath = lib.getExe pkgs.shellcheck;
 
     shfmt = {
-      path = lib.getExe pkgs.shfmt;
+      # all formatting comes from efm
+      path = "";
       languageDialect = "auto";
       funcNextLine = true;
       caseIndent = true;
@@ -24,4 +25,27 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
       spaceRedirects = true;
     };
   };
+
+  runtimeBinaries = [ pkgs.shellharden pkgs.beautysh pkgs.shfmt ];
+
+  plugins.lsp.servers.efm.enable = true;
+  plugins.lsp.servers.efm.filetypes = [ "sh" ];
+  plugins.lsp.servers.efm.extraOptions = {
+    init_options = {
+      documentFormatting = true;
+      documentRangeFormatting = true;
+      hover = true;
+      documentSymbol = true;
+      codeAction = true;
+      completion = true;
+    };
+  };
+  plugins.lsp.servers.efm.settings = {
+    rootMarkers = [ ".git/" ];
+    languages = { };
+  };
+
+  plugins.efmls-configs.enable = true;
+  plugins.efmls-configs.setup.sh.formatter =
+    [ "shfmt" "beautysh" "shellharden" ];
 }

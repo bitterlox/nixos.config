@@ -6,6 +6,20 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   # maybe reconsider this if build times are affected
   plugins.treesitter.grammarPackages =
     config.plugins.treesitter.package.passthru.allGrammars;
+  # plugins.treesitter.grammarPackages = [
+  #     bash
+  #     common
+  #     css
+  #     go
+  #     json
+  #     lua
+  #     markdown
+  #     nix
+  #     rust
+  #     typescript
+  #     yaml
+  #     zig
+  # ]
   plugins.treesitter.nixGrammars = true;
 
   plugins.treesitter.luaConfig.content = ''

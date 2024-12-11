@@ -3,7 +3,6 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   # https://github.com/folke/lazydev.nvim
 
   plugins.lsp.servers.lua_ls.enable = true;
-  plugins.lsp.servers.lua_ls.cmd = [ "lua-language-server" ];
   plugins.lsp.servers.lua_ls.settings = {
     Lua = {
       runtime = {
@@ -25,17 +24,18 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   };
 
   plugins.lsp.servers.efm.enable = true;
-  plugins.lsp.servers.efm.cmd = ["efm-langserver"];
-  plugins.lsp.servers.efm.filetypes = ["lua"];
-  plugins.lsp.servers.efm.settings = {
-rootMarkers = [ ".git/" ];
-languages = {
-  lua = {
-      formatCommand = ''${lib.getExe pkgs.stylua} --color never --output-format unified ''${INPUT}'';
-      formatStdin = false;
-  };
-  };
-
+  plugins.lsp.servers.efm.filetypes = [ "lua" ];
+  plugins.lsp.servers.efm.extraOptions = {
+    init_options = {
+      documentFormatting = true;
+      documentRangeFormatting = true;
+      hover = true;
+      documentSymbol = true;
+      codeAction = true;
+      completion = true;
     };
+  };
 
+  plugins.efmls-configs.enable = true;
+  plugins.efmls-configs.setup.lua.formatter = [ "stylua" ];
 }

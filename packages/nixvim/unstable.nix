@@ -14,7 +14,7 @@
 #   + lua/config/plugins/extra-config/lua_ls                                  #
 #   x lua/config/plugins/extra-config/nil_ls                                  #
 #   + lua/config/plugins/extra-config/rust_analyzer                           #
-#   - lua/config/plugins/extra-config/efm-langserver                          #
+#   + lua/config/plugins/extra-config/efm-langserver                          #
 #                                                                             #
 #                                                                             #
 # after port:                                                                 #

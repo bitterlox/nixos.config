@@ -44,6 +44,9 @@ args@{ config, helpers, lib, options, specialArgs }: {
     # typescript support
     ./plugins/languages/typescript.nix
 
+    # css support
+    ./plugins/languages/css.nix
+
     # bash support
     ./plugins/languages/bash.nix
 
