@@ -3,7 +3,7 @@
 { pkgs, addon }: {
   gopls = addon.makeToolAddon {
     pkg = pkgs.gopls;
-    config = [ ../../../../../lua/config/plugins/extra-config/bashls.lua ];
+    config = [ ../../../../../lua/config/plugins/extra-config/gopls.lua ];
   };
   lua-language-server = addon.makeToolAddon {
     pkg = pkgs.lua-language-server;

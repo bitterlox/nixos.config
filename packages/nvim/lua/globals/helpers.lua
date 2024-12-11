@@ -62,6 +62,7 @@ end
 vim.g.helpers = {
   lsp = {
     make_on_attach_callback = function(inlayhints, builtin)
+      vim.lsp.inlay_hint.enable(true, {bufnr=bufnr})
       vim.api.nvim_create_augroup("LspAttach_inlayhints", {})
       vim.api.nvim_create_autocmd("LspAttach", {
         group = "LspAttach_inlayhints",
@@ -69,9 +70,9 @@ vim.g.helpers = {
           if not (args.data and args.data.client_id) then
             return
           end
-          local bufnr = args.buf
-          local client = vim.lsp.get_client_by_id(args.data.client_id)
-          inlayhints.on_attach(client, bufnr, false)
+          -- local bufnr = args.buf
+          -- local client = vim.lsp.get_client_by_id(args.data.client_id)
+          -- inlayhints.on_attach(client, bufnr, false)
         end,
       })
       return function(client, bufnr)
