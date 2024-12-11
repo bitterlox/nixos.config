@@ -30,6 +30,9 @@ args@{ config, helpers, lib, options, specialArgs }: {
     # testing
     ./plugins/neotest.nix
 
+    # colorizer
+    ./plugins/languages/nix.nix
+
     # nvim-lspconfig
     ./plugins/lsp.nix
 
