@@ -1,5 +1,13 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  specialArgs,
+}:
+{
   plugins.colorizer.enable = true;
   plugins.colorizer.settings.buftypes = [ "*" ];
   plugins.colorizer.settings.filetypes = [ "*" ];
@@ -26,11 +34,11 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
 
     # set the display mode
     # highlighting mode.  'background'|'foreground'|'virtualtext'
-    mode = "virtualtext";
+    mode = "foreground";
     # tailwind colors.
     # boolean|'normal'|'lsp'|'both'.  true is same as normal
     # enable tailwind colors
-    tailwind = false;
+    tailwind = "both";
 
     # parsers can contain values used in |user_default_options|
     # enable sass colors
@@ -46,11 +54,11 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     virtualtext_inline = false;
 
     # virtualtext highlight mode: 'background'|'foreground'
-    virtualtext_mode = "foreground";
+    virtualtext_mode = "background";
 
     # update color values even if buffer is not focused
     # example use: cmp_menu; cmp_docs
-    always_update = false;
+    always_update = true;
   };
 
 }

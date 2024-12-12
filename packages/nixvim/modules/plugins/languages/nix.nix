@@ -1,14 +1,21 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  specialArgs,
+}:
+{
 
   # lsp configuration #
 
   runtimeBinaries = [ pkgs.nixfmt-rfc-style ];
 
   plugins.lsp.servers.nixd.enable = true;
-  plugins.lsp.servers.nixd.cmd = [ "nixd" "--semantic-tokens=true" ];
-  plugins.lsp.servers.nixd.rootDir =
-    "require('lspconfig.util').root_pattern('.nixd.json', 'flake.nix', '.git')";
+  plugins.lsp.servers.nixd.cmd = ["nixd" "--semantic-tokens=true" ];
+  plugins.lsp.servers.nixd.rootDir = "require('lspconfig.util').root_pattern('.nixd.json', 'flake.nix', '.git')";
 
   # https://github.com/nix-community/nixd/blob/main/nixd/docs/configuration.md
   plugins.lsp.servers.nixd.settings = {

@@ -1,5 +1,43 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  specialArgs,
+}:
+{
+
+  plugins.lsp.servers.tailwindcss.enable = true;
+  # https://github.com/tailwindlabs/tailwindcss-intellisense?tab=readme-ov-file#extension-settings
+  plugins.lsp.servers.tailwindcss.settings = {
+    tailwindCSS = {
+      classAttributes = [
+        "class"
+        "className"
+        "class:list"
+        "classList"
+        "ngClass"
+      ];
+      includeLanguages = {
+        eelixir = "html-eex";
+        eruby = "erb";
+        htmlangular = "html";
+        templ = "html";
+      };
+      lint = {
+        cssConflict = "warning";
+        invalidApply = "error";
+        invalidConfigPath = "error";
+        invalidScreen = "error";
+        invalidTailwindDirective = "error";
+        invalidVariant = "error";
+        recommendedVariantOrder = "warning";
+      };
+      validate = true;
+    };
+  };
 
   plugins.lsp.servers.efm.enable = true;
   # enable on all files
@@ -20,4 +58,3 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   plugins.efmls-configs.setup.css.formatter = [ "stylelint" ];
   plugins.efmls-configs.setup.css.linter = [ "stylelint" ];
 }
-

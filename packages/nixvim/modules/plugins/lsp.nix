@@ -1,5 +1,13 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  specialArgs,
+}:
+{
   plugins.lsp.enable = true;
   plugins.lsp.inlayHints = true;
   plugins.lsp.onAttach = ''
@@ -8,7 +16,6 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     -- 1 = debug
     -- vim.lsp.log.set_level(0)
   '';
-
 
   # lua code - unused, was using only for keybindings and inlayHints
   # plugins.lsp.onAttach = "";
@@ -106,8 +113,7 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     {
       mode = "n";
       key = "gtd";
-      action =
-        helpers.mkRaw "require('telescope.builtin').lsp_type_definitions";
+      action = helpers.mkRaw "require('telescope.builtin').lsp_type_definitions";
     }
     {
       mode = "n";
@@ -116,4 +122,3 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     }
   ];
 }
-
