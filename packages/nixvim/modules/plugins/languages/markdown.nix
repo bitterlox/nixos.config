@@ -15,6 +15,17 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     };
   };
 
+  # manual lua config
+  # markdown = {
+  # {
+  #  prefix = "markdownlint",
+  #  lintCommand = "markdownlint parsable ${INPUT}",
+  #  lintStdin = true,
+  #  -- this is vim error format https://vimhelp.org/quickfix.txt.html#error-file-format
+  #  -- tested with https://github.com/reviewdog/errorformat (which is used in efm-langserver)
+  #  lintFormats = { '%f:%l %m' },
+  # }
+  # }
   plugins.efmls-configs.enable = true;
   plugins.efmls-configs.setup.markdown.linter = [ "markdownlint" ];
 }

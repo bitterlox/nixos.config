@@ -6,10 +6,15 @@ top@{ inputs, lib, ... }: {
   perSystem = { inputs', config, system, pkgs, ... }:
     let
       packages-unstable = {
-        nixvim-unstable =
+        nvim-full =
           top.inputs.nixvim-unstable.legacyPackages.${system}.makeNixvimWithModule {
             pkgs = import top.inputs.nixpkgs { inherit system; };
-            module = ./unstable.nix;
+            module = ./unstable-full.nix;
+          };
+        nvim-light =
+          top.inputs.nixvim-unstable.legacyPackages.${system}.makeNixvimWithModule {
+            pkgs = import top.inputs.nixpkgs { inherit system; };
+            module = ./unstable-light.nix;
           };
       };
       # packages-stable = {

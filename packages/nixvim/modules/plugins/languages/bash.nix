@@ -45,6 +45,14 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     languages = { };
   };
 
+  # manual lua config
+  # sh = {
+  #   {
+  #     formatCommand = "shellharden --transform ${INPUT}",
+  #     formatStdin = false,
+  #   },
+  #   require('efmls-configs.formatters.shfmt'),
+  # },
   plugins.efmls-configs.enable = true;
   plugins.efmls-configs.setup.sh.formatter =
     [ "shfmt" "beautysh" "shellharden" ];

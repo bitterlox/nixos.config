@@ -19,6 +19,15 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   plugins.efmls-configs.externallyManagedPackages = [ "fixjson" ];
   runtimeBinaries = [ pkgs.fixjson ];
 
+  # manual lua config
+  # json = {
+  #   {
+  #     prefix = "jsonlint",
+  #     lintCommand = "jsonlint -c",
+  #     lintStdin = true,
+  #     lintFormats = { 'line %l, col %c, found: %m' },
+  #   }
+  # },
   plugins.efmls-configs.setup.JSON.linter = [ "jsonlint" ];
   plugins.efmls-configs.setup.json.linter = [ "jq" ];
   plugins.efmls-configs.setup.json.formatter = [ "fixjson" ];

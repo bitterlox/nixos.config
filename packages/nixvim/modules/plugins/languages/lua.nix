@@ -36,6 +36,13 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     };
   };
 
+  # manual lua config
+  # lua = {
+  #   {
+  #     formatCommand = "stylua-c --color never --output-format unified ${INPUT}",
+  #     formatStdin = false,
+  #   },
+  # },
   plugins.efmls-configs.enable = true;
   plugins.efmls-configs.setup.lua.formatter = [ "stylua" ];
 }

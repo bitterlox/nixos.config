@@ -25,8 +25,13 @@
 
 # this is a nixvim module
 args@{ config, helpers, lib, options, pkgs, specialArgs }: {
-  imports =
-    [ ./options.nix ./modules/editor-config ./modules/plugins-essentials.nix ];
+  imports = [
+    ./options.nix
+    ./modules/editor-config
+    ./modules/plugins/_essentials.nix
+    ./modules/plugins/lsp.nix
+    ./modules/plugins/languages/_all.nix
+  ];
 
   # we do this so we can add binaries to nvim's path, as some plugins require
   # external tool?

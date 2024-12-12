@@ -4,7 +4,7 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   plugins.colorizer.settings.buftypes = [ "*" ];
   plugins.colorizer.settings.filetypes = [ "*" ];
 
-  plugins.colorizer.user_default_options = {
+  plugins.colorizer.settings.user_default_options = {
     # "name" codes like blue or blue
     names = true;
     # #rgb hex codes

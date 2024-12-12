@@ -15,6 +15,17 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     };
   };
 
+  # manual lua config
+  # yaml = {
+  #   {
+  #     prefix = "yamllint",
+  #     lintCommand = "yamllint -s -f parsable ${INPUT}",
+  #     lintStdin = true,
+  #     -- this is vim error format https://vimhelp.org/quickfix.txt.html#error-file-format
+  #     -- tested with https://github.com/reviewdog/errorformat (which is used in efm-langserver)
+  #     lintFormats = { '%f:%l:%c: [%t%r] %m' },
+  #   }
+  # },
   plugins.efmls-configs.enable = true;
   plugins.efmls-configs.setup.yaml.formatter = [ "yq" ];
   plugins.efmls-configs.setup.yaml.linter = [ "yamllint" ];
