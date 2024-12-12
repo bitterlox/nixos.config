@@ -1,5 +1,13 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  specialArgs,
+}:
+{
 
   keymaps = [
     # leader mappings
@@ -94,12 +102,12 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     # quickfix list mappings
     {
       mode = "n";
-      key = "<C-k>";
+      key = "<C-S-k>";
       action = "<cmd>cnext<CR>zz";
     }
     {
       mode = "n";
-      key = "<C-j>";
+      key = "<C-S-j>";
       action = "<cmd>cprev<CR>zz";
     }
 
@@ -119,8 +127,7 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     {
       mode = "n";
       key = "<leader>s";
-      action = helpers.mkRaw
-        "[[:%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>]]";
+      action = helpers.mkRaw "[[:%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>]]";
     }
     # make file executable
     {
@@ -147,4 +154,3 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
   ];
 
 }
-
