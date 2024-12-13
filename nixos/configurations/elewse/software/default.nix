@@ -1,18 +1,33 @@
-{ config, pkgs, lib, ... }: {
-  imports =
-    [ ./hardware ./compositor.nix ./greeter.nix ];
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
+  imports = [
+    ./hardware
+    ./compositor.nix
+    ./greeter.nix
+  ];
 
   # we have mkBefore here due to the interactions between this declaration
   # of environment.systemPackages and the one in linux-base NixOSmodule
-  environment.systemPackages = lib.mkBefore (with pkgs; [
-    git
-    brightnessctl
-    libreoffice-qt6-fresh
-    joplin-desktop
-    #  wget
-  ]);
+  environment.systemPackages = lib.mkBefore (
+    with pkgs;
+    [
+      git
+      brightnessctl
+      libreoffice-qt6-fresh
+      joplin-desktop
+      #  wget
+    ]
+  );
 
   ## programs ##
+
+  # steam
+  programs.steam.enable = true;
 
   # file manager - thunar
 
