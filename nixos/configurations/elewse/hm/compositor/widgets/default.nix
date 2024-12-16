@@ -1,6 +1,10 @@
 { lib, config, options, pkgs, ... }: {
   imports = [ ];
   config = {
+# todo eww bar:
+# - add bluetooh widget
+# - add small widgtet to switch power profiles with
+#   powerprofilesctl
     programs.eww = {
       enable = true;
       package = pkgs.eww;

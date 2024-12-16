@@ -15,12 +15,11 @@ let
       # and it would exit
       status=$(systemctl is-enabled fprintd.service; exit 0)
 
-      if grep -Fq closed /proc/acpi/button/lid/LID0/state &&
-         grep -Fxq connected /sys/class/drm/card1-eDP-1/status
+      if grep -Fq closed /proc/acpi/button/lid/LID0/state
       then
       # second condition handles the following case: on reboot fprintd is
       # started automatically and and the transient symlink probably removed
-        echo "lid closed and monitor connected, attempting to disable fprintd."
+        echo "lid closed, attempting to disable fprintd."
         if [ ! -f $lock ] || { [ -f "$lock" ] && [ "$status" != "masked-runtime" ]; }; then
           # confirm last addition
           if { [ -f "$lock" ] && [ "$status" != "masked-runtime" ]; }; then
@@ -36,7 +35,7 @@ let
         fi
       elif [ -f "$lock" ];
       then
-        echo "lid open or monitor disconnected, enabling fprintd."
+        echo "lid open, enabling fprintd."
         rm -f /run/systemd/transient/fprintd.service
         rm "$lock"
         systemctl daemon-reload
@@ -74,7 +73,7 @@ in {
     serviceConfig = { ExecStart = lib.getExe script; };
     unitConfig = {
       Description =
-        "disables/enables fprintd depending on laptop lid/external monitor";
+        "disables/enables fprintd depending on laptop lid being closed or open";
     };
   };
 }

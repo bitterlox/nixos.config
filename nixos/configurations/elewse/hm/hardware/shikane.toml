@@ -1,0 +1,30 @@
+[[profile]]
+name = "undocked"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""]
+    [[profile.output]]
+    search = ["m=0x0BC9", "s=", "v=BOE"]
+    enable = true
+    mode = "2560x1600@165Hz"
+    position = "0,0"
+    scale = 1.59765625
+    transform = "normal"
+    adaptive_sync = false
+[[profile]]
+name = "docked"
+exec = ["notify-send shikane \"Profile $SHIKANE_PROFILE_NAME has been applied\""]
+    [[profile.output]]
+    # search for a matching serial number and model by full text comparison
+    # ASUSTek COMPUTER INC PG32UCDM S5LMQS055583
+    search = ["v=ASUSTek COMPUTER INC", "m=PG32UCDM", "s=S5LMQS055583"]
+    enable = true
+    mode = "preferred"
+    # position = "0,0"
+    # scale = 1.3
+
+    [[profile.output]]
+    search = ["m=0x0BC9", "s=", "v=BOE"]
+    enable = false
+    # exec = ["echo This is output $SHIKANE_OUTPUT_NAME"]
+    # mode = "2560x1440@75Hz"
+    # position = "1920,0"
+    # transform = "270"
