@@ -1,5 +1,12 @@
 angelBaseModule: impermanenceHmModule:
-{ lib, config, options, pkgs, osConfig, ... }:
+{
+  lib,
+  config,
+  options,
+  pkgs,
+  osConfig,
+  ...
+}:
 let
   overrides = {
     nerdfonts = pkgs.nerdfonts.override {
@@ -28,12 +35,12 @@ let
       # then override that
       # make PR to nixpkgs to upstream this change
       desktopItem = previousAttrs.desktopItem.override {
-        exec =
-          "${previousAttrs.pname} --enable-features=UseOzonePlatform --ozone-platform=wayland";
+        exec = "${previousAttrs.pname} --enable-features=UseOzonePlatform --ozone-platform=wayland";
       };
     });
   };
-in {
+in
+{
   imports = [
     angelBaseModule
     impermanenceHmModule
@@ -43,20 +50,25 @@ in {
     ./hardware
   ];
   config = {
-    home.packages = let
-      overriden = with overrides; [ nerdfonts popcorntime ];
-      #overriden = with overrides; [ nerdfonts ];
-      vanilla = with pkgs; [
-        wl-clipboard
-        shotman
-        libnotify
-        obsidian
-        hyprpicker
-        pavucontrol
-        protonmail-desktop
-        protonvpn-gui
-      ];
-    in overriden ++ vanilla;
+    home.packages =
+      let
+        overriden = with overrides; [
+          nerdfonts
+          popcorntime
+        ];
+        #overriden = with overrides; [ nerdfonts ];
+        vanilla = with pkgs; [
+          wl-clipboard
+          shotman
+          libnotify
+          obsidian
+          hyprpicker
+          pavucontrol
+          protonmail-desktop
+          protonvpn-gui
+        ];
+      in
+      overriden ++ vanilla;
     #home.extraOutputsToInstall = [ "share" ];
 
     fonts.fontconfig.enable = true;
@@ -97,6 +109,13 @@ in {
       # settings = { background_opacity = 0.65; };
     };
 
+    programs.rio = {
+      enable = true;
+      # Configuration written to {file}$XDG_CONFIG_HOME/rio/config.toml. See
+      # https://raphamorim.io/rio/docs/#configuration-file for options.
+      # settings = {};
+    };
+
     programs.password-store.enable = true;
     programs.password-store.settings = {
       PASSWORD_STORE_DIR = "/home/angel/.password-store";
@@ -110,7 +129,9 @@ in {
         serverAliveInterval = 120;
         identityFile = osConfig.lockbox.sshKeyPath;
       };
-      "github.com" = { identityFile = osConfig.lockbox.sshKeyPath; };
+      "github.com" = {
+        identityFile = osConfig.lockbox.sshKeyPath;
+      };
     };
     programs.ssh.includes = [ osConfig.lockbox.sshHostsPath ];
 

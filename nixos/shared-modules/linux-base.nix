@@ -1,4 +1,13 @@
-{ config, pkgs, lib, ... }: {
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
+{
+
+  imports = [ ./tmux.nix ];
+
   time.timeZone = "Europe/Rome";
 
   # Limit the number of generations to keep
@@ -59,6 +68,9 @@
   nix.settings = {
     # https://nixos.org/manual/nix/stable/command-ref/conf-file.html#conf-auto-optimise-store
     auto-optimise-store = true;
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
   };
 }
