@@ -14,7 +14,6 @@ args@{
     ./palette.nix
     # ./citruszest.nix
     ./gruvbox.nix
-    ./melange.nix
   ];
 
   # enabling any specific colorscheme also sets this global 'colorscheme'
@@ -48,10 +47,10 @@ args@{
       --  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
       --  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
     end)
-    -- addtheme(darkcolorfuns, "palette", function()
-    --   local color = color or "palette"
-    --   vim.cmd.colorscheme(color)
-    -- end)
+    addtheme(darkcolorfuns, "palette", function()
+      local color = color or "palette"
+      vim.cmd.colorscheme(color)
+    end)
 
     -- replicate with palette
     -- addtheme(darkcolorfuns, "citruszest", function()
@@ -64,10 +63,10 @@ args@{
       vim.cmd.colorscheme(color)
     end)
 
-    addtheme(darkcolorfuns, "melange", function()
-      local color = color or "melange"
-      vim.cmd.colorscheme(color)
-    end)
+    -- addtheme(darkcolorfuns, "TBD", function()
+    --   local color = color or "TBD"
+    --   vim.cmd.colorscheme(color)
+    -- end)
 
     -- light themes --
 
