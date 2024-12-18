@@ -1,5 +1,12 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, specialArgs }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  specialArgs,
+}:
+{
   imports = [
     # fuzzily navigate code
     ./telescope.nix
@@ -33,5 +40,29 @@ args@{ config, helpers, lib, options, specialArgs }: {
     # colorizer
     ./colorizer.nix
   ];
-  config = { plugins.web-devicons.enable = true; };
+  config =
+    let
+      grammars = config.plugins.treesitter.package.passthru.builtGrammars;
+    in
+    {
+      plugins.web-devicons.enable = true;
+
+      plugins.treesitter.grammarPackages = lib.mkForce (
+        with grammars;
+        [
+          bash
+          toml
+          css
+          go
+          json
+          lua
+          markdown
+          nix
+          rust
+          typescript
+          yaml
+          zig
+        ]
+      );
+    };
 }

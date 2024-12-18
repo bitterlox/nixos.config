@@ -15,7 +15,7 @@ in {
           in [{
             # add my own packages
             firefly-iii.dataImporterPackage = p.firefly-iii-data-importer;
-            environment.systemPackages = [ p.nvim-light p.nvim-full ];
+            environment.systemPackages = [ p.nvim-light ];
           }] ++ privateModules ++ [
             #shared-modules.agenix
             secretsModule

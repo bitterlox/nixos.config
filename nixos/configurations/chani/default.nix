@@ -17,7 +17,7 @@ in {
           modules = [{
             # add my own packages
             environment.systemPackages = let p = self'.packages;
-            in [ p.nvim-light p.nvim-full ];
+            in [ p.nvim-light ];
           }] ++ privateModules ++ [
             secretsModule
             sharedModules.linux-base
