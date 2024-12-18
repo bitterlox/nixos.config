@@ -35,7 +35,7 @@ in {
 
       # for keychron k6 in window mode;
       # todo: figure out how to turn this off for laptop keyboard
-      "$mod" = "ALT";
+      "$mod" = "SUPER";
 
       # See https://wiki.hyprland.org/Configuring/Keywords/
       # Set programs that you use
