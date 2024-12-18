@@ -106,7 +106,7 @@ in
       enable = true;
       keybindings = { };
       # can't set float values yet, need next stable release
-      # settings = { background_opacity = 0.65; };
+      settings = { background_opacity = 0.65; };
     };
 
     programs.rio = {
