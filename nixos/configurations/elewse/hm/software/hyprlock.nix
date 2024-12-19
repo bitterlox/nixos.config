@@ -5,10 +5,11 @@
     settings = {
       general = {
         disable_loading_bar = false;
-        grace = 300;
+        grace = 0;
         pam_module = "greetd";
         hide_cursor = true;
         no_fade_in = false;
+        ignore_empty_input = true;
       };
 
       background = [

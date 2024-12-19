@@ -267,7 +267,7 @@ in {
       bindl = [
         # trigger when the switch is toggled
         # should make this conditional on external monitor disconnected
-        ", switch:on:Lid Switch, exec, pidof hyprlock || hyprlock"
+        ", switch:off:Lid Switch, exec, pidof hyprlock || hyprlock"
       ];
 
       ##############################
