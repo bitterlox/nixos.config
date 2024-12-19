@@ -48,6 +48,7 @@
     # don’t shutdown when power button is short-pressed
     HandlePowerKey=ignore
   '';
+  services.logind.lidSwitch = "suspend-then-hibernate";
 
   # open port for urbit - ames
   networking.firewall.allowedTCPPorts = [ 12321 ];

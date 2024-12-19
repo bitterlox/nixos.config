@@ -1,5 +1,6 @@
 { ... }:
 {
+  
   services.hypridle = {
     enable = true;
     settings = {
@@ -34,7 +35,7 @@
         }
         {
           timeout = 1800; # 30min
-          on-timeout = "systemctl suspend"; # suspend pc
+          on-timeout = "systemctl suspend-then-hibernate"; # suspend pc
         }
       ];
     };
