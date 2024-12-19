@@ -1,3 +1,5 @@
+
+# todo: pass this as specialArgs
 { pkgs, ... }: {
   changeWallpaper = let name = "change-wallpaper.sh";
   in pkgs.writeShellApplication {
