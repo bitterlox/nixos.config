@@ -17,7 +17,7 @@
     ./hyprpaper.nix
 
     # app launcher
-    ./hyprpaper.nix
+    ./tofi.nix
 
     # browsers
     ./browsers
@@ -26,6 +26,6 @@
     ./desktop-entries.nix
 
     # shell configuration
-    ./desktop-entries.nix
+    ./shells.nix
   ];
 }
