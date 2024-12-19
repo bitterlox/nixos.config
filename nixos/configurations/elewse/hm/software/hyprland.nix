@@ -1,7 +1,6 @@
 { pkgs, osConfig, lib, ... }:
-let scripts = (import ../scripts { inherit pkgs; });
+let scripts = (import ./scripts { inherit pkgs; });
 in {
-  imports = [ ./widgets ./launcher.nix ./desktop-files.nix ];
   # force electron apps to use wayland
   home.sessionVariables = {
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
@@ -294,99 +293,5 @@ in {
   # not suppported yet, added here
   # https://github.com/nix-community/home-manager/commit/445d721ecfbd92d83f857f12f1f99f5c8fa79951
   # home.pointerCursor.hyprcursor.enable = true;
-
-  services.hyprpaper = {
-    enable = true;
-    settings = {
-      ipc = "on";
-      splash = false;
-      splash_offset = 2.0;
-      # preload =
-      #   [ "/share/wallpapers/buttons.png" "/share/wallpapers/cat_pacman.png" ];
-
-      # wallpaper = [
-      #   "DP-3,/share/wallpapers/buttons.png"
-      #   "DP-1,/share/wallpapers/cat_pacman.png"
-      # ];
-    };
-  };
-
-  services.hypridle = {
-    enable = true;
-    settings = {
-      general = {
-        lock_cmd =
-          "pidof hyprlock || hyprlock"; # avoid starting multiple hyprlock instances.
-        before_sleep_cmd = "loginctl lock-session"; # lock before suspend.
-        after_sleep_cmd =
-          "hyprctl dispatch dpms on"; # to avoid having to press a key twice to turn on the display.
-      };
-
-      listener = [
-        {
-          timeout = 150; # 2.5min.
-          on-timeout =
-            "brightnessctl -s set 10"; # set monitor backlight to minimum, avoid 0 on OLED monitor.
-          on-resume = "brightnessctl -r"; # monitor backlight restore.
-        }
-        # turn off keyboard backlight, comment out this section if you dont have a keyboard backlight.
-        # {
-        #   timeout = 150; # 2.5min.
-        #   on-timeout =
-        #     "brightnessctl -sd rgb:kbd_backlight set 0"; # turn off keyboard backlight.
-        #   on-resume =
-        #     "brightnessctl -rd rgb:kbd_backlight"; # turn on keyboard backlight.
-        # }
-        {
-          timeout = 300; # 5min
-          on-timeout =
-            "loginctl lock-session"; # lock screen when timeout has passed
-        }
-        {
-          timeout = 330; # 5.5min
-          on-timeout =
-            "hyprctl dispatch dpms off"; # screen off when timeout has passed
-          on-resume =
-            "hyprctl dispatch dpms on"; # screen on when activity is detected after timeout has fired.
-        }
-        {
-          timeout = 1800; # 30min
-          on-timeout = "systemctl suspend"; # suspend pc
-        }
-      ];
-    };
-  };
-
-  programs.hyprlock = {
-    enable = true;
-    settings = {
-      general = {
-        disable_loading_bar = true;
-        grace = 300;
-        pam_module = "greetd";
-        hide_cursor = true;
-        no_fade_in = false;
-      };
-
-      background = [{
-        path = "$HOME/Pictures/wallpapers/max-bender-8FdEwlxP3oU-unsplash.jpg";
-        blur_passes = 3;
-        blur_size = 8;
-      }];
-
-      input-field = [{
-        size = "200, 50";
-        position = "0, -80";
-        monitor = "";
-        dots_center = true;
-        fade_on_empty = false;
-        font_color = "rgb(202, 211, 245)";
-        inner_color = "rgb(91, 96, 120)";
-        outer_color = "rgb(24, 25, 38)";
-        outline_thickness = 5;
-        placeholder_text = ''<span foreground="##cad3f5">Password...</span>'';
-        shadow_passes = 2;
-      }];
-    };
-  };
 }
+

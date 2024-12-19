@@ -1,5 +1,5 @@
-{ lib, config, options, pkgs, ... }: {
-  imports = [ ];
+{ ... }:
+{
   config = {
     programs.tofi.enable = true;
     programs.tofi.settings = {

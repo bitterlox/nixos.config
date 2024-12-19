@@ -44,10 +44,8 @@ in
   imports = [
     angelBaseModule
     impermanenceHmModule
-    ./compositor
-    ./browsers
-    ./shells.nix
     ./hardware
+    ./software
   ];
   config = {
     home.packages =

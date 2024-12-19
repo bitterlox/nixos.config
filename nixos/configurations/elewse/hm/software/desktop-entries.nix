@@ -1,7 +1,7 @@
 { lib, config, options, pkgs, ... }:
 let
   makeApp = { name, ... }@argSet: { type = "Application"; } // argSet;
-  scripts = (import ../scripts { inherit pkgs; });
+  scripts = (import ./scripts { inherit pkgs; });
 in {
   imports = [ ];
   xdg.desktopEntries = {
