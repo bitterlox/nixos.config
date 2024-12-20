@@ -6,10 +6,10 @@
       general = {
         disable_loading_bar = false;
         grace = 0;
-        pam_module = "greetd";
+        pam_module = "hyprlock";
         hide_cursor = true;
         no_fade_in = false;
-        ignore_empty_input = true;
+        ignore_empty_input = false;
       };
 
       background = [
