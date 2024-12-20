@@ -1,12 +1,16 @@
-#!/usr/bin/env bash
-
 # primagen's tmux sessionizer
 # from https://youtu.be/0eHZRPzbiJ0 minute 8:30
 
 if [[ $# -eq 1 ]]; then
   selected=$1
 else
-  selected=$(find ~/ ~/personal ~/personal/dev/env/ .config -mindepth 1 -maxdepth 1 -type d | fzf)
+  if [[ -z $CODE_PATHS ]]; then
+    echo "no code paths set"
+    exit 1
+  else
+    IFS=':' read -ra CODEPATHS <<<"$CODE_PATHS"
+  fi
+  selected=$(find "${CODEPATHS[@]}" -mindepth 1 -maxdepth 1 -type d | fzf)
 fi
 
 if [[ -z $selected ]]; then
