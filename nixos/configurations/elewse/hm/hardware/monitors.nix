@@ -17,7 +17,11 @@
     ################
 
     # See https://wiki.hyprland.org/Configuring/Monitors/
-    monitor = "eDP-1,preferred,auto,auto";
+    monitor = [
+      ",preferred,auto,1"
+      "eDP-1,preferred,auto,auto"
+      "eDP-2,preferred,auto,auto"
+    ];
 
     exec-once = [ "shikane" ];
 
