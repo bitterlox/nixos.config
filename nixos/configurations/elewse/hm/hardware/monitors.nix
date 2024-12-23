@@ -19,16 +19,29 @@
     # See https://wiki.hyprland.org/Configuring/Monitors/
     monitor = [
       ",preferred,auto,1"
-      "eDP-1,preferred,auto,auto"
-      "eDP-2,preferred,auto,auto"
     ];
 
-    exec-once = [ "shikane" ];
+    # exec-once = [ "shikane" ];
 
-    bind = [
-      "$mod SHIFT, D, exec, shikanectl switch docked"
-      "$mod SHIFT, U, exec, shikanectl switch undocked"
-    ];
+    # bind = [
+    #   "$mod SHIFT, D, exec, shikanectl switch docked"
+    #   "$mod SHIFT, U, exec, shikanectl switch undocked"
+    # ];
+
+    bindl =
+      let
+        grabEDP = "hyprctl monitors | grep -Eo 'eDP-.'";
+        externalMonitorDesc = "ASUSTek COMPUTER INC PG32UCDM S5LMQS055583";
+        laptopMonitorDesc = "BOE 0x0BC9C";
+        enableLaptop = "EDP=''$(${grabEDP}) hyprctl keyword monitor $EDP, preferred, auto, auto";
+        enableExternal = "hyprctl keyword monitor desc:'${externalMonitorDesc}', preferred, auto, auto";
+        disableLaptop = "EDP=''$(${grabEDP}) hyprctl keyword monitor $EDP, disable";
+        disableExternal = "hyprctl keyword monitor desc:'${externalMonitorDesc}', disable";
+      in
+      [
+        "$mod SHIFT, D, exec, (${enableExternal}; ${disableLaptop})"
+        "$mod SHIFT, U, exec, (${enableLaptop}; ${disableExternal})"
+      ];
 
     # this was nifty but was making it crash and i don't want to figure this out
     # in the end i'm happy with just automatically switching from / to docked
@@ -40,43 +53,12 @@
     # ];
   };
 
-  home.packages = [ pkgs.shikane ];
+  # due to bugginess in automatically switching monitors using manual for now
+  # home.packages = [ pkgs.shikane ];
 
-  xdg.configFile."shikane/config.toml" = {
-    enable = true;
-    source = ./shikane.toml;
-  };
-
-  # to config this see nix shell nixpkgs#sway
-  # man 5 sway-output
-
-  # services.kanshi = {
+  # xdg.configFile."shikane/config.toml" = {
   #   enable = true;
-  #   systemdTarget = "hyprland-session.target";
-
-  #   # kanshi.profiles is deprecated, use settings
-
-  #   settings = [
-  #     {
-  #       profile.name = "undocked";
-  #       profile.outputs = [{
-  #         criteria = "BOE 0x0BC9 "; # laptop display
-  #         status = "enable";
-  #       }];
-  #     }
-  #     {
-  #       profile.name = "docked-asus-monitor";
-  #       profile.outputs = [
-  #         {
-  #           criteria = "ASUSTek COMPUTER INC PG32UCDM S5LMQS055583";
-  #           status = "enable";
-  #         }
-  #         {
-  #           criteria = "BOE 0x0BC9 "; # laptop display
-  #           status = "disable";
-  #         }
-  #       ];
-  #     }
-  #   ];
+  #   source = ./shikane.toml;
   # };
+
 }
