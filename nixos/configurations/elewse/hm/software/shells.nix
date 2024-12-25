@@ -17,5 +17,6 @@ in
     open-di-tunnel = open-di-tunnel-cmd;
     close-di-tunnel = ''kill $(pgrep -f "${open-di-tunnel-cmd}")'';
     sessionizer = "${lib.getExe scripts.tmux-sessionizer}";
+    syscfg = "sessionizer /etc/nixos";
   };
 }

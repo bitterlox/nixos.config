@@ -30,7 +30,9 @@
 
     bindl =
       let
-        grabEDP = "hyprctl monitors | grep -Eo 'eDP-.'";
+        # there is a bug with external monitors disconnected;
+        # the undocked works but the docked one doesn't
+        grabEDP = "hyprctl monitors all | grep -Eo 'eDP-.'";
         externalMonitorDesc = "ASUSTek COMPUTER INC PG32UCDM S5LMQS055583";
         laptopMonitorDesc = "BOE 0x0BC9C";
         enableLaptop = "EDP=''$(${grabEDP}) hyprctl keyword monitor $EDP, preferred, auto, auto";

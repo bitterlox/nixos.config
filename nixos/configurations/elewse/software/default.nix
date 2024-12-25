@@ -9,6 +9,7 @@
     ./hardware
     ./compositor.nix
     ./greeter.nix
+    ./logind.nix
   ];
 
   # we have mkBefore here due to the interactions between this declaration
@@ -43,12 +44,6 @@
 
   services.fprintd.enable = true;
   services.fwupd.enable = true;
-
-  services.logind.extraConfig = ''
-    # don’t shutdown when power button is short-pressed
-    HandlePowerKey=ignore
-  '';
-  services.logind.lidSwitch = "suspend-then-hibernate";
 
   # open port for urbit - ames
   networking.firewall.allowedTCPPorts = [ 12321 ];

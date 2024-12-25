@@ -35,7 +35,7 @@
         }
         {
           timeout = 1800; # 30min
-          on-timeout = "systemctl suspend-then-hibernate"; # suspend pc
+          on-timeout = "systemctl sleep"; # suspend pc
         }
       ];
     };
