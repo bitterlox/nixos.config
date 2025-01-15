@@ -1,10 +1,21 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  specialArgs,
+}:
+{
 
   # TODO: enable native sorter to improve performance
   # maybe missing leader d keymap to lsp stuff
 
-  runtimeBinaries = [ pkgs.ripgrep pkgs.fd ];
+  runtimeBinaries = [
+    pkgs.ripgrep
+    pkgs.fd
+  ];
 
   plugins.telescope.enable = true;
 
@@ -45,7 +56,7 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     };
     "<leader>fg" = {
       mode = "n";
-      action = ''grep_string({ search = vim.fn.input(" grep > ") })'';
+      action = "grep_string";
     };
     "<leader>lg" = {
       mode = "n";

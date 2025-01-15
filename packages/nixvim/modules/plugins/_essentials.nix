@@ -39,6 +39,12 @@ args@{
 
     # colorizer
     ./colorizer.nix
+
+    # llm companion
+    ./codecompanion-nvim.nix
+
+    # remember keymaps
+    ./which-key.nix
   ];
   config =
     let

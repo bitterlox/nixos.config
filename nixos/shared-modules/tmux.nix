@@ -44,6 +44,8 @@
 #   - it's an improved session manager                       #
 #                                                            #
 ##############################################################
+# issues in sudo su
+# https://github.com/christoomey/vim-tmux-navigator/issues/119
 {
   lib,
   config,
@@ -61,7 +63,7 @@
   ];
   programs.tmux.extraConfig = ''
     set -g default-shell $SHELL
-
+ https://github.com/christoomey/vim-tmux-navigator/issues/119
     set -g mouse on
     set -g default-terminal "xterm"
     set-window-option -g mode-keys vi
