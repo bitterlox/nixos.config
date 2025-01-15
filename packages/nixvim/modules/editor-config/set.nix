@@ -48,4 +48,6 @@ args@{
 
   globals.mapleader = " ";
 
+  opts.statusline = "%t %r %m %= %{&filetype} %2p%% %3l:%-2c";
+
 }

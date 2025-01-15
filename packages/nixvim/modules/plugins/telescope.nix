@@ -29,7 +29,7 @@ args@{
   #     "--column"
   #     "--smart-case"
   #   ];
-
+ 
   plugins.telescope.settings.pickers = {
     find_files.theme = "dropdown";
     git_files.theme = "dropdown";
@@ -49,6 +49,10 @@ args@{
     "<leader>pf" = {
       mode = "n";
       action = "find_files";
+    };
+    "<leader>b" = {
+      mode = "n";
+      action = "buffers";
     };
     "<leader>gf" = {
       mode = "n";

@@ -10,8 +10,6 @@ args@{
   imports = [
     # fuzzily navigate code
     ./telescope.nix
-    # status line
-    ./nvim-cokeline.nix
     # tmux integration
     ./tmux-nvim.nix
 
