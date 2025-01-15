@@ -1,5 +1,15 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  specialArgs,
+}:
+{
+
+  plugins.otter.enable = true;
 
   imports = [
     # common languages
@@ -27,4 +37,3 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
     ./nix.nix
   ];
 }
-
