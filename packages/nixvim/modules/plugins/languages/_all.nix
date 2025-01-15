@@ -18,6 +18,9 @@ args@{
     # golang support
     ./go.nix
 
+    # zig support
+    ./zig.nix
+
     # typescript support
     ./typescript.nix
 

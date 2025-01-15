@@ -30,7 +30,8 @@ args@{
     ./undo-tree.nix
 
     # completion
-    ./nvim-cmp.nix
+    # ./nvim-cmp.nix
+    ./blink-cmp.nix
 
     # testing
     ./neotest.nix
