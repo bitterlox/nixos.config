@@ -18,11 +18,10 @@ args@{
 
   plugins.lsp.servers.zls.enable = true;
 
-  # plugins.lsp.servers.zls.cmd = [
-  #   "gopls"
-  #   "serve"
-  # ];
   plugins.lsp.servers.zls.filetypes = [ "zig" ];
+  plugins.lsp.servers.zls.onAttach.function = ''
+    vim.lsp.inlay_hint.enable(false)
+  '';
 
   plugins.neotest.adapters.zig.enable = true;
 }
