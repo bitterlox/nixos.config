@@ -47,10 +47,10 @@ args@{
       --  vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
       --  vim.api.nvim_set_hl(0, "NormalFloat", { bg = "none" })
     end)
-    addtheme(darkcolorfuns, "palette", function()
-      local color = color or "palette"
-      vim.cmd.colorscheme(color)
-    end)
+    --  addtheme(darkcolorfuns, "palette", function()
+    --    local color = color or "palette"
+    --    vim.cmd.colorscheme(color)
+    --  end)
 
     -- replicate with palette
     -- addtheme(darkcolorfuns, "citruszest", function()

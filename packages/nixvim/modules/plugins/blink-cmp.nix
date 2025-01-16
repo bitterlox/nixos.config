@@ -17,6 +17,7 @@ args@{
         auto_show_delay_ms = 500;
       };
       ghost_text.enabled = true;
+      menu.auto_show = false;
     };
     keymap = {
       "<Down>" = [
