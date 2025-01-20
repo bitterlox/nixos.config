@@ -61,9 +61,11 @@
     catppuccin
     yank
   ];
+
+  # there is a bug when navigating with tmux-navigator & vim as sudo
+  # https://github.com/christoomey/vim-tmux-navigator/issues/119
   programs.tmux.extraConfig = ''
     set -g default-shell $SHELL
- https://github.com/christoomey/vim-tmux-navigator/issues/119
     set -g mouse on
     set -g default-terminal "xterm"
     set-window-option -g mode-keys vi
