@@ -1,5 +1,13 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  specialArgs,
+}:
+{
   # https://github.com/folke/lazydev.nvim
 
   plugins.lsp.servers.lua_ls.enable = true;
@@ -15,11 +23,15 @@ args@{ config, helpers, lib, options, pkgs, specialArgs }: {
       ##        };
       workspace = {
         ## Make the server aware of Neovim runtime files
-        library = "vim.api.nvim_get_runtime_file(''; true)";
+        library = helpers.mkRaw ''
+          vim.api.nvim_get_runtime_file("", true)
+        '';
         checkThirdParty = false;
       };
       ## Do not send telemetry data containing a randomized but unique identifier
-      telemetry = { enable = false; };
+      telemetry = {
+        enable = false;
+      };
     };
   };
 

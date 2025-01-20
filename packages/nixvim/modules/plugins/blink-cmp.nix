@@ -74,14 +74,15 @@ args@{
 
   # thanks to this commit
   # https://github.com/nix-community/nixvim/pull/1776/commits/3a8d4fee35642ee326f5fea8ddb7aacd1176f23e
-  plugins.lsp.capabilities = ''
-    capabilities = vim.tbl_deep_extend(
-      "force",
-      capabilities,
-      require('blink-cmp').get_lsp_capabilities()
-    )
-  '';
+  plugins.lsp.capabilities = # lua
+    ''
+      capabilities = vim.tbl_deep_extend(
+        "force",
+        capabilities,
+        require('blink-cmp').get_lsp_capabilities()
+      )
+    '';
 
   # compatibility with nvim-cmp plugin
-  # plugins.blink-compat.enable = true;
+  plugins.blink-compat.enable = true;
 }
