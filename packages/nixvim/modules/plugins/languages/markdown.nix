@@ -1,5 +1,5 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{ config, helpers, lib, options, pkgs, ... }: {
 
   plugins.lsp.servers.efm.enable = true;
   # enable on all files

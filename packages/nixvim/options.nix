@@ -1,5 +1,5 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }:
+args@{ config, helpers, lib, options, pkgs, specialArgs, ... }:
 let t = lib.types;
 in {
   options.runtimeBinaries = lib.options.mkOption {

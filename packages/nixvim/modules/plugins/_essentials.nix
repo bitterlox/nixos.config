@@ -1,11 +1,5 @@
 # this is a nixvim module
-args@{
-  config,
-  helpers,
-  lib,
-  options,
-  specialArgs,
-}:
+args@{ config, lib, ... }:
 {
   imports = [
     # fuzzily navigate code

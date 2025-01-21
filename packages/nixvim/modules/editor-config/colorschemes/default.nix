@@ -1,12 +1,5 @@
 # this is a nixvim module
-args@{
-  config,
-  helpers,
-  lib,
-  options,
-  pkgs,
-  specialArgs,
-}:
+args@{ lib,  ... }:
 {
   imports = [
     ./rose-pine.nix

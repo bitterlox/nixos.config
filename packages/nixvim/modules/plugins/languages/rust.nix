@@ -1,5 +1,5 @@
 # this is a nixvim module
-rgs@{ config, helpers, lib, options, pkgs, specialArgs }: {
+rgs@{ config, helpers, lib, options, pkgs, ... }: {
 
   # lsp configuration #
 

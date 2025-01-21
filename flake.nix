@@ -2,7 +2,10 @@
   description = "system configuration flake";
 
   nixConfig = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     substituters = [ "https://cache.nixos.org/" ];
 
     extra-substituters = [
@@ -64,6 +67,11 @@
       inputs.nixpkgs.follows = "nixpkgs-stable";
     };
 
+    nixd = {
+      url = "github:nix-community/nixd";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     ## misc coming from nvim-config-flake ##
 
     efmls-configs = {
@@ -95,9 +103,19 @@
     rose-pine-hyprcursor.url = "github:ndom91/rose-pine-hyprcursor";
   };
 
-  outputs = { flake-parts, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } ({ flake-parts-lib, ... }: {
-      imports = [ ./lib ./nixos ./hm ./devshells ./packages ];
-    });
+  outputs =
+    { flake-parts, ... }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { flake-parts-lib, ... }:
+      {
+        debug = true;
+        imports = [
+          ./lib
+          ./nixos
+          ./hm
+          ./devshells
+          ./packages
+        ];
+      }
+    );
 }
-

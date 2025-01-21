@@ -1,5 +1,5 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{ config, helpers, lib, options, pkgs, ... }: {
 
   # todo: setup for deno project
   # https://docs.deno.com/runtime/reference/lsp_integration/

@@ -1,5 +1,5 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, specialArgs }: {
+args@{ config, helpers, lib, options, pkgs, ... }: {
 
   imports = [ ./json.nix ./yaml.nix ./markdown.nix ];
 

@@ -20,7 +20,6 @@ myflakelib:
   boot.kernelPackages = pkgs.linuxPackages_6_11;
 
   boot.loader.efi.canTouchEfiVariables = true;
-
   # Set your time zone.
   time.timeZone = "Europe/Rome";
 
@@ -38,6 +37,7 @@ myflakelib:
     LC_TELEPHONE = "it_IT.UTF-8";
     LC_TIME = "it_IT.UTF-8";
   };
+
 
   # Enable the X11 windowing system.
   # services.xserver.enable = true;

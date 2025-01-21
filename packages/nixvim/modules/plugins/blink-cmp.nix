@@ -5,7 +5,7 @@ args@{
   lib,
   options,
   pkgs,
-  specialArgs,
+  ...
 }:
 {
   plugins.blink-cmp.enable = true;
@@ -84,5 +84,5 @@ args@{
     '';
 
   # compatibility with nvim-cmp plugin
-  plugins.blink-compat.enable = true;
+  # plugins.blink-compat.enable = true;
 }

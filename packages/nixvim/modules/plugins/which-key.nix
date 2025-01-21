@@ -3,7 +3,7 @@ args@{
   helpers,
   lib,
   options,
-  specialArgs,
+  ...
 }:
 {
   plugins.which-key.enable = true;

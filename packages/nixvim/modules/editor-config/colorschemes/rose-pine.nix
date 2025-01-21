@@ -1,12 +1,5 @@
 # this is a nixvim module
-args@{
-  config,
-  helpers,
-  lib,
-  options,
-  pkgs,
-  specialArgs,
-}:
+args@{ ... }:
 {
   colorschemes.rose-pine.enable = true;
 

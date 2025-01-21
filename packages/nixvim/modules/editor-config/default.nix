@@ -6,6 +6,7 @@ args@{
   options,
   pkgs,
   specialArgs,
+  ...
 }:
 {
   imports = [

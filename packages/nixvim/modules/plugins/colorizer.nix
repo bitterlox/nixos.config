@@ -5,7 +5,7 @@ args@{
   lib,
   options,
   pkgs,
-  specialArgs,
+  ...
 }:
 {
   plugins.colorizer.enable = true;
