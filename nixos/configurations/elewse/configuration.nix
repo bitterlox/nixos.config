@@ -1,8 +1,14 @@
 myflakelib:
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 
 {
-  imports = [ # Include the results of the hardware scan.
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware
     ./software
   ];
@@ -38,7 +44,6 @@ myflakelib:
     LC_TIME = "it_IT.UTF-8";
   };
 
-
   # Enable the X11 windowing system.
   # services.xserver.enable = true;
 
@@ -63,7 +68,10 @@ myflakelib:
     isNormalUser = true;
     description = "angel";
     hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
@@ -87,17 +95,26 @@ myflakelib:
     '';
   };
 
-  services.borgbackup.jobs.sietch = let
-    defaults = myflakelib.defaultBorgOptions {
-      sshKeyPath = config.lockbox.backupsKeyPath;
-      passphrasePath = config.lockbox.borgPassphrasePath;
+  services.borgbackup.jobs.sietch =
+    let
+      defaults = myflakelib.defaultBorgOptions {
+        sshKeyPath = config.lockbox.backupsKeyPath;
+        passphrasePath = config.lockbox.borgPassphrasePath;
+      };
+    in
+    defaults
+    // {
+      repo = config.lockbox.borg-repo-url;
+      paths = [ "/persist" ];
+      user = "root";
+      startAt = "weekly";
+      # from; maybe implement backup fail notify as well
+      # https://wiki.nixos.org/wiki/Borg_backup#Don't_try_backup_when_network_is_unreachable
+      preHook = lib.mkBefore ''
+        # waiting for internet after resume-from-suspend
+        until /run/wrappers/bin/ping google.com -c1 -q >/dev/null; do :; done
+      '';
     };
-  in defaults // {
-    repo = config.lockbox.borg-repo-url;
-    paths = [ "/persist" ];
-    user = "root";
-    startAt = "weekly";
-  };
 
   # nix.settings = { };
 
