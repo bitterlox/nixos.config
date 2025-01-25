@@ -10,6 +10,7 @@
     ./compositor.nix
     ./greeter.nix
     ./logind.nix
+    ./systemd.nix
   ];
 
   # we have mkBefore here due to the interactions between this declaration
