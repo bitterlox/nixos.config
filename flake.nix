@@ -53,7 +53,7 @@
 
     impermanence.url = "github:nix-community/impermanence";
 
-    lanzaboote.url = "github:nix-community/lanzaboote/v0.3.0";
+    lanzaboote.url = "github:nix-community/lanzaboote/v0.4.2";
     lanzaboote.inputs.nixpkgs.follows = "nixpkgs";
 
     ## nvim stuff ##
