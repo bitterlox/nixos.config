@@ -95,7 +95,7 @@ myflakelib:
     '';
   };
 
-  services.borgbackup.jobs.sietch =
+  services.borgbackup.jobs.elewse =
     let
       defaults = myflakelib.defaultBorgOptions {
         sshKeyPath = config.lockbox.backupsKeyPath;
