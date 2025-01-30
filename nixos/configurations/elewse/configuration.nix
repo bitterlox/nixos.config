@@ -112,7 +112,7 @@ myflakelib:
       # https://wiki.nixos.org/wiki/Borg_backup#Don't_try_backup_when_network_is_unreachable
       preHook = lib.mkBefore ''
         # waiting for internet after resume-from-suspend
-        until /run/wrappers/bin/ping google.com -c1 -q >/dev/null; do :; done
+        until ${lib.getExe pkgs.unixtools.ping} google.com -c1 -q >/dev/null; do :; done
       '';
     };
 
