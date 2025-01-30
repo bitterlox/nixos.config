@@ -11,11 +11,42 @@ args@{
   plugins.codecompanion.settings = {
     strategies = {
       chat = {
-        adapter = "anthropic";
+        adapter = "openai";
+        roles = {
+          llm = "CodeCompanion"; # The markdown header content for the LLM's responses
+          user = "Me"; # The markdown header for your questions
+        };
       };
       inline = {
-        adapter = "anthropic";
+        adapter = "openai";
       };
+      agent = {
+        adapter = "openai";
+      };
+    };
+    adapters = {
+      openai = helpers.mkRaw ''
+         function()
+          return require("codecompanion.adapters").extend("openai_compatible", {
+            env = {
+              url = "https://openrouter.ai/api",
+              api_key = "OPENROUTER_API_KEY",
+              chat_url = "/v1/chat/completions",
+            },
+            schema = {
+              model = {
+                default = "deepseek/deepseek-r1-distill-llama-70b"
+              };
+              num_ctx = {
+                default = 8192;
+              };
+            }
+          })
+        end
+      '';
+    };
+    opts = {
+      log_level = "TRACE";
     };
   };
 
@@ -69,5 +100,6 @@ args@{
 
   extraConfigLua = ''
     vim.cmd([[cab cc CodeCompanion]])
+    vim.cmd([[cab cca CodeCompanionActions]])
   '';
 }
