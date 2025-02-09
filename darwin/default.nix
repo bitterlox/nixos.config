@@ -17,42 +17,45 @@ let
   impermanenceModule = (import ./impermanence.nix inputs.impermanence.nixosModules.impermanence);
 in
 {
-  flake.darwinConfigurations."mycos" = withSystem "aarch64-darwin" (
-    ctx@{
-      inputs',
-      self',
-      system,
-      pkgs,
-      ...
-    }:
-    let
-      user = "angel";
-      darwin = inputs'.darwin;
-      home-manager = inputs'.home-manager;
-      homebrew-module = inputs'.nix-homebrew.darwinModules.nix-homebrew {
-        nix-homebrew = {
-          inherit user;
-          enable = true;
-          taps = {
-            "homebrew/homebrew-core" = inputs.homebrew-core;
-            "homebrew/homebrew-cask" = inputs.homebrew-cask;
-            "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+  flake.darwinConfigurations = {
+    "mycos" = withSystem "aarch64-darwin" (
+      ctx@{
+        inputs',
+        self',
+        system,
+        pkgs,
+        ...
+      }:
+      let
+        user = "angel";
+        darwin = inputs'.darwin;
+        home-manager = inputs'.home-manager;
+        homebrew-module = inputs'.nix-homebrew.darwinModules.nix-homebrew {
+          nix-homebrew = {
+            inherit user;
+            enable = true;
+            taps = {
+              "homebrew/homebrew-core" = inputs.homebrew-core;
+              "homebrew/homebrew-cask" = inputs.homebrew-cask;
+              "homebrew/homebrew-bundle" = inputs.homebrew-bundle;
+            };
+            mutableTaps = false;
+            autoMigrate = true;
           };
-          mutableTaps = false;
-          autoMigrate = true;
         };
-      };
-    in
-    darwin.lib.darwinSystem {
-      inherit system;
-      specialArgs = inputs;
-      modules = [
-        home-manager.darwinModules.home-manager
-        homebrew-module
-        ./hosts/darwin
-      ];
-    }
-  );
+      in
+      darwin.lib.darwinSystem {
+        inherit system;
+        specialArgs = inputs;
+        modules = [
+          home-manager.darwinModules.home-manager
+          homebrew-module
+          ./hosts/darwin
+        ];
+      }
+    );
+  };
+
 }
 # flake.nixosConfigurations = {
 #   "elewse" = withSystem "x86_64-linux"
