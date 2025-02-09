@@ -11,17 +11,17 @@ args@{
   plugins.codecompanion.settings = {
     strategies = {
       chat = {
-        adapter = "openai";
+        adapter = "anthropic";
         roles = {
           llm = "CodeCompanion"; # The markdown header content for the LLM's responses
           user = "Me"; # The markdown header for your questions
         };
       };
       inline = {
-        adapter = "openai";
+        adapter = "anthropic";
       };
       agent = {
-        adapter = "openai";
+        adapter = "anthropic";
       };
     };
     adapters = {
@@ -33,6 +33,16 @@ args@{
               api_key = "OPENROUTER_API_KEY",
               chat_url = "/v1/chat/completions",
             },
+            handlers = {
+              form_parameters =  function(self, params, messages)
+                local custom_params = {
+                   provider = {
+                     sort = "throughput";
+                  }
+                };
+                return vim.tbl_deep_extend('error', params, custom_params );
+              end
+            };
             schema = {
               model = {
                 default = "deepseek/deepseek-r1-distill-llama-70b"
