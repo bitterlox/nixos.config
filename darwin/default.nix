@@ -17,7 +17,7 @@ let
   impermanenceModule = (import ./impermanence.nix inputs.impermanence.nixosModules.impermanence);
 in
 {
-  flake.darwinConfigurations = withSystem "aarch64-darwin" (
+  flake.darwinConfigurations."mycos" = withSystem "aarch64-darwin" (
     ctx@{
       inputs',
       self',
