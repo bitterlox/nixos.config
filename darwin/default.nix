@@ -39,7 +39,7 @@ in
           inputs.nix-homebrew.darwinModules.nix-homebrew 
           {
             system.stateVersion = 6;
-            environment.systemPackages = let p = self'.packages; in [ p.nvim-light pkgs.kitty ];
+            environment.systemPackages = let p = self'.packages; in [ p.nvim-light pkgs.kitty pkgs.pass pkgs.gnupg ];
             nix = {
                 package = pkgs.nix;
                 configureBuildUsers = true;
@@ -64,7 +64,7 @@ in
               };
             homebrew = {
               enable = true;
-              casks = [ "protonvpn" "kitty"];
+              casks = [ "protonvpn" "proton-drive" "kitty" "vlc"];
               onActivation = {
                 autoUpdate = true;
                 cleanup = "uninstall";
