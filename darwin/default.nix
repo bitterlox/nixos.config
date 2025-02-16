@@ -40,6 +40,13 @@ in
           {
             system.stateVersion = 6;
             environment.systemPackages = let p = self'.packages; in [ p.nvim-light pkgs.kitty pkgs.pass pkgs.gnupg ];
+            system.defaults = {
+              NSGlobalDomain = {
+                InitialKeyRepeat = 15;
+                KeyRepeat = 1;
+                NSAutomaticPeriodSubstitutionEnabled = false;
+              };
+            };
             nix = {
                 package = pkgs.nix;
                 configureBuildUsers = true;
@@ -64,7 +71,12 @@ in
               };
             homebrew = {
               enable = true;
-              casks = [ "protonvpn" "proton-drive" "kitty" "vlc"];
+              casks = [ "protonvpn" "proton-drive" "kitty" "vlc" "steam" "obsidian"];
+              masApps = {
+                drafts = 1435957248;
+                todoist = 585829637;
+              };
+              whalebrews = [];
               onActivation = {
                 autoUpdate = true;
                 cleanup = "uninstall";
