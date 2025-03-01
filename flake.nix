@@ -133,11 +133,13 @@
         debug = true;
         imports = [
           ./lib
-          ./nixos
-          ./darwin
-          ./hm
+            ./hm
           ./devshells
           ./packages
+
+          # systems
+          ./hosts/darwin
+          ./hosts/nixos
         ];
       }
     );
