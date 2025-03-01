@@ -1,5 +1,6 @@
 # this is akin to a flake-parts top-level module
 {
+  self,
   inputs,
   config,
   lib,

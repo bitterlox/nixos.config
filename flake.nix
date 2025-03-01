@@ -140,6 +140,11 @@
           # systems
           ./hosts/darwin
           ./hosts/nixos
+
+          # modules
+          ./modules/darwin
+          ./modules/nixos
+          ./modules/shared
         ];
       }
     );
