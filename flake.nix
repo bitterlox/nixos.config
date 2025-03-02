@@ -133,7 +133,6 @@
         debug = true;
         imports = [
           ./lib
-            ./hm
           ./devshells
           ./packages
 
