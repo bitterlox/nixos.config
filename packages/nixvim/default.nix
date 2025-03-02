@@ -21,7 +21,7 @@ top@{ self, inputs, lib, ... }:
             {
               imports = [ ./unstable-full.nix ];
               config = {
-                plugins.lsp.servers.nixd.package = inputs.nixd.packages.x86_64-linux.nixd;
+                plugins.lsp.servers.nixd.package = inputs.nixd.packages.${system}.nixd;
               };
             };
           extraSpecialArgs = { inherit self; };
