@@ -12,9 +12,6 @@
 }:
 let
   sharedModules = config.flake.nixosModules;
-  secretsModule = (
-    import ./secrets.nix inputs.secrets-flake inputs.agenix.nixosModules.default sharedModules.lockbox
-  );
   impermanenceModule = (import ./impermanence.nix inputs.impermanence.nixosModules.impermanence);
 in
 {
@@ -35,13 +32,16 @@ in
       darwin.lib.darwinSystem {
         inherit system;
         specialArgs = inputs;
-        modules = [
-          inputs.nix-homebrew.darwinModules.nix-homebrew
-          home-manager.darwinModules.home-manager
-          (import ./system.nix username self'.packages inputs)
-          (import ./home-manager.nix username config.flake.homeModules)
-
-        ];
+        modules =
+          let
+            agenixModule = inputs.agenix.nixosModules.default;
+          in
+          [
+            inputs.nix-homebrew.darwinModules.nix-homebrew
+            home-manager.darwinModules.home-manager
+            (import ./system.nix username self'.packages inputs)
+            (import ./home-manager.nix username inputs config.flake.homeModules config.flake.darwinModules)
+          ];
       }
     );
   };

@@ -123,6 +123,10 @@
       url = "github:homebrew/homebrew-cask";
       flake = false;
     };
+    mac-app-util = {
+      url = "github:hraban/mac-app-util";
+    };
+
   };
 
   outputs =
@@ -136,14 +140,14 @@
           ./devshells
           ./packages
 
-          # systems
+          # home-manager
           ./hosts/darwin
           ./hosts/nixos
 
           # modules
           ./modules/darwin
           ./modules/nixos
-          ./modules/shared
+          ./modules/home-manager
         ];
       }
     );
