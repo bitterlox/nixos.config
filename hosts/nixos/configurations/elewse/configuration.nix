@@ -23,7 +23,7 @@ myflakelib:
   # kernel 6.9.x has this error on log-on screen with bothers me
   # https://community.frame.work/t/usb-c-error-on-boot/52012
   # boot.kernelPackages = pkgs.linuxPackages_6_9;
-  boot.kernelPackages = pkgs.linuxPackages_6_11;
+  boot.kernelPackages = pkgs.linuxPackages_6_13;
 
   boot.loader.efi.canTouchEfiVariables = true;
   # Set your time zone.
