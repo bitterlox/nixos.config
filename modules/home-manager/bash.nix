@@ -9,6 +9,13 @@
     bashrcExtra = ''
       export PS1='\h:\w \u\$ '
     '';
+
+    # this file contains shell vars used in varoious spots in the system config
+    initExtra = ''
+      # include .profile if it exists
+      [[ -f ~/.home.env ]] && . ~/.home.env
+    '';
+
     # set some aliases, feel free to add more or remove some
     # shellAliases = {
     #   k = "kubectl";
