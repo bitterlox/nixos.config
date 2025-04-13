@@ -1958,11 +1958,11 @@
         "agenix": "agenix_2"
       },
       "locked": {
-        "lastModified": 1730996384,
-        "narHash": "sha256-38UjzOmM2wpsIyf35k+hP//79BeXW6hfaiaDId+xV6M=",
+        "lastModified": 1744282985,
+        "narHash": "sha256-/yaIQdWzquG9XMeu5Fx7Y7IdaCBSF0bgX6XLT4aV0JA=",
         "ref": "refs/heads/main",
-        "rev": "47935771db9f6fa7b955d12ac457952c5f3042a4",
-        "revCount": 44,
+        "rev": "9ed4429f2cfb0fd8f9163058f06697edecacb2e6",
+        "revCount": 45,
         "type": "git",
         "url": "ssh://git.bittervoid.io:23231/secrets-flake"
       },

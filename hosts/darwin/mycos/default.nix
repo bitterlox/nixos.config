@@ -32,16 +32,12 @@ in
       darwin.lib.darwinSystem {
         inherit system;
         specialArgs = inputs;
-        modules =
-          let
-            agenixModule = inputs.agenix.nixosModules.default;
-          in
-          [
-            inputs.nix-homebrew.darwinModules.nix-homebrew
-            home-manager.darwinModules.home-manager
-            (import ./system.nix username self'.packages inputs)
-            (import ./home-manager.nix username inputs config.flake.homeModules config.flake.darwinModules)
-          ];
+        modules = [
+          inputs.nix-homebrew.darwinModules.nix-homebrew
+          home-manager.darwinModules.home-manager
+          (import ./system.nix username inputs self'.packages)
+          (import ./home-manager.nix username inputs config)
+        ];
       }
     );
   };
