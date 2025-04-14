@@ -14,6 +14,14 @@
   ...
 }:
 let
+  # this script tests that the service actually waits for the process inside the
+  # tmux to quit before shutting everything down
+  # testScript = pkgs.writeShellApplication {
+  #   name = "test-service";
+  #   text = ''
+  #     bash -c '(trap "echo -e \"\nReceived Ctrl+C. Waiting \$n seconds before exiting...\"; sleep \$n; echo \"Exiting now.\"; exit 0" INT; n=''${1:-5}; echo "Program running. Press Ctrl+C to trigger $n second delayed exit."; while true; do echo -n "."; sleep 1; done)' _ 10
+  #   '';
+  # };
   bash = lib.getExe pkgs.bashInteractive;
   # if we use system tmux config it complains about the line which sets shell to $SHELL
   # but the send-keys still work. Keep as is for now, can disable config if needed
@@ -21,62 +29,74 @@ let
   # tmux = "${lib.getExe pkgs.tmux} -f /dev/null"
   # default tmux socket is in /tmp when running as root
   # and in /run/user/<uid>/tmux-<uid>/default when a user
-  tmux = "${lib.getExe pkgs.tmux} -S /run/user/$(id -u)/tmux-$(id -u)/default";
   pgrep = "${pkgs.busybox}/bin/pgrep";
   xargs = "${pkgs.busybox}/bin/xargs";
   types = lib.types;
-  mkService = name: startCmd: stopSignal: {
-    environment = {
+  mkService =
+    isRoot: name: startCmd: stopSignal:
+    let
+      tmux =
+        if isRoot then
+          "${lib.getExe pkgs.tmux} -S /tmp/tmux-$(id -u)/default"
+        else
+          "${lib.getExe pkgs.tmux} -S /run/user/$(id -u)/tmux-$(id -u)/default";
+    in
+    {
+      description = "A daemon running ${name} in a tmux session";
+      after = [ "network.target" ];
+      serviceConfig = {
+        Type = "forking";
+        ExecStart = ''
+          ${bash} -c "${tmux} new-session -d -s ${name} && ${tmux} send-keys -t ${name} '${startCmd}' && ${tmux} send-keys C-m"
+        '';
+        ExecStop = [
+          "${bash} -c '${tmux} send-keys -t ${name} ${stopSignal}'"
+          ''
+            ${bash} -c 'while ${tmux} list-panes -t ${name} -F "#{pane_pid}" | ${xargs} -I{} ${pgrep} -P {} >/dev/null; do \
+            sleep 0.5; \
+            done && \
+            ${tmux} kill-session -t ${name}'
+          ''
+        ];
+
+        # Set a reasonable maximum timeout as fallback
+        TimeoutStopSec = 30;
+
+        Restart = "on-failure";
+        RestartSec = 5;
+      };
     };
-    description = "A daemon running ${name} in a tmux session";
-    after = [ "network.target" ];
-    serviceConfig = {
-      Type = "forking";
-      ExecStart = ''
-        ${bash} -c "${tmux} new-session -d -s ${name} && ${tmux} send-keys -t ${name} '${startCmd}' && ${tmux} send-keys C-m"
-      '';
-      ExecStop = [
-        "${bash} -c '${tmux} send-keys -t ${name} ${stopSignal}'"
-        ''
-          ${bash} -c 'while ${tmux} list-panes -t ${name} -F "#{pane_pid}" | ${xargs} -I{} ${pgrep} -P {} >/dev/null; do \
-          sleep 0.5; \
-          done && \
-          ${tmux} kill-session -t ${name}'
-        ''
-      ];
-
-      # Set a reasonable maximum timeout as fallback
-      TimeoutStopSec = 30;
-
-      Restart = "on-failure";
-      RestartSec = 5;
+  mkRootService = mkService true;
+  mkUserService = mkService false;
+  optionType = types.submodule {
+    options = {
+      startCmd = lib.mkOption { type = types.str; };
+      stopSignal = lib.mkOption {
+        type = types.enum [
+          "C-c"
+          "C-d"
+        ];
+      };
     };
   };
 in
 {
-  options.tmux-services = lib.mkOption {
-    type = types.attrsOf (
-      types.submodule {
-        options = {
-          startCmd = lib.mkOption { type = types.str; };
-          stopSignal = lib.mkOption {
-            type = types.enum [
-              "C-c"
-              "C-d"
-            ];
-          };
-        };
-      }
-    );
+  options.tmux-services.root = lib.mkOption {
+    type = types.attrsOf optionType;
     default = { };
+    description = "Create a new tmux service that runs under root";
+  };
+  options.tmux-services.user = lib.mkOption {
+    type = types.attrsOf optionType;
+    default = { };
+    description = "Create a new tmux service that runs under user(s?)";
   };
   config = {
-    tmux-services.foo = {
-      startCmd = "ping www.google.com";
-      stopSignal = "C-c";
-    };
+    systemd.services = lib.attrsets.mapAttrs (
+      name: { startCmd, stopSignal, ... }: mkRootService name startCmd stopSignal
+    ) config.tmux-services.root;
     systemd.user.services = lib.attrsets.mapAttrs (
-      name: value: mkService name value.startCmd value.stopSignal
-    ) config.tmux-services;
+      name: { startCmd, stopSignal, ... }: mkUserService name startCmd stopSignal
+    ) config.tmux-services.user;
   };
 }
