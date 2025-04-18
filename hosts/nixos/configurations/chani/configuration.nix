@@ -1,5 +1,7 @@
-{ config, pkgs, ... }: {
-  imports = [ # Include the results of the hardware scan.
+{ config, pkgs, ... }:
+{
+  imports = [
+    # Include the results of the hardware scan.
     ./hardware-configuration.nix
     ./modules/calibre
     ./modules/urbit
@@ -18,8 +20,18 @@
         isNormalUser = true;
         hashedPasswordFile = config.lockbox.hashedPasswordFilePath;
         extraGroups = [ "wheel" ]; # Enable ‘sudo’ for the user.
-        openssh.authorizedKeys.keys = let keys = config.lockbox.sshPubKeys;
-        in [ keys.voidbook keys.iphone keys.elewse keys.sietch ];
+        openssh.authorizedKeys.keys =
+          let
+            keys = config.lockbox.sshPubKeys;
+          in
+          [
+            keys.voidbook
+            keys.iphone
+            keys.elewse
+            keys.sietch
+          ];
+        # lingering is needed to keep systemd services running when nobody's logged in
+        linger = true;
       };
     };
 
@@ -41,13 +53,24 @@
     };
 
     customServices.urbit = {
-      enable = true;
-      moon1virtualHost = "${config.lockbox.urbit-moon1-patp}.bittervoid.io";
-      moon1Port = 8080;
-      moon2virtualHost = "${config.lockbox.urbit-moon2-patp}.bittervoid.io";
-      moon2Port = 8081;
-      moon3virtualHost = "${config.lockbox.urbit-moon3-patp}.bittervoid.io";
-      moon3Port = 8082;
+      ${config.lockbox.urbit-moon1-patp} = {
+        enable = true;
+        virtualHost = "${config.lockbox.urbit-moon1-patp}.bittervoid.io";
+        pierPath = "/home/angel/urbit/${config.lockbox.urbit-moon1-patp}";
+        port = 8080;
+      };
+      ${config.lockbox.urbit-moon2-patp} = {
+        enable = true;
+        virtualHost = "${config.lockbox.urbit-moon2-patp}.bittervoid.io";
+        pierPath = "/home/angel/urbit/${config.lockbox.urbit-moon2-patp}";
+        port = 8081;
+      };
+      ${config.lockbox.urbit-moon3-patp} = {
+        enable = true;
+        virtualHost = "${config.lockbox.urbit-moon3-patp}.bittervoid.io";
+        pierPath = "/home/angel/urbit/${config.lockbox.urbit-moon3-patp}";
+        port = 8082;
+      };
     };
 
     # HOME-MANAGER #
@@ -61,7 +84,9 @@
             serverAliveInterval = 120;
             identityFile = config.lockbox.sshKeyPath;
           };
-          "github.com" = { identityFile = config.lockbox.sshKeyPath; };
+          "github.com" = {
+            identityFile = config.lockbox.sshKeyPath;
+          };
         };
       };
     };
