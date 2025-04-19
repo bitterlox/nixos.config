@@ -8,5 +8,6 @@
     angel = import ./angel.nix;
     chromium = import ./chromium.nix;
     firefox = import ./firefox.nix;
+    ghostty = import ./ghostty.nix;
   };
 }
