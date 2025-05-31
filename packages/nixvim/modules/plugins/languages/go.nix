@@ -21,9 +21,9 @@ args@{
     "go"
     "gomod"
   ];
-  plugins.lsp.servers.gopls.rootDir = helpers.mkRaw ''
-    require('lspconfig.util').root_pattern('go.work', 'go.mod', '.git')
-  '';
+  plugins.lsp.servers.gopls.rootMarkers = [
+    "require('lspconfig.util').root_pattern('go.work', 'go.mod', '.git')"
+  ];
   plugins.lsp.servers.gopls.settings = {
     gopls = {
       # general settings

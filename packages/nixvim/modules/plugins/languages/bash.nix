@@ -1,11 +1,18 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, ... }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  ...
+}:
+{
 
   # lsp configuration #
 
   plugins.lsp.servers.bashls.enable = true;
-  plugins.lsp.servers.bashls.rootDir =
-    "require('lspconfig.util').find_git_ancestor";
+  plugins.lsp.servers.bashls.rootMarkers = [ "require('lspconfig.util').find_git_ancestor" ];
 
   # https://github.com/bash-lsp/bash-language-server/blob/main/server/src/config.ts
   plugins.lsp.servers.bashls.settings = {
@@ -26,7 +33,11 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
     };
   };
 
-  runtimeBinaries = [ pkgs.shellharden pkgs.beautysh pkgs.shfmt ];
+  runtimeBinaries = [
+    pkgs.shellharden
+    pkgs.beautysh
+    pkgs.shfmt
+  ];
 
   plugins.lsp.servers.efm.enable = true;
   plugins.lsp.servers.efm.filetypes = [ "sh" ];
@@ -54,6 +65,9 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
   #   require('efmls-configs.formatters.shfmt'),
   # },
   plugins.efmls-configs.enable = true;
-  plugins.efmls-configs.setup.sh.formatter =
-    [ "shfmt" "beautysh" "shellharden" ];
+  plugins.efmls-configs.setup.sh.formatter = [
+    "shfmt"
+    "beautysh"
+    "shellharden"
+  ];
 }

@@ -18,8 +18,9 @@ args@{
   plugins.lsp.servers.nixd.cmd = [
     "nixd"
   ];
-  plugins.lsp.servers.nixd.rootDir =
-    "require('lspconfig.util').root_pattern('.nixd.json', 'flake.nix', '.git')";
+  plugins.lsp.servers.nixd.rootMarkers = [
+    "require('lspconfig.util').root_pattern('.nixd.json', 'flake.nix', '.git')"
+  ];
 
   plugins.lsp.servers.nixd.onAttach.function = # lua
     ''
