@@ -9,15 +9,6 @@ angelBaseModule: impermanenceHmModule:
 }:
 let
   overrides = {
-    nerdfonts = pkgs.nerdfonts.override {
-      fonts = [
-        "FiraCode"
-        "DroidSansMono"
-        "SourceCodePro"
-        "Hasklig"
-        "NerdFontsSymbolsOnly"
-      ];
-    };
     popcorntime = pkgs.popcorntime.overrideDerivation (previousAttrs: {
       # PROBLEM: this derivation is defined using a recursive attrSet so
       # overrides don't propagate
@@ -51,7 +42,6 @@ in
     home.packages =
       let
         overriden = with overrides; [
-          nerdfonts
           popcorntime
         ];
         #overriden = with overrides; [ nerdfonts ];
@@ -64,6 +54,13 @@ in
           pavucontrol
           protonmail-desktop
           protonvpn-gui
+
+          # fonts
+          pkgs.nerd-fonts.fira-code
+          pkgs.nerd-fonts.droid-sans-mono
+          pkgs.nerd-fonts.sauce-code-pro
+          pkgs.nerd-fonts.hasklug
+          pkgs.nerd-fonts.symbols-only
         ];
       in
       overriden ++ vanilla;
@@ -104,7 +101,9 @@ in
       enable = true;
       keybindings = { };
       # can't set float values yet, need next stable release
-      settings = { background_opacity = 0.65; };
+      settings = {
+        background_opacity = 0.65;
+      };
     };
 
     programs.rio = {
