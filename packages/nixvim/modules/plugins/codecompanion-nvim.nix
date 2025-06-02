@@ -3,12 +3,48 @@ args@{
   helpers,
   lib,
   options,
+  pkgs,
   ...
 }:
+let
+# TODO: move this into packages top-level
+  vectorCodePlugin =
+    (pkgs.vimUtils.buildVimPlugin {
+      pname = "vectorcode";
+      version = "2025-06-02";
+      src = pkgs.fetchFromGitHub {
+        owner = "Davidyz";
+        repo = "VectorCode";
+        rev = "2ed7d79c8947afd8592e56ad0f1a5ed2be4dd26f";
+        sha256 = "sha256-JG2WF00cDlNOGZbj8ja659fEfwXXbEXFefxk4uhMDtw=";
+      };
+      meta.homepage = "https://github.com/Davidyz/VectorCode";
+      meta.hydraPlatforms = [ ];
+    }).overrideAttrs
+      (old: {
+        dependencies = [ pkgs.vimPlugins.plenary-nvim ];
+        # this makes the tests pass as they need access to the cli
+        nativeBuildInputs = [ pkgs.vectorcode ];
+      });
+in
 {
   plugins.codecompanion.enable = true;
 
+  extraPlugins = [
+    vectorCodePlugin
+  ];
+
+  runtimeBinaries = [ pkgs.vectorcode ];
+
   plugins.codecompanion.settings = {
+    extensions.vectorcode = {
+      enabled = true;
+      opts = {
+        add_tool = true; # the @vectorcode tool becomes available in the CodeCompanion chat buffer
+        add_slash_command = true; # the /vectorcode slash command
+        tool_opts = { };
+      };
+    };
     strategies = {
       chat = {
         adapter = "anthropic";
@@ -112,4 +148,5 @@ args@{
     vim.cmd([[cab cc CodeCompanion]])
     vim.cmd([[cab cca CodeCompanionActions]])
   '';
+
 }

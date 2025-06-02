@@ -40,28 +40,29 @@ args@{ config, lib, ... }:
     ./which-key.nix
   ];
   config =
-    let
-      grammars = config.plugins.treesitter.package.passthru.builtGrammars;
-    in
+    # let
+    #   grammars = config.plugins.treesitter.package.passthru.builtGrammars;
+    # in
     {
       plugins.web-devicons.enable = true;
 
-      plugins.treesitter.grammarPackages = lib.mkForce (
-        with grammars;
-        [
-          bash
-          toml
-          css
-          go
-          json
-          lua
-          markdown
-          nix
-          rust
-          typescript
-          yaml
-          zig
-        ]
-      );
+      # plugins.treesitter.grammarPackages = grammars;
+      # plugins.treesitter.grammarPackages = lib.mkForce (
+      #   with grammars;
+      #   [
+      #     bash
+      #     toml
+      #     css
+      #     go
+      #     json
+      #     lua
+      #     markdown
+      #     nix
+      #     rust
+      #     typescript
+      #     yaml
+      #     zig
+      #   ]
+      # );
     };
 }

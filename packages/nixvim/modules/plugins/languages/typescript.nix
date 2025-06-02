@@ -1,5 +1,13 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, ... }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  ...
+}:
+{
 
   # todo: setup for deno project
   # https://docs.deno.com/runtime/reference/lsp_integration/
@@ -34,9 +42,17 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
     };
   };
 
+  plugins.lsp.servers.vuels.enable = true;
+  plugins.lsp.servers.vuels.cmd = [ "vue-language-server" "--stdio" ];
+  plugins.lsp.servers.vuels.package = pkgs.vue-language-server;
+
   plugins.lsp.servers.efm.enable = true;
   # enable on all files
-  plugins.lsp.servers.efm.filetypes = [ "typescript" "typescriptreact" ];
+  plugins.lsp.servers.efm.filetypes = [
+    "typescript"
+    "typescriptreact"
+    "vue"
+  ];
   plugins.lsp.servers.efm.extraOptions = {
     init_options = {
       documentFormatting = true;
