@@ -12,7 +12,7 @@ args@{
   # TODO: enable native sorter to improve performance
   # maybe missing leader d keymap to lsp stuff
 
-  runtimeBinaries = [
+  extraPackages = [
     pkgs.ripgrep
     pkgs.fd
   ];

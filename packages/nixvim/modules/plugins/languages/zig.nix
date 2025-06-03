@@ -9,7 +9,7 @@ args@{
 }:
 {
 
-  runtimeBinaries = [ pkgs.zig ];
+  extraPackages = [ pkgs.zig ];
 
   plugins.zig.enable = true;
   plugins.zig.settings.fmt_autosave = 1;

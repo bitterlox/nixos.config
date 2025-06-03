@@ -17,7 +17,7 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
 
   plugins.efmls-configs.enable = true;
   plugins.efmls-configs.externallyManagedPackages = [ "fixjson" ];
-  runtimeBinaries = [ pkgs.fixjson ];
+  extraPackages = [ pkgs.fixjson ];
 
   # manual lua config
   # json = {

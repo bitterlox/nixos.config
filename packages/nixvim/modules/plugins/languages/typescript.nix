@@ -66,7 +66,7 @@ args@{
 
   plugins.efmls-configs.enable = true;
   plugins.efmls-configs.externallyManagedPackages = [ "deno_fmt" ];
-  runtimeBinaries = [ pkgs.deno ];
+  extraPackages = [ pkgs.deno ];
 
   plugins.efmls-configs.setup.typescript.linter = [ "eslint" ];
   plugins.efmls-configs.setup.typescript.formatter = [ "deno_fmt" ];

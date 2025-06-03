@@ -34,7 +34,7 @@ in
     vectorCodePlugin
   ];
 
-  runtimeBinaries = [ pkgs.vectorcode ];
+  extraPackages = [ pkgs.vectorcode ];
 
   plugins.codecompanion.settings = {
     extensions.vectorcode = {

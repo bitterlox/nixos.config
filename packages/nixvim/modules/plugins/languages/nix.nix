@@ -12,7 +12,7 @@ args@{
 
   # lsp configuration #
 
-  runtimeBinaries = [ pkgs.nixfmt-rfc-style ];
+  extraPackages = [ pkgs.nixfmt-rfc-style ];
 
   plugins.lsp.servers.nixd.enable = true;
   plugins.lsp.servers.nixd.cmd = [

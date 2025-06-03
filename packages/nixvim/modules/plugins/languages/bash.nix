@@ -33,7 +33,7 @@ args@{
     };
   };
 
-  runtimeBinaries = [
+  extraPackages = [
     pkgs.shellharden
     pkgs.beautysh
     pkgs.shfmt
