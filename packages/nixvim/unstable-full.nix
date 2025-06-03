@@ -38,6 +38,7 @@ args@{
     ./options.nix
     ./modules/editor-config
     ./modules/plugins/_essentials.nix
+    ./modules/plugins/_extras.nix
     ./modules/plugins/lsp.nix
     ./modules/plugins/languages/_all.nix
   ];

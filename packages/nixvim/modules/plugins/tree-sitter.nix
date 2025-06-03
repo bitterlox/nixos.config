@@ -7,26 +7,28 @@ args@{
   pkgs,
   ...
 }:
+let
+  grammars = config.plugins.treesitter.package.passthru.builtGrammars;
+in
 {
   plugins.treesitter.enable = true;
 
   # default is allGrammars
-  # maybe reconsider this if build times are affected
-  plugins.treesitter.grammarPackages = config.plugins.treesitter.package.passthru.allGrammars;
-  # plugins.treesitter.grammarPackages = [
-  #     bash
-  #     common
-  #     css
-  #     go
-  #     json
-  #     lua
-  #     markdown
-  #     nix
-  #     rust
-  #     typescript
-  #     yaml
-  #     zig
-  # ]
+  plugins.treesitter.grammarPackages = with grammars; [
+    bash
+    toml
+    css
+    go
+    json
+    lua
+    markdown
+    nix
+    rust
+    typescript
+    yaml
+    zig
+  ];
+
   plugins.treesitter.nixGrammars = true;
 
   plugins.treesitter.settings = {
