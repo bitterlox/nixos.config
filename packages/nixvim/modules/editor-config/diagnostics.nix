@@ -13,7 +13,7 @@ args@{
   # configuring diagnostic stuff #
   # https://github.com/neovim/nvim-lspconfig/wiki/UI-Customization #
 
-  diagnostics = {
+  diagnostic.settings = {
     virtual_text = false;
     signs = true;
     underline = true;

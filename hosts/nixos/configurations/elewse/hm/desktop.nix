@@ -121,7 +121,7 @@ in
     ## SERVICES ##
     services.gpg-agent = {
       enable = true;
-      pinentryPackage = pkgs.pinentry-qt;
+      pinentry.package = pkgs.pinentry-qt;
     };
     services.mako.enable = true;
     services.cliphist.enable = true;
