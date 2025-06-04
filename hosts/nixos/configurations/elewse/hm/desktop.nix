@@ -1,4 +1,4 @@
-angelBaseModule: impermanenceHmModule:
+homeModules: impermanenceHmModule:
 {
   lib,
   config,
@@ -33,7 +33,8 @@ let
 in
 {
   imports = [
-    angelBaseModule
+    homeModules.angel
+    homeModules.ghostty
     impermanenceHmModule
     ./hardware
     ./software
@@ -54,6 +55,7 @@ in
           pavucontrol
           protonmail-desktop
           protonvpn-gui
+          ghostty
 
           # fonts
           pkgs.nerd-fonts.fira-code
@@ -97,22 +99,6 @@ in
     # gtk.theme.name = "Kanagawa-BL";
 
     ## PROGRAMS ##
-    programs.kitty = {
-      enable = true;
-      keybindings = { };
-      # can't set float values yet, need next stable release
-      settings = {
-        background_opacity = 0.65;
-      };
-    };
-
-    programs.rio = {
-      enable = true;
-      # Configuration written to {file}$XDG_CONFIG_HOME/rio/config.toml. See
-      # https://raphamorim.io/rio/docs/#configuration-file for options.
-      # settings = {};
-    };
-
     programs.password-store.enable = true;
     programs.password-store.settings = {
       PASSWORD_STORE_DIR = "/home/angel/.password-store";

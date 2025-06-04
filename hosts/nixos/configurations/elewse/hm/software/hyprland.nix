@@ -38,7 +38,7 @@ in {
 
       # See https://wiki.hyprland.org/Configuring/Keywords/
       # Set programs that you use
-      "$terminal" = "kitty";
+      "$terminal" = "ghostty";
       "$fileManager" = "thunar";
       "$menu" = "tofi-drun | xargs hyprctl dispatch exec --";
       "$lock" = "hyprlock --immediate";
@@ -208,7 +208,7 @@ in {
         "$mod, M, exit,"
         "$mod, E, exec, $fileManager"
         "$mod, V, togglefloating,"
-        "$mod, D, exec, $menu"
+        "$mod, SPACE, exec, $menu"
         "$mod, L, exec, $lock"
         "$mod, P, pseudo," # dwindle
         "$mod, J, togglesplit," # dwindle
