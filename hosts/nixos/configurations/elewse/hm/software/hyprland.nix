@@ -1,6 +1,13 @@
-{ pkgs, osConfig, lib, ... }:
-let scripts = (import ./scripts { inherit pkgs; });
-in {
+{
+  pkgs,
+  osConfig,
+  lib,
+  ...
+}:
+let
+  scripts = (import ./scripts { inherit pkgs; });
+in
+{
   # force electron apps to use wayland
   home.sessionVariables = {
     ELECTRON_OZONE_PLATFORM_HINT = "auto";
@@ -42,7 +49,8 @@ in {
       "$fileManager" = "thunar";
       "$menu" = "tofi-drun | xargs hyprctl dispatch exec --";
       "$lock" = "hyprlock --immediate";
-
+      "$firefox-browser" = "librewolf";
+      "$chrome-browser" = "chromium";
       ###################
       #### AUTOSTART ####
       ###################
@@ -55,9 +63,7 @@ in {
         "wl-paste --type image --watch cliphist store"
         #"eww daemon"
         "eww open bar"
-        "sleep 3; ${
-          lib.getExe scripts.changeWallpaper
-        } $HOME/Pictures/wallpapers/"
+        "sleep 3; ${lib.getExe scripts.changeWallpaper} $HOME/Pictures/wallpapers/"
       ];
 
       # exec-once = $terminal
@@ -147,20 +153,19 @@ in {
 
       # See https://wiki.hyprland.org/Configuring/Dwindle-Layout/ for more
       dwindle = {
-        pseudotile =
-          true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+        pseudotile = true; # Master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
         preserve_split = true; # You probably want this
       };
 
       # See https://wiki.hyprland.org/Configuring/Master-Layout/ for more
-      master = { new_status = "master"; };
+      master = {
+        new_status = "master";
+      };
 
       # https://wiki.hyprland.org/Configuring/Variables/#misc
       misc = {
-        force_default_wallpaper =
-          -1; # Set to 0 or 1 to disable the anime mascot wallpapers
-        disable_hyprland_logo =
-          false; # If true disables the random hyprland logo / anime girl background. :(
+        force_default_wallpaper = -1; # Set to 0 or 1 to disable the anime mascot wallpapers
+        disable_hyprland_logo = false; # If true disables the random hyprland logo / anime girl background. :(
       };
       #############
       ### INPUT ###
@@ -184,7 +189,9 @@ in {
       };
 
       # https://wiki.hyprland.org/Configuring/Variables/#gestures
-      gestures = { workspace_swipe = true; };
+      gestures = {
+        workspace_swipe = true;
+      };
 
       # Example per-device config
       # See https://wiki.hyprland.org/Configuring/Keywords/#per-device-input-configs for more
@@ -203,8 +210,9 @@ in {
       # can use wev program to find key names
       bind = [
         "$mod, T, exec, $terminal"
-        "$mod, F, exec, firefox"
-        "$mod, C, killactive,"
+        "$mod, F, exec, $firefox-browser"
+        "$mod, C, exec, $chrome-browser"
+        "$mod, Q, killactive,"
         "$mod, M, exit,"
         "$mod, E, exec, $fileManager"
         "$mod, V, togglefloating,"
@@ -286,7 +294,9 @@ in {
 
       ## debug##
 
-      debug = { disable_logs = false; };
+      debug = {
+        disable_logs = false;
+      };
     };
   };
 
@@ -294,4 +304,3 @@ in {
   # https://github.com/nix-community/home-manager/commit/445d721ecfbd92d83f857f12f1f99f5c8fa79951
   # home.pointerCursor.hyprcursor.enable = true;
 }
-

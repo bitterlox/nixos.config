@@ -1,9 +1,9 @@
 { config, pkgs, lib, ... }: {
-  imports = [ ./firefox.nix ];
+  imports = [ ./librewolf.nix ];
 
   # browserpass
   programs.browserpass.enable = true;
-  programs.browserpass.browsers = [ "firefox" ];
+  programs.browserpass.browsers = [ "librewolf" ];
 
   programs.chromium = {
     enable = true;
