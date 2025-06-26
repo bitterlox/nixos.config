@@ -2,7 +2,12 @@
 #   and mash them all into a single PATH, using the config.package option
 #
 # this is a flake-parts module
-top@{ self, inputs, lib, ... }:
+top@{
+  self,
+  inputs,
+  lib,
+  ...
+}:
 {
   perSystem =
     {
@@ -31,6 +36,32 @@ top@{ self, inputs, lib, ... }:
           module = ./unstable-light.nix;
           extraSpecialArgs = { inherit self; };
         };
+        vledger =
+          let
+            builtNvim = top.inputs.nixvim-unstable.legacyPackages.${system}.makeNixvimWithModule {
+              pkgs = import top.inputs.nixpkgs { inherit system; };
+              module = ./vledger.nix;
+              extraSpecialArgs = { inherit self; };
+            };
+          in
+          pkgs.runCommand
+            # derivation name:
+            "vledger"
+            # derivation args:
+            {
+              # you probably want to copy version & meta from your nixvim-pkg
+              inherit (builtNvim.config.package) version;
+
+              # mainProgram should match your symlink's name though
+              meta = builtNvim.meta // {
+                mainProgram = "vledger";
+              };
+            }
+            # build script:
+            ''
+              mkdir -p "$out"/bin
+              ln -s ${lib.getExe builtNvim} "$out"/bin/vledger
+            '';
       };
       # packages-stable = {
       #   nixvim-stable =
