@@ -24,6 +24,8 @@ username: inputs:
       isHidden = false;
       shell = pkgs.bashInteractive;
     };
+    # got some error message while rebuilding
+    system.primaryUser = "angel";
     system.stateVersion = 6;
     system.defaults = {
       NSGlobalDomain = {

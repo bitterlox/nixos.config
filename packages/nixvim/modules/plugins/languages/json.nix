@@ -1,9 +1,17 @@
 # this is a nixvim module
-args@{ config, helpers, lib, options, pkgs, ... }: {
+args@{
+  config,
+  helpers,
+  lib,
+  options,
+  pkgs,
+  ...
+}:
+{
 
   plugins.lsp.servers.efm.enable = true;
   # enable on all files
-  plugins.lsp.servers.efm.filetypes = [ "json" "JSON" ];
+  plugins.lsp.servers.efm.filetypes = [ "json" ];
   plugins.lsp.servers.efm.extraOptions = {
     init_options = {
       documentFormatting = true;
@@ -32,4 +40,3 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
   plugins.efmls-configs.setup.json.linter = [ "jq" ];
   plugins.efmls-configs.setup.json.formatter = [ "fixjson" ];
 }
-
