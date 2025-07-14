@@ -14,14 +14,12 @@ in {
           modules = let p = self'.packages;
           in [{
             # add my own packages
-            firefly-iii.dataImporterPackage = p.firefly-iii-data-importer;
             environment.systemPackages = [ p.nvim-light ];
           }] ++ privateModules ++ [
             #shared-modules.agenix
             secretsModule
             sharedModules.linux-base
             ./modules/soft-serve
-            ./modules/firefly-iii
             (import ./configuration.nix config.flake.lib)
             # make home-manager as a module of nixos
             # so that home-manager configuration will be deployed automatically when executing `nixos-rebuild switch`

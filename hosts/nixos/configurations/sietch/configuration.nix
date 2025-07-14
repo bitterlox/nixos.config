@@ -40,14 +40,6 @@ myflakelib:
       sshPublicUrl = config.lockbox.softServeSshPublicUrl;
     };
 
-    firefly-iii = {
-      enable = true;
-      virtualHosts = {
-        firefly-iii = "ff.bittervoid.io";
-        data-importer = "http://localhost:1234";
-      };
-    };
-
     # https://nixos.wiki/wiki/Borg_backup
     # see: Don't try backup when unit is unavailable
     services.borgbackup.jobs = let
@@ -66,12 +58,6 @@ myflakelib:
         # ssh server spun up that says backup in progress
         preHook = "systemctl stop soft-serve.service";
         postHook = "systemctl start soft-serve.service";
-      };
-      firefly-iii = defaults // {
-        repo = config.lockbox.borg-repo-urls.firefly-iii;
-        paths = [ "/var/backup/mysql/" "/var/lib/firefly-iii/storage/upload/" ];
-        startAt = "Mon *-*-* 01:00:00";
-        # don't need hooks since we're backing up an inert sql dump
       };
     };
 
