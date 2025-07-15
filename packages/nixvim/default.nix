@@ -18,39 +18,39 @@ top@{
       ...
     }:
     let
-      # posthog-overlay = (
-      #   final: prev:
-      #   let
-      #     posthog_5_4 = prev.python3Packages.posthog.overridePythonAttrs (old: rec {
-      #       version = "5.4.0";
-      #       src = prev.fetchFromGitHub {
-      #         owner = "PostHog";
-      #         repo = "posthog-python";
-      #         rev = "v${version}";
-      #         hash = "sha256-UUINopWw2q5INuFiveI5si7jPRLT0Mad3hnfbykHs6M=";
-      #       };
-      #     });
-      #   in
-      #   {
-      #     # overlaying posthost_5 because vectorcode can't build if
-      #     # posthog isn't < 6
-      #     # chromadb = prev.python3Packages.chromadb.overridePythonAttrs (old: {})
-      #     python3 = prev.python3.override {
-      #       packageOverrides = python-self: python-super: {
-      #         posthog = posthog_5_4;
-      #       };
-      #     };
-      #     vectorcode = prev.vectorcode.overridePythonAttrs (old: {
-      #       dependencies = old.dependencies ++ [ posthog_5_4 ];
-      #     });
-      #     cromadb = prev.vectorcode.overridePythonAttrs (old: {
-      #       dependencies = old.dependencies ++ [ posthog_5_4 ];
-      #     });
-      #   }
-      # );
+      posthog-overlay = (
+        final: prev:
+        let
+          posthog_5_4 = prev.python3Packages.posthog.overridePythonAttrs (old: rec {
+            version = "5.4.0";
+            src = prev.fetchFromGitHub {
+              owner = "PostHog";
+              repo = "posthog-python";
+              rev = "v${version}";
+              hash = "sha256-UUINopWw2q5INuFiveI5si7jPRLT0Mad3hnfbykHs6M=";
+            };
+          });
+        in
+        {
+          # overlaying posthost_5 because vectorcode can't build if
+          # posthog isn't < 6
+          # chromadb = prev.python3Packages.chromadb.overridePythonAttrs (old: {})
+          python3 = prev.python3.override {
+            packageOverrides = python-self: python-super: {
+              posthog = posthog_5_4;
+            };
+          };
+          # vectorcode = prev.vectorcode.overridePythonAttrs (old: {
+          #   dependencies = old.dependencies ++ [ posthog_5_4 ];
+          # });
+          # cromadb = prev.vectorcode.overridePythonAttrs (old: {
+          #   dependencies = old.dependencies ++ [ posthog_5_4 ];
+          # });
+        }
+      );
       nixvim-pkgs = import top.inputs.nixpkgs {
         inherit system;
-        # overlays = [ posthog-overlay ];
+        overlays = [ posthog-overlay ];
       };
       packages-unstable = {
         nvim-full = top.inputs.nixvim-unstable.legacyPackages.${system}.makeNixvimWithModule {

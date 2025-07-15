@@ -49,13 +49,14 @@ in
         vanilla = with pkgs; [
           wl-clipboard
           shotman
-          libnotify
+          libnotify # notifications
           obsidian
           hyprpicker
           pavucontrol
           protonmail-desktop
           protonvpn-gui
-          ghostty
+          ghostty # terminal
+          wayfarer # screen recording
 
           # fonts
           pkgs.nerd-fonts.fira-code
