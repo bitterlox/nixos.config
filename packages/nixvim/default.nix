@@ -30,6 +30,15 @@ top@{
               hash = "sha256-UUINopWw2q5INuFiveI5si7jPRLT0Mad3hnfbykHs6M=";
             };
           });
+          vectorcode_0_7_9 = prev.vectorcode.overridePythonAttrs (old: rec {
+            version = "0.7.9";
+            src = prev.fetchFromGitHub {
+              owner = "Davidyz";
+              repo = "VectorCode";
+              rev = "${version}";
+              hash = "sha256-EU/JitByOXfquMCcMHH14gCbVl/oHpREAcQNxmOuI+E=";
+            };
+          });
         in
         {
           # overlaying posthost_5 because vectorcode can't build if
@@ -40,9 +49,7 @@ top@{
               posthog = posthog_5_4;
             };
           };
-          # vectorcode = prev.vectorcode.overridePythonAttrs (old: {
-          #   dependencies = old.dependencies ++ [ posthog_5_4 ];
-          # });
+          vectorcode = vectorcode_0_7_9;
           # cromadb = prev.vectorcode.overridePythonAttrs (old: {
           #   dependencies = old.dependencies ++ [ posthog_5_4 ];
           # });
@@ -60,7 +67,7 @@ top@{
             {
               imports = [ ./unstable-full.nix ];
               config = {
-                plugins.lsp.servers.nixd.package = inputs.nixd.packages.${system}.nixd;
+                # plugins.lsp.servers.nixd.package = inputs.nixd.packages.${system}.nixd;
               };
             };
           extraSpecialArgs = { inherit self; };
