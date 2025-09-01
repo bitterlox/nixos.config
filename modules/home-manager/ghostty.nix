@@ -17,7 +17,9 @@ let
     # list themes with ghostty +list-themes
     # tried: srcery
     theme = "srcery";
-    background-opacity = 0.8;
+    background-opacity = 0.45;
+    macos-option-as-alt = "left";
+    macos-titlebar-style = "transparent";
     background-blur-radius = 20;
   };
   themes = { };
