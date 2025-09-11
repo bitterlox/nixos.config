@@ -28,6 +28,7 @@
         "chromium"
         "librewolf"
         "ghostty"
+        "trezor-suite"
       ];
       brews = [ "cocoapods" ];
       masApps = {
