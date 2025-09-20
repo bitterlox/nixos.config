@@ -11,6 +11,12 @@ args@{
   plugins.blink-cmp.enable = true;
   plugins.blink-cmp.settings = {
     signature.enabled = true;
+    sources.default = [
+      "lsp"
+        "path"
+        "snippets"
+        "buffer"
+    ];
     completion = {
       documentation = {
         auto_show = true;
