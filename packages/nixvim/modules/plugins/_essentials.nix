@@ -34,7 +34,7 @@ args@{ config, lib, ... }:
     ./colorizer.nix
 
     # llm companion
-    ./codecompanion-nvim.nix
+    #./codecompanion-nvim.nix
 
     # remember keymaps
     ./which-key.nix
