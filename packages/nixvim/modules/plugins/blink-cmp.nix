@@ -13,9 +13,10 @@ args@{
     signature.enabled = true;
     sources.default = [
       "lsp"
-        "path"
-        "snippets"
-        "buffer"
+      "path"
+      "snippets"
+      "buffer"
+      "omni"
     ];
     completion = {
       documentation = {
