@@ -34,6 +34,7 @@ in
 {
   imports = [
     homeModules.angel
+    homeModules.bash
     homeModules.ghostty
     impermanenceHmModule
     ./hardware
