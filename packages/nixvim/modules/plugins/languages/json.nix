@@ -36,7 +36,6 @@ args@{
   #     lintFormats = { 'line %l, col %c, found: %m' },
   #   }
   # },
-  plugins.efmls-configs.setup.JSON.linter = [ "jsonlint" ];
-  plugins.efmls-configs.setup.json.linter = [ "jq" ];
+  plugins.efmls-configs.setup.json.linter = [ "jq" "jsonlint"  ];
   plugins.efmls-configs.setup.json.formatter = [ "fixjson" ];
 }
