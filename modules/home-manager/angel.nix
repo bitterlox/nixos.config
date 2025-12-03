@@ -28,8 +28,12 @@
   # configure git
   programs.git = {
     enable = true;
-    userName = "bitterlox";
-    userEmail = "bitterlox@pm.me";
+    settings = {
+      user = {
+        name = "bitterlox";
+        email = "bitterlox@pm.me";
+      };
+    };
   };
 
   # Packages that should be installed to the user profile.

@@ -79,6 +79,7 @@
     home-manager.users.angel = {
       programs.ssh = {
         enable = true;
+        enableDefaultConfig = false;
         matchBlocks = {
           "*" = {
             serverAliveInterval = 120;

@@ -24,7 +24,7 @@ args@{
   };
 
   plugins.efmls-configs.enable = true;
-  plugins.efmls-configs.externallyManagedPackages = [ "fixjson" ];
+  plugins.efmls-configs.externallyManagedPackages = [ "fixjson" "jsonlint" ];
   extraPackages = [ pkgs.fixjson ];
 
   # manual lua config

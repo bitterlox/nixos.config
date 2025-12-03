@@ -42,10 +42,6 @@ args@{
     };
   };
 
-  plugins.lsp.servers.vuels.enable = true;
-  plugins.lsp.servers.vuels.cmd = [ "vue-language-server" "--stdio" ];
-  plugins.lsp.servers.vuels.package = pkgs.vue-language-server;
-
   plugins.lsp.servers.efm.enable = true;
   # enable on all files
   plugins.lsp.servers.efm.filetypes = [
