@@ -22,8 +22,8 @@ myflakelib:
   };
   # kernel 6.9.x has this error on log-on screen with bothers me
   # https://community.frame.work/t/usb-c-error-on-boot/52012
-  #boot.kernelPackages = pkgs.linuxPackages_6_12; # LTS
-  boot.kernelPackages = pkgs.linuxPackages_6_16;
+  #boot.kernelPackages = pkgs.linuxPackages_6_18; # LTS EOL Dec 2027
+  boot.kernelPackages = pkgs.linuxPackages_6_17;
 
   boot.loader.efi.canTouchEfiVariables = true;
   # Set your time zone.
