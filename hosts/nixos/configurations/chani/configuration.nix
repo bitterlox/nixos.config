@@ -73,6 +73,32 @@
       };
     };
 
+    services.freshrss = {
+        enable = true;
+        baseUrl = "reader.bittervoid.io";
+        virtualHost = "reader";
+        webserver = "caddy";
+        extensions = with pkgs.freshrss-extensions; [
+          youtube
+          reading-time
+          auto-ttl
+        ];
+        # ++ [
+        #   (freshrss-extensions.buildFreshRssExtension {
+        #     FreshRssExtUniqueId = "ReadingTime";
+        #     pname = "reading-time";
+        #     version = "1.5";
+        #     src = pkgs.fetchFromGitLab {
+        #       domain = "framagit.org";
+        #       owner = "Lapineige";
+        #       repo = "FreshRSS_Extension-ReadingTime";
+        #       rev = "fb6e9e944ef6c5299fa56ffddbe04c41e5a34ebf";
+        #      hash = "sha256-C5cRfaphx4Qz2xg2z+v5qRji8WVSIpvzMbethTdSqsk=";
+        #    };
+        #   })
+        # ]
+      };
+
     # HOME-MANAGER #
 
     # this is home-manager level
