@@ -75,8 +75,9 @@
 
     services.freshrss = {
         enable = true;
-        baseUrl = "reader.bittervoid.io";
-        virtualHost = "reader";
+        baseUrl = "https://reader.bittervoid.io";
+        passwordFile = "/run/secrets/freshrss";
+        virtualHost = "https://reader.bittervoid.io";
         webserver = "caddy";
         extensions = with pkgs.freshrss-extensions; [
           youtube
