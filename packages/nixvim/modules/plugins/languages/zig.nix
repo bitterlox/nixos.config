@@ -20,8 +20,14 @@ args@{
 
   plugins.lsp.servers.zls.filetypes = [ "zig" ];
   plugins.lsp.servers.zls.onAttach.function = ''
-    vim.lsp.inlay_hint.enable(false)
+    vim.lsp.inlay_hint.enable(true)
   '';
+
+  plugins.lsp.servers.zls.settings = {
+    zls = {
+      zig_exe_path = lib.getExe pkgs.zig;
+    };
+  };
 
   plugins.neotest.adapters.zig.enable = true;
 }
