@@ -1,7 +1,6 @@
 # this is a nixvim module
 args@{
   config,
-  helpers,
   lib,
   options,
   pkgs,
@@ -26,7 +25,7 @@ args@{
     {
       mode = "n";
       key = "<leader>tt";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           require('neotest').run.run()
         end
@@ -36,7 +35,7 @@ args@{
     {
       mode = "n";
       key = "<leader>tf";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           require('neotest').run.run(vim.fn.expand('%:p'))
         end
@@ -46,7 +45,7 @@ args@{
     {
       mode = "n";
       key = "<leader>td";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           require('neotest').run.run(vim.fn.expand('%:p:h'))
         end
@@ -56,7 +55,7 @@ args@{
     {
       mode = "n";
       key = "<leader>ta";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           require('neotest').run.run(vim.fn.getcwd())
         end
@@ -66,7 +65,7 @@ args@{
     {
       mode = "n";
       key = "<leader>tl";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           require('neotest').run.run_last()
         end
@@ -76,7 +75,7 @@ args@{
     {
       mode = "n";
       key = "<leader>tq";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           require('neotest').run.stop()
         end
@@ -86,7 +85,7 @@ args@{
     {
       mode = "n";
       key = "<leader>tp";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           require('neotest').output.open({ enter = true })
         end
@@ -96,7 +95,7 @@ args@{
     {
       mode = "n";
       key = "<leader>to";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           require('neotest').output_panel.open()
         end
@@ -106,7 +105,7 @@ args@{
     {
       mode = "n";
       key = "<leader>ts";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function()
           require('neotest').summary.open()
         end

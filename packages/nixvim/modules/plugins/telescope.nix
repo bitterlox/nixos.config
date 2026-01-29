@@ -1,7 +1,6 @@
 # this is a nixvim module
 args@{
   config,
-  helpers,
   lib,
   options,
   pkgs,
@@ -20,7 +19,7 @@ args@{
   plugins.telescope.enable = true;
 
   # plugins.telescope.settings.defaults.vimgrep_arguments =
-  #   helpers.listToUnkeyedAttrs [
+  #   lib.nixvim.listToUnkeyedAttrs [
   #     "${lib.getExe pkgs.ripgrep}"
   #     "--color=never"
   #     "--no-heading"

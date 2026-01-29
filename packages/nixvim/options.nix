@@ -2,7 +2,6 @@
 # define custom options here
 args@{
   config,
-  helpers,
   lib,
   options,
   pkgs,

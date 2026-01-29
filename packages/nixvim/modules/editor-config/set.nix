@@ -1,7 +1,6 @@
 # this is a nixvim module
 args@{
   config,
-  helpers,
   lib,
   options,
   pkgs,
@@ -33,7 +32,7 @@ args@{
   # disable swapfile, enable undo file
   opts.swapfile = false;
   opts.backup = false;
-  opts.undodir = helpers.mkRaw ''os.getenv("HOME") .. "/.nvim/undodir"'';
+  opts.undodir = lib.nixvim.mkRaw ''os.getenv("HOME") .. "/.nvim/undodir"'';
   opts.undofile = true;
 
   opts.hlsearch = false;

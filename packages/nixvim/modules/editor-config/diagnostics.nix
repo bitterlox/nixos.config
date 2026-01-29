@@ -1,7 +1,6 @@
 # this is a nixvim module
 args@{
   config,
-  helpers,
   lib,
   options,
   pkgs,
@@ -32,7 +31,7 @@ args@{
         "CursorHoldI"
       ];
       command = "lua vim.diagnostic.open_float(nil, {focus=false})";
-      # callback = helpers.mkRaw ''
+      # callback = lib.nixvim.mkRaw ''
       #   function ()
       #     vim.diagnostic.open_float(nil, {focus=false})
       #   end'';

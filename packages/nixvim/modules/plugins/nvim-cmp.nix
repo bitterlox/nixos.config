@@ -82,17 +82,17 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
 
   plugins.cmp.cmdline = {
     "/" = {
-      mapping = helpers.mkRaw "cmp.mapping.preset.cmdline()";
+      mapping = lib.nixvim.mkRaw "cmp.mapping.preset.cmdline()";
       sources = [{ name = "buffer"; }];
     };
 
     "?" = {
-      mapping = helpers.mkRaw "cmp.mapping.preset.cmdline()";
+      mapping = lib.nixvim.mkRaw "cmp.mapping.preset.cmdline()";
       sources = [{ name = "buffer"; }];
     };
 
     ":" = {
-      mapping = helpers.mkRaw "cmp.mapping.preset.cmdline()";
+      mapping = lib.nixvim.mkRaw "cmp.mapping.preset.cmdline()";
       sources = [
         {
           name = "path";

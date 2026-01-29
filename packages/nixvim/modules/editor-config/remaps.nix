@@ -1,7 +1,6 @@
 # this is a nixvim module
 args@{
   config,
-  helpers,
   lib,
   options,
   pkgs,
@@ -15,18 +14,18 @@ args@{
     {
       mode = "n";
       key = "<leader>wq";
-      action = helpers.mkRaw "vim.cmd.wq";
+      action = lib.nixvim.mkRaw "vim.cmd.wq";
     }
     {
       mode = "n";
       key = "<leader>cc";
-      action = helpers.mkRaw "vim.cmd.close";
+      action = lib.nixvim.mkRaw "vim.cmd.close";
     }
 
     {
       mode = "n";
       key = "<leader>nrw";
-      action = helpers.mkRaw "vim.cmd.Ex";
+      action = lib.nixvim.mkRaw "vim.cmd.Ex";
     }
 
     # move visually highlighted text
@@ -128,7 +127,7 @@ args@{
     {
       mode = "n";
       key = "<leader>s";
-      action = helpers.mkRaw "[[:%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>]]";
+      action = lib.nixvim.mkRaw "[[:%s/\\<<C-r><C-w>\\>/<C-r><C-w>/gI<Left><Left><Left>]]";
     }
     # make file executable
     {

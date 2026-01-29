@@ -6,6 +6,6 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
   keymaps = [{
     mode = "n";
     key = "<leader>gs";
-    action = helpers.mkRaw "vim.cmd.Git";
+    action = lib.nixvim.mkRaw "vim.cmd.Git";
   }];
 }

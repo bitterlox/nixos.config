@@ -1,6 +1,5 @@
 args@{
   config,
-  helpers,
   lib,
   options,
   pkgs,
@@ -78,7 +77,7 @@ in
           # When chat is cleared with `gx` delete the chat from history
           delete_on_clearing_chat = false;
           # Directory path to save the chats
-          dir_to_save = helpers.mkRaw ''
+          dir_to_save = lib.nixvim.mkRaw ''
             vim.fn.stdpath("data") .. "/codecompanion-history"
           '';
           # Enable detailed logging for history extension
@@ -102,7 +101,7 @@ in
       };
     };
     adapters = {
-      openai = helpers.mkRaw ''
+      openai = lib.nixvim.mkRaw ''
          function()
           return require("codecompanion.adapters").extend("openai_compatible", {
             env = {

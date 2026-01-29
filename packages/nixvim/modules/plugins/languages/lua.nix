@@ -1,7 +1,6 @@
 # this is a nixvim module
 args@{
   config,
-  helpers,
   lib,
   options,
   pkgs,
@@ -23,7 +22,7 @@ args@{
     workspace = {
       # Make the server aware of Neovim runtime files
       # replace with { vim.env.VIMRUNTIME } if performance gets bad
-      library = helpers.mkRaw ''
+      library = lib.nixvim.mkRaw ''
         vim.api.nvim_get_runtime_file("", true)
       '';
       checkThirdParty = false;

@@ -1,7 +1,6 @@
 # this is a nixvim module
 args@{
   config,
-  helpers,
   lib,
   options,
   pkgs,
@@ -35,33 +34,33 @@ args@{
     {
       mode = "n";
       key = "gdc";
-      action = helpers.mkRaw "vim.lsp.buf.declaration";
+      action = lib.nixvim.mkRaw "vim.lsp.buf.declaration";
     }
     {
       mode = "n";
       key = "H";
-      action = helpers.mkRaw "vim.lsp.buf.hover";
+      action = lib.nixvim.mkRaw "vim.lsp.buf.hover";
     }
     {
       mode = "n";
       key = "<C-s>";
-      action = helpers.mkRaw "vim.lsp.buf.signature_help";
+      action = lib.nixvim.mkRaw "vim.lsp.buf.signature_help";
     }
     # todo: look into lsp workspaces
     {
       mode = "n";
       key = "<leader>wa";
-      action = helpers.mkRaw "vim.lsp.buf.add_workspace_folder";
+      action = lib.nixvim.mkRaw "vim.lsp.buf.add_workspace_folder";
     }
     {
       mode = "n";
       key = "<leader>wr";
-      action = helpers.mkRaw "vim.lsp.buf.remove_workspace_folder";
+      action = lib.nixvim.mkRaw "vim.lsp.buf.remove_workspace_folder";
     }
     {
       mode = "n";
       key = "<leader>wl";
-      action = helpers.mkRaw ''
+      action = lib.nixvim.mkRaw ''
         function() 
           print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
         end
@@ -70,55 +69,55 @@ args@{
     {
       mode = "n";
       key = "<leader>rn";
-      action = helpers.mkRaw "vim.lsp.buf.rename";
+      action = lib.nixvim.mkRaw "vim.lsp.buf.rename";
     }
     {
       mode = "n";
       key = "<leader>ca";
-      action = helpers.mkRaw "vim.lsp.buf.code_action";
+      action = lib.nixvim.mkRaw "vim.lsp.buf.code_action";
     }
 
     {
       mode = "n";
       key = "<leader>f";
-      action = helpers.mkRaw "vim.lsp.buf.format";
+      action = lib.nixvim.mkRaw "vim.lsp.buf.format";
     }
 
     # supercharging with telescope
     {
       mode = "n";
       key = "<leader>d";
-      action = helpers.mkRaw "require('telescope.builtin').diagnostics";
+      action = lib.nixvim.mkRaw "require('telescope.builtin').diagnostics";
     }
     {
       mode = "n";
       key = "<leader>rr";
-      action = helpers.mkRaw "require('telescope.builtin').lsp_references";
+      action = lib.nixvim.mkRaw "require('telescope.builtin').lsp_references";
     }
     {
       mode = "n";
       key = "<leader>ic";
-      action = helpers.mkRaw "require('telescope.builtin').lsp_incoming_calls";
+      action = lib.nixvim.mkRaw "require('telescope.builtin').lsp_incoming_calls";
     }
     {
       mode = "n";
       key = "<leader>oc";
-      action = helpers.mkRaw "require('telescope.builtin').lsp_outgoing_calls";
+      action = lib.nixvim.mkRaw "require('telescope.builtin').lsp_outgoing_calls";
     }
     {
       mode = "n";
       key = "gd";
-      action = helpers.mkRaw "require('telescope.builtin').lsp_definitions";
+      action = lib.nixvim.mkRaw "require('telescope.builtin').lsp_definitions";
     }
     {
       mode = "n";
       key = "gtd";
-      action = helpers.mkRaw "require('telescope.builtin').lsp_type_definitions";
+      action = lib.nixvim.mkRaw "require('telescope.builtin').lsp_type_definitions";
     }
     {
       mode = "n";
       key = "gi";
-      action = helpers.mkRaw "require('telescope.builtin').lsp_implementations";
+      action = lib.nixvim.mkRaw "require('telescope.builtin').lsp_implementations";
     }
   ];
 }

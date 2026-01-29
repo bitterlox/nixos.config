@@ -6,7 +6,7 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
     {
       mode = "n";
       key = "<leader>u";
-      action = helpers.mkRaw "vim.cmd.UndotreeToggle";
+      action = lib.nixvim.mkRaw "vim.cmd.UndotreeToggle";
     }
   ];
 }
