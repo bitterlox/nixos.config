@@ -6,7 +6,7 @@
 }:
 {
 
-  imports = [ ./tmux.nix ];
+  imports = [];
 
   time.timeZone = "Europe/Rome";
 

@@ -114,7 +114,7 @@
     set -g default-terminal "''${TERM}"
     set -g message-command-style bg=default,fg=#f9e2af
     set -g message-style bg=default,fg=#f9e2af
-    set -g mode-style bg=default,fg=#f9e2af
+    set -g mode-style bg=default,fg=#f9c657
     setw -g mode-keys vi
     set -g pane-active-border-style 'fg=#eba0ac,bg=default,'
     set -g pane-border-style 'fg=brightblack,bg=default,'

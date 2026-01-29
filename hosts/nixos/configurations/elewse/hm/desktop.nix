@@ -36,6 +36,7 @@ in
     homeModules.angel
     homeModules.bash
     homeModules.ghostty
+    homeModules.tmux
     impermanenceHmModule
     ./hardware
     ./software
