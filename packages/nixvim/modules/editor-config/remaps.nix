@@ -102,12 +102,12 @@ args@{
     # quickfix list mappings
     {
       mode = "n";
-      key = "<C-S-k>";
+      key = "J";
       action = "<cmd>cnext<CR>zz";
     }
     {
       mode = "n";
-      key = "<C-S-j>";
+      key = "K";
       action = "<cmd>cprev<CR>zz";
     }
 
