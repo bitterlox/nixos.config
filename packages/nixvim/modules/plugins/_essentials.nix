@@ -33,6 +33,9 @@ args@{ config, lib, ... }:
     # colorizer
     ./colorizer.nix
 
+    # otter
+    ./otter.nix
+
     # llm companion
     #./codecompanion-nvim.nix
 

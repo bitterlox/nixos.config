@@ -8,19 +8,6 @@ args@{
 }:
 {
 
-  plugins.otter.enable = true;
-  plugins.otter.settings = {
-    buffers.set_filetype = true;
-    lsp.diagnostic_update_events = [
-      "BufWritePost"
-      "InsertLeave"
-      "TextChanged"
-    ];
-    verbose = {
-      no_code_found = true;
-    };
-  };
-
   imports = [
     # common languages
     ./_common.nix
