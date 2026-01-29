@@ -83,6 +83,22 @@ args@{
       action = lib.nixvim.mkRaw "vim.lsp.buf.format";
     }
 
+    {
+      mode = "n";
+      key = "<leader>ih";
+      action = lib.nixvim.mkRaw ''
+        function ()
+          local ih_state = vim.lsp.inlay_hint.is_enabled();
+          vim.lsp.inlay_hint.enable(not ih_state);
+          if ih_state then
+            print("disabled inlay hints")
+          else
+            print("enabled inlay hints")
+          end
+        end
+      '';
+    }
+
     # supercharging with telescope
     {
       mode = "n";
