@@ -55,5 +55,5 @@ args@{
   #   },
   # },
   plugins.efmls-configs.enable = true;
-  plugins.efmls-configs.setup.lua.formatter = [ "stylua" ];
+  plugins.efmls-configs.languages.lua.formatter = [ "stylua" ];
 }

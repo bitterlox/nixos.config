@@ -27,7 +27,7 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
   #   }
   # },
   plugins.efmls-configs.enable = true;
-  plugins.efmls-configs.setup.yaml.formatter = [ "yq" ];
-  plugins.efmls-configs.setup.yaml.linter = [ "yamllint" ];
+  plugins.efmls-configs.languages.yaml.formatter = [ "yq" ];
+  plugins.efmls-configs.languages.yaml.linter = [ "yamllint" ];
 }
 

@@ -49,6 +49,6 @@ args@{
 
   plugins.efmls-configs.enable = true;
   # biome should support css i think
-  plugins.efmls-configs.setup.css.formatter = [ "stylelint" ];
-  plugins.efmls-configs.setup.css.linter = [ "stylelint" ];
+  plugins.efmls-configs.languages.css.formatter = [ "stylelint" ];
+  plugins.efmls-configs.languages.css.linter = [ "stylelint" ];
 }

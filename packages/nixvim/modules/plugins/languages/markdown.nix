@@ -27,6 +27,6 @@ args@{ config, helpers, lib, options, pkgs, ... }: {
   # }
   # }
   plugins.efmls-configs.enable = true;
-  plugins.efmls-configs.setup.markdown.linter = [ "markdownlint" ];
+  plugins.efmls-configs.languages.markdown.linter = [ "markdownlint" ];
 }
 

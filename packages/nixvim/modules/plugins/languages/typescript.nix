@@ -64,8 +64,8 @@ args@{
   plugins.efmls-configs.externallyManagedPackages = [ "deno_fmt" ];
   extraPackages = [ pkgs.deno ];
 
-  plugins.efmls-configs.setup.typescript.linter = [ "eslint" ];
-  plugins.efmls-configs.setup.typescript.formatter = [ "deno_fmt" ];
-  # plugins.efmls-configs.setup.typescriptreact.linter = [ "eslint" ];
-  plugins.efmls-configs.setup.typescriptreact.formatter = [ "deno_fmt" ];
+  plugins.efmls-configs.languages.typescript.linter = [ "eslint" ];
+  plugins.efmls-configs.languages.typescript.formatter = [ "deno_fmt" ];
+  # plugins.efmls-configs.languages.typescriptreact.linter = [ "eslint" ];
+  plugins.efmls-configs.languages.typescriptreact.formatter = [ "deno_fmt" ];
 }

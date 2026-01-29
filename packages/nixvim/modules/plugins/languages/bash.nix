@@ -65,7 +65,7 @@ args@{
   #   require('efmls-configs.formatters.shfmt'),
   # },
   plugins.efmls-configs.enable = true;
-  plugins.efmls-configs.setup.sh.formatter = [
+  plugins.efmls-configs.languages.sh.formatter = [
     "shfmt"
     "beautysh"
     "shellharden"
