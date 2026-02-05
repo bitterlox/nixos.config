@@ -39,6 +39,16 @@ args@{
       key = "J";
       action = ":m '>+1<CR>gv=gv";
     }
+    {
+      mode = "v";
+      key = "H";
+      action = "<gv";
+    }
+    {
+      mode = "v";
+      key = "L";
+      action = ">gv";
+    }
     # todo: should add the equivalent for H & L mapping to < and >
 
     # when using J keep the cursor at the start of the line
@@ -100,14 +110,15 @@ args@{
     # { mode="n"; key="<C-f>"; action ="<cmd> silent !tmux neww tmux-sessionizer<CR>";}
 
     # quickfix list mappings
+
     {
       mode = "n";
-      key = "J";
+      key = "q";
       action = "<cmd>cnext<CR>zz";
     }
     {
       mode = "n";
-      key = "K";
+      key = "Q";
       action = "<cmd>cprev<CR>zz";
     }
 
